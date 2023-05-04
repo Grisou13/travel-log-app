@@ -7,6 +7,8 @@ import {AuthService} from '../services/auth-service.service';
 export const authGuard = () => {
     const router = inject(Router);
     const service = inject(AuthService)
-    return service.isAuthenticated();
+    return service.IsAuthenticated$.pipe(tap(val => {
+        return !val ? router.navigate(["/login"]) : true
+    }));
 }
 
