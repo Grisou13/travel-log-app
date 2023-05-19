@@ -1,0 +1,22 @@
+<section class="h-screen" style="background-color: #F2D1B3">
+  <div class="h-full flex flex-col" >
+    <h1 class="text-center m-4 mt-12 text-4xl font-medium">{{ title }}</h1>
+    <!-- Left column container with background-->
+    <div
+      class="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+      <div
+        class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12" >
+        <img
+          src="assets/logo.svg"
+          class="w-full"
+          alt="Logo" />
+      </div>
+
+      <!-- Right column container -->
+      <div class="mb-12 p-12  md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</section>
