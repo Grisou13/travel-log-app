@@ -1,4 +1,10 @@
-import { Inject, Injectable, NgModule, inject } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  InjectionToken,
+  NgModule,
+  inject,
+} from '@angular/core';
 import { fetchToken } from '../../auth/services/auth-service.service';
 import { Observable } from 'rxjs';
 import {
@@ -18,6 +24,7 @@ import placesFuncs from './places';
 import authFuncs from './auth';
 
 export const baseUrl = () => environment.travelLogApi;
+export const BASE_API_URL = new InjectionToken<string>('travel_log.base_url');
 
 @Injectable()
 export class BearerAuthTokenInterceptor implements HttpInterceptor {
@@ -37,7 +44,7 @@ export class BearerAuthTokenInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
-  constructor(@Inject('BASE_API_URL') private baseUrl: string) {}
+  constructor(@Inject(BASE_API_URL) private baseUrl: string) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -51,58 +58,59 @@ export class BaseUrlInterceptor implements HttpInterceptor {
 }
 
 @Injectable()
-export class TravelLogApiHttp extends HttpClient {
+export class TravelLogApiHttp {
+  constructor(private httpClient: HttpClient) {}
   users = {
     create: (data: SecondArgOfFunction<typeof usersFuncs.create>) =>
-      usersFuncs.create(this, data),
+      usersFuncs.create(this.httpClient, data),
     fetchAll: (data: SecondArgOfFunction<typeof usersFuncs.fetchAll>) =>
-      usersFuncs.fetchAll(this, data),
+      usersFuncs.fetchAll(this.httpClient, data),
     fetchOne: (data: SecondArgOfFunction<typeof usersFuncs.fetchOne>) =>
-      usersFuncs.fetchOne(this, data),
+      usersFuncs.fetchOne(this.httpClient, data),
     remove: (data: SecondArgOfFunction<typeof usersFuncs.remove>) =>
-      usersFuncs.remove(this, data),
+      usersFuncs.remove(this.httpClient, data),
     update: (data: SecondArgOfFunction<typeof usersFuncs.update>) =>
-      usersFuncs.update(this, data),
+      usersFuncs.update(this.httpClient, data),
   };
   trips = {
     create: (data: SecondArgOfFunction<typeof tripFuncs.create>) =>
-      tripFuncs.create(this, data),
+      tripFuncs.create(this.httpClient, data),
     fetchAll: (data: SecondArgOfFunction<typeof tripFuncs.fetchAll>) =>
-      tripFuncs.fetchAll(this, data),
+      tripFuncs.fetchAll(this.httpClient, data),
     fetchOne: (data: SecondArgOfFunction<typeof tripFuncs.fetchOne>) =>
-      tripFuncs.fetchOne(this, data),
+      tripFuncs.fetchOne(this.httpClient, data),
     remove: (data: SecondArgOfFunction<typeof tripFuncs.remove>) =>
-      tripFuncs.remove(this, data),
+      tripFuncs.remove(this.httpClient, data),
     update: (data: SecondArgOfFunction<typeof tripFuncs.update>) =>
-      tripFuncs.update(this, data),
+      tripFuncs.update(this.httpClient, data),
   };
   places = {
     create: (data: SecondArgOfFunction<typeof placesFuncs.create>) =>
-      placesFuncs.create(this, data),
+      placesFuncs.create(this.httpClient, data),
     fetchAll: (data: SecondArgOfFunction<typeof placesFuncs.fetchAll>) =>
-      placesFuncs.fetchAll(this, data),
+      placesFuncs.fetchAll(this.httpClient, data),
     fetchOne: (data: SecondArgOfFunction<typeof placesFuncs.fetchOne>) =>
-      placesFuncs.fetchOne(this, data),
+      placesFuncs.fetchOne(this.httpClient, data),
     remove: (data: SecondArgOfFunction<typeof placesFuncs.remove>) =>
-      placesFuncs.remove(this, data),
+      placesFuncs.remove(this.httpClient, data),
     update: (data: SecondArgOfFunction<typeof placesFuncs.update>) =>
-      placesFuncs.update(this, data),
+      placesFuncs.update(this.httpClient, data),
   };
   auth = {
     login: (data: SecondArgOfFunction<typeof authFuncs.login>) =>
-      authFuncs.login(this, data),
+      authFuncs.login(this.httpClient, data),
     signup: (data: SecondArgOfFunction<typeof usersFuncs.create>) =>
-      usersFuncs.create(this, data),
+      usersFuncs.create(this.httpClient, data),
   };
 }
 
 @NgModule({
   imports: [HttpClientModule],
   providers: [
-    TravelLogApiHttp,
     {
-      provide: HttpClient,
-      useClass: TravelLogApiHttp,
+      provide: BASE_API_URL,
+      useFactory: baseUrl,
+      deps: [],
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -115,8 +123,7 @@ export class TravelLogApiHttp extends HttpClient {
       multi: true,
     },
     {
-      provide: 'BASE_API_URL',
-      useValue: baseUrl(),
+      provide: TravelLogApiHttp,
     },
   ],
   exports: [],

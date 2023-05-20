@@ -13,6 +13,7 @@ import { AuthLayoutComponent } from './components/auth-layout/auth-layout.compon
 const routes: Routes = [
   {
     path: '',
+    canActivate: [anonGuard],
     pathMatch: 'full',
     component: IndexComponent,
   },

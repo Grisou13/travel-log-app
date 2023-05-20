@@ -31,10 +31,10 @@ import { AuthLayoutComponent } from './components/auth-layout/auth-layout.compon
     AuthLayoutComponent,
   ],
   imports: [
-    ReactiveFormsModule,
-    TravelLogApiModule,
-    AuthModule,
     BrowserModule,
+    ReactiveFormsModule,
+    AuthModule,
+    TravelLogApiModule,
     AppRoutingModule,
   ],
   providers: [TravelLogApiModule, AuthModule],
