@@ -22,6 +22,7 @@ const routes: Routes = [
     path: 'app',
     canActivate: [authGuard],
     component: DashboardComponent,
+    title: 'TrekTrack',
     children: [
       {
         path: '',
