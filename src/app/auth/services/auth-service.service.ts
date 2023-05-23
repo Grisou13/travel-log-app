@@ -40,17 +40,28 @@ export class AuthService {
 
   constructor(private httpClient: TravelLogApiHttp) {
     this.isAuthenticatedEvent.next(this.isTokenValid());
-    this.userEvent.pipe(switchMap(() => this.resolveUser()));
-    this.userEvent.next(null);
+
     this.IsAuthenticated$ = this.isAuthenticatedEvent.asObservable();
     this.user$ = this.userEvent.asObservable();
   }
+  public boot() {
+    console.log('Booting auth service');
+    return this.resolveUser().pipe(
+      tap((user) => {
+        if (!user) return;
+        this.userEvent.next(user);
+      })
+    );
+  }
   private resolveUser(): Observable<null | User> {
     //resolve user on startup, this is usefull so we don't keep the whole user object
+    console.log('resolving user');
     const userId = fetchUserId();
     if (!userId) {
+      console.log('no user nor token found');
       return of(null);
     }
+    console.log('fetching him remotly');
     return this.httpClient.users.fetchOne(userId);
   }
   public getToken(): string | null {
