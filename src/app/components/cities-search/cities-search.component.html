@@ -1,0 +1,8 @@
+<p>cities-search works!</p>
+<input class="border-b-2 border-black-400 focus:outline-2 focus:outline-blue-400 focus:outline-none" type="text" (input)="search$.next($any($event.target).value)" />
+
+
+<div *ngIf="obs$ | async as obs">
+  {{ obs | json }}
+</div>
+<div *ngIf="loading$ | async"><span>Loading...</span></div>

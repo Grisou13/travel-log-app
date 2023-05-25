@@ -12,7 +12,7 @@ import {
   tap,
 } from 'rxjs';
 import { login } from '../../httpClients/travelLogApi/auth/login';
-import { TravelLogApiHttp } from '../../httpClients/travelLogApi/travelLogApi.module';
+import { TravelLogService } from '../../httpClients/travelLogApi/travelLogApi.module';
 import { AuthModule } from '../auth.module';
 import { ArgumentTypes } from 'src/app/helpers';
 import {
@@ -38,7 +38,7 @@ export class AuthService {
   private isAuthenticatedEvent = new ReplaySubject<boolean>(1);
   private userEvent = new ReplaySubject<null | User>(1);
 
-  constructor(private httpClient: TravelLogApiHttp) {
+  constructor(private travelLogService: TravelLogService) {
     this.isAuthenticatedEvent.next(this.isTokenValid());
 
     this.IsAuthenticated$ = this.isAuthenticatedEvent.asObservable();
@@ -62,7 +62,7 @@ export class AuthService {
       return of(null);
     }
     console.log('fetching him remotly');
-    return this.httpClient.users.fetchOne(userId);
+    return this.travelLogService.users.fetchOne(userId);
   }
   public getToken(): string | null {
     return fetchToken();
@@ -78,7 +78,7 @@ export class AuthService {
     this.userEvent.next(null);
   }
   public signup(data: AuthParams) {
-    return this.httpClient.auth.signup(data).pipe(
+    return this.travelLogService.auth.signup(data).pipe(
       switchMap((res) =>
         this.authenticate({
           authMethod: 'default',
@@ -91,7 +91,7 @@ export class AuthService {
   public authenticate(
     authInfo: Authentication
   ): Observable<AuthResponse | null> {
-    return this.httpClient.auth
+    return this.travelLogService.auth
       .login({
         username: authInfo.credential,
         password: authInfo.password,

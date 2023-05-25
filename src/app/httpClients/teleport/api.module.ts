@@ -33,18 +33,18 @@ import { UrbanAreasService } from './api/urbanAreas.service';
     UrbanAreasService,
   ],
 })
-export class ApiModule {
+export class TeleportApiModule {
   public static forRoot(
     configurationFactory: () => Configuration
-  ): ModuleWithProviders<ApiModule> {
+  ): ModuleWithProviders<TeleportApiModule> {
     return {
-      ngModule: ApiModule,
+      ngModule: TeleportApiModule,
       providers: [{ provide: Configuration, useFactory: configurationFactory }],
     };
   }
 
   constructor(
-    @Optional() @SkipSelf() parentModule: ApiModule,
+    @Optional() @SkipSelf() parentModule: TeleportApiModule,
     @Optional() http: HttpClient
   ) {
     if (parentModule) {

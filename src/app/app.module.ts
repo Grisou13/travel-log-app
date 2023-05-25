@@ -15,6 +15,10 @@ import { UserDashboardComponent } from './components/user-dashboard/user-dashboa
 import { HomeComponent } from './pages/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
+import { CitiesSearchComponent } from './components/cities-search/cities-search.component';
+import { WithLoadingPipe } from './pipes/with-loading.pipe';
+import { Configuration, TeleportApiModule } from './httpClients/teleport';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,12 +33,16 @@ import { AuthLayoutComponent } from './components/auth-layout/auth-layout.compon
     UserDashboardComponent,
     HomeComponent,
     AuthLayoutComponent,
+    CitiesSearchComponent,
+    WithLoadingPipe,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     ReactiveFormsModule,
     AuthModule,
     TravelLogApiModule,
+    TeleportApiModule.forRoot(() => new Configuration({})),
     AppRoutingModule,
   ],
   providers: [TravelLogApiModule, AuthModule],

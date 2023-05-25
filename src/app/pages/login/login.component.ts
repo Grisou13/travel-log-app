@@ -7,9 +7,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TravelLogApiHttp } from 'src/app/httpClients/travelLogApi/travelLogApi.module';
+import { TravelLogService } from 'src/app/httpClients/travelLogApi/travelLogApi.module';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, tap } from 'rxjs';
+import { indicate } from 'src/app/helpers';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string = '/app';
-
+  loading$ = new BehaviorSubject(false);
   loginForm = this.fb.group({
     username: '',
     password: '',
@@ -49,15 +50,19 @@ export class LoginComponent implements OnInit, OnDestroy {
         credential: username,
         password,
       })
-      .subscribe(
-        (user) => {
+      .pipe(indicate(this.loading$))
+      .subscribe({
+        next: (user) => {
+          this.loading$.next(false);
           console.log('Logged in as user:', user);
           this.router.navigate([this.returnUrl]);
         },
-        (err) => {
+        error: (err) => {
           console.log(err);
-        }
-      );
+          this.loading$.next(false);
+        },
+        complete: () => {},
+      });
   }
   ngOnDestroy() {
     this.sub$?.unsubscribe();
