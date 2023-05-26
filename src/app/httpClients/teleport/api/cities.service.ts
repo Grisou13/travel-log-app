@@ -21,7 +21,7 @@ import {
 } from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec } from '../encoder';
 
-import { Observable } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 
 import { City } from '../model/city';
 import { CityAlternateNames } from '../model/cityAlternateNames';
@@ -29,6 +29,7 @@ import { CitySearchResults } from '../model/citySearchResults';
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
+import { CitySearchResultsItem } from '../model/citySearchResultsItem';
 
 @Injectable()
 export class CitiesService {
@@ -219,6 +220,7 @@ export class CitiesService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
+
   public searchCities(
     search: string,
     limit?: number,

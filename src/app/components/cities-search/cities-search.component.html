@@ -2,7 +2,9 @@
 <input class="border-b-2 border-black-400 focus:outline-2 focus:outline-blue-400 focus:outline-none" type="text" (input)="search$.next($any($event.target).value)" />
 
 
-<div *ngIf="obs$ | async as obs">
-  {{ obs | json }}
+<div *ngIf="cities$ | async as data">
+  <ul>
+    <li *ngFor="let item of data" (click)="resolveCity(item)">{{item.matching_full_name}} </li>
+  </ul>
 </div>
 <div *ngIf="loading$ | async"><span>Loading...</span></div>

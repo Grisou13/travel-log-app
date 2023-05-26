@@ -7,9 +7,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TravelLogService } from 'src/app/httpClients/travelLogApi/travelLogApi.module';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
-import { BehaviorSubject, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, delay, Subscription, takeLast, tap } from 'rxjs';
 import { indicate } from 'src/app/helpers';
 
 @Component({
@@ -34,7 +33,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit() {
     initTE({ Input });
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl =
+      this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   login() {
@@ -50,17 +50,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         credential: username,
         password,
       })
-      .pipe(indicate(this.loading$))
+      .pipe(delay(100), indicate(this.loading$), takeLast(1))
       .subscribe({
         next: (user) => {
-          this.loading$.next(false);
           console.log('Logged in as user:', user);
           this.router.navigate([this.returnUrl]);
         },
-        error: (err) => {
-          console.log(err);
-          this.loading$.next(false);
-        },
+        error: console.error,
         complete: () => {},
       });
   }

@@ -3,7 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { indicate } from 'src/app/helpers';
 
 @Component({
   selector: 'app-signup',
@@ -11,6 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./signup.component.sass'],
 })
 export class SignupComponent implements OnInit, OnDestroy {
+  protected loading$ = new BehaviorSubject(false);
   returnUrl: string = '/app';
 
   signupForm = this.fb.group({
@@ -44,6 +46,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         name: username,
         password,
       })
+      .pipe(indicate(this.loading$))
       .subscribe(
         (user) => {
           this.signupForm.reset();

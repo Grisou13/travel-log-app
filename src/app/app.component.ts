@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Input, Ripple, initTE } from 'tw-elements';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Locator';
-  ngOnInit() {
-    initTE({ Input, Ripple });
-  }
+  ngOnInit() {}
 }

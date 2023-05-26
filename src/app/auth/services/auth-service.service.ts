@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {
+  BehaviorSubject,
   Observable,
-  ReplaySubject,
-  Subject,
-  catchError,
-  from,
-  map,
+  delay,
   of,
+  shareReplay,
   switchMap,
   tap,
 } from 'rxjs';
-import { login } from '../../httpClients/travelLogApi/auth/login';
-import { TravelLogService } from '../../httpClients/travelLogApi/travelLogApi.module';
-import { AuthModule } from '../auth.module';
-import { ArgumentTypes } from 'src/app/helpers';
+import { TravelLogService } from '../../httpClients/travelLogApi/travel-log.service';
 import {
   AuthParams,
   User,
@@ -30,20 +25,32 @@ export type Authentication = {
   credential: string;
   password: string;
 };
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
-  public IsAuthenticated$: Observable<boolean>;
-  user$: Observable<null | User>;
+  private isAuthenticatedEvent = new BehaviorSubject<boolean>(false);
+  public IsAuthenticated$: Observable<boolean> =
+    this.isAuthenticatedEvent.asObservable();
+  //.pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
-  private isAuthenticatedEvent = new ReplaySubject<boolean>(1);
-  private userEvent = new ReplaySubject<null | User>(1);
+  private userEvent = new BehaviorSubject<null | User>(null);
+  public user$: Observable<null | User> = this.IsAuthenticated$.pipe(
+    switchMap((authenticated) => {
+      if (!authenticated) {
+        return of(null);
+      }
+      return this.resolveUser().pipe(delay(3000), shareReplay(1));
+      //return this.userEvent.asObservable();
+    })
+  );
+  //.pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
   constructor(private travelLogService: TravelLogService) {
+    console.info('Creating auth service');
     this.isAuthenticatedEvent.next(this.isTokenValid());
-
-    this.IsAuthenticated$ = this.isAuthenticatedEvent.asObservable();
-    this.user$ = this.userEvent.asObservable();
   }
+
   public boot() {
     console.log('Booting auth service');
     return this.resolveUser().pipe(
@@ -53,30 +60,23 @@ export class AuthService {
       })
     );
   }
-  private resolveUser(): Observable<null | User> {
-    //resolve user on startup, this is usefull so we don't keep the whole user object
-    console.log('resolving user');
-    const userId = fetchUserId();
-    if (!userId) {
-      console.log('no user nor token found');
-      return of(null);
-    }
-    console.log('fetching him remotly');
-    return this.travelLogService.users.fetchOne(userId);
-  }
+
   public getToken(): string | null {
     return fetchToken();
   }
+
   public isTokenValid(): boolean {
     return this.getToken() != null;
     // the api actually doesn't give a jwt token but a generic token
     // return !this.jwtHelper.isTokenExpired(this.getToken());
   }
+
   public logout() {
     localStorage.removeItem(AUTH_KEY);
     this.isAuthenticatedEvent.next(false);
     this.userEvent.next(null);
   }
+
   public signup(data: AuthParams) {
     return this.travelLogService.auth.signup(data).pipe(
       switchMap((res) =>
@@ -88,6 +88,7 @@ export class AuthService {
       )
     );
   }
+
   public authenticate(
     authInfo: Authentication
   ): Observable<AuthResponse | null> {
@@ -98,11 +99,23 @@ export class AuthService {
       })
       .pipe(
         tap((res) => {
+          this.isAuthenticatedEvent.next(true);
+          this.userEvent.next(res.user);
           localStorage.setItem(AUTH_KEY, res.token);
           localStorage.setItem(USER_ID_KEY, res.user.id);
-          this.userEvent.next(res.user);
-          this.isAuthenticatedEvent.next(true);
         })
       );
+  }
+
+  private resolveUser(): Observable<null | User> {
+    //resolve user on startup, this is usefull so we don't keep the whole user object
+    console.log('resolving user');
+    const userId = fetchUserId();
+    if (!userId) {
+      console.log('no user nor token found');
+      return of(null);
+    }
+    console.log('fetching him remotly');
+    return this.travelLogService.users.fetchOne(userId);
   }
 }
