@@ -7,9 +7,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TravelLogApiHttp } from 'src/app/httpClients/travelLogApi/travelLogApi.module';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, delay, Subscription, takeLast, tap } from 'rxjs';
+import { indicate } from 'src/app/helpers';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string = '/app';
-
+  loading$ = new BehaviorSubject(false);
   loginForm = this.fb.group({
     username: '',
     password: '',
@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit() {
     initTE({ Input });
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl =
+      this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   login() {
@@ -49,15 +50,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         credential: username,
         password,
       })
-      .subscribe(
-        (user) => {
+      .pipe(delay(100), indicate(this.loading$), takeLast(1))
+      .subscribe({
+        next: (user) => {
           console.log('Logged in as user:', user);
           this.router.navigate([this.returnUrl]);
         },
-        (err) => {
-          console.log(err);
-        }
-      );
+        error: console.error,
+        complete: () => {},
+      });
   }
   ngOnDestroy() {
     this.sub$?.unsubscribe();

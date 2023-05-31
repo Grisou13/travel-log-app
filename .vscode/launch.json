@@ -13,6 +13,7 @@
     {
       "name": "ng serve",
       "type": "firefox",
+      "firefoxArgs": [],
       "request": "launch",
       "preLaunchTask": "npm: start",
       "url": "http://localhost:4200/"
