@@ -21,7 +21,7 @@ export class NewTripComponent implements OnInit {
     this.travelLogService.trips
       .create({
         title: $event.full_name,
-        description: "{'description':'Trip to " + $event.full_name + "'",
+        description: "{'description':'Trip to " + $event.full_name + "'}",
       })
       .pipe(
         mergeMap((trip) => {
