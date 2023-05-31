@@ -30,6 +30,6 @@ export class TripListComponent {
   ) {}
 
   navigateToNewTrip($event: Trip) {
-    this.router.navigate(['/dashboard/trips/', $event.id]);
+    this.router.navigate(['/dashboard/trips/', { id: $event.id }]);
   }
 }
