@@ -40,7 +40,7 @@ export class AuthService {
       if (!authenticated) {
         return of(null);
       }
-      return this.resolveUser().pipe(delay(3000), shareReplay(1));
+      return this.resolveUser().pipe(shareReplay(1));
       //return this.userEvent.asObservable();
     })
   );
