@@ -30,7 +30,7 @@ export class TravelLogService {
     fetchOne: (data: SecondArgOfFunction<typeof tripFuncs.fetchOne>) =>
       tripFuncs.fetchOne(this.httpClient, data),
     fetchById: (id: SecondArgOfFunction<typeof tripFuncs.fetchById>) =>
-      tripFuncs.fetchById(this.httpClient, data),
+      tripFuncs.fetchById(this.httpClient, id),
     remove: (data: SecondArgOfFunction<typeof tripFuncs.remove>) =>
       tripFuncs.remove(this.httpClient, data),
     update: (data: SecondArgOfFunction<typeof tripFuncs.update>) =>
