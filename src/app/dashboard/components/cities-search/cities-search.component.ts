@@ -1,4 +1,4 @@
-import { CitiesService } from './../../httpClients/teleport/api/cities.service';
+import { CitiesService } from '@httpClients/teleport/api/cities.service';
 import { Component, EventEmitter, Output } from '@angular/core';
 import {
   BehaviorSubject,
@@ -21,7 +21,8 @@ import {
   Photo,
   UrbanArea,
   UrbanAreasService,
-} from 'src/app/httpClients/teleport';
+} from '@httpClients/teleport';
+import { CommonModule } from '@angular/common';
 
 export type CitySearchResult = City & {
   pictures?: Array<Photo>;

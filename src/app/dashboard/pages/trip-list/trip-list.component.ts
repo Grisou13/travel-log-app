@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { indicate } from 'src/app/helpers';
-import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
-import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
+import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
+import type { Trip } from '@httpClients/travelLogApi/trips/schema';
 
 @Component({
   selector: 'app-trip-list',

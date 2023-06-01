@@ -49,7 +49,7 @@ export class TeleportApiModule {
   ) {
     if (parentModule) {
       throw new Error(
-        'ApiModule is already loaded. Import in your base AppModule only.'
+        'TeleportApiModule is already loaded. Import in your base AppModule only.'
       );
     }
     if (!http) {
