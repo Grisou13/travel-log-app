@@ -10,6 +10,12 @@
     "paths": {
       "httpClients": [
         "dist/http-clients"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@httpClients/*": [
+        "src/app/httpClients/*"
       ]
     },
     "noPropertyAccessFromIndexSignature": true,
@@ -28,6 +34,7 @@
       "ES2022",
       "dom"
     ],
+
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
