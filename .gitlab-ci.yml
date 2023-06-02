@@ -9,6 +9,7 @@ pages:
     - ng build
     - mkdir public
     - mv dist/locator/* public/
+    - echo "/* /index.html 200" > public/_redirects
   artifacts:
     paths:
       - public
