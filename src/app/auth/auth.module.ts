@@ -14,7 +14,7 @@ const initAuth = (authService: AuthService) => () => {
 };
 
 @NgModule({
-  declarations: [AuthLayoutComponent, SignupComponent, LoginComponent],
+  declarations: [SignupComponent, LoginComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
