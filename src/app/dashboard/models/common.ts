@@ -20,3 +20,16 @@ export const mapDiff = (fromType, toType) => {
       { description: {} } as any
     );
 };
+
+export const stringifyDescription = (data: any, validator: any) => {
+  const newObj = Object.entries(data).reduce((acc, [key, value]) => {
+    if (!(key in validator)) {
+      acc[key] = value;
+    }
+    return acc;
+  }, {} as any);
+  return {
+    ...data,
+    description: JSON.stringify(newObj),
+  };
+};
