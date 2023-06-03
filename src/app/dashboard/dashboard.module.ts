@@ -15,6 +15,7 @@ import { TripPlannerComponent } from './components/trip-planner/trip-planner.com
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { CitiesSearchComponent } from '../shared/components/cities-search/cities-search.component';
 import { LogoComponent } from '@shared/components/logo/logo.component';
+import { TripService } from './services/trip.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ export class DashboardModule {
       ngModule: DashboardModule,
 
       providers: [
+        TripService,
         /*{
           provide: APP_INITIALIZER,
           useFactory: initAuth,

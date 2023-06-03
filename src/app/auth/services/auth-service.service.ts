@@ -6,6 +6,7 @@ import {
   delay,
   of,
   shareReplay,
+  startWith,
   switchMap,
   tap,
 } from 'rxjs';
@@ -30,8 +31,9 @@ export type Authentication = {
 })
 export class AuthService {
   private isAuthenticatedEvent = new BehaviorSubject<boolean>(false);
-  public IsAuthenticated$: Observable<boolean> =
-    this.isAuthenticatedEvent.asObservable();
+  public IsAuthenticated$: Observable<boolean> = this.isAuthenticatedEvent
+    .asObservable()
+    .pipe(startWith(false));
   //.pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
   private userEvent = new BehaviorSubject<null | User>(null);

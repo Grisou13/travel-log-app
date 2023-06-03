@@ -33,6 +33,8 @@ export class TravelLogService {
       tripFuncs.fetchById(this.httpClient, id),
     remove: (data: SecondArgOfFunction<typeof tripFuncs.remove>) =>
       tripFuncs.remove(this.httpClient, data),
+    removeById: (id: SecondArgOfFunction<typeof tripFuncs.removeById>) =>
+      tripFuncs.removeById(this.httpClient, id),
     update: (data: SecondArgOfFunction<typeof tripFuncs.update>) =>
       tripFuncs.update(this.httpClient, data),
     fetchByUser: (
@@ -47,8 +49,12 @@ export class TravelLogService {
       placesFuncs.fetchAll(this.httpClient, data),
     fetchOne: (data: SecondArgOfFunction<typeof placesFuncs.fetchOne>) =>
       placesFuncs.fetchOne(this.httpClient, data),
+    fetchById: (id: SecondArgOfFunction<typeof placesFuncs.fetchById>) =>
+      placesFuncs.fetchById(this.httpClient, id),
     remove: (data: SecondArgOfFunction<typeof placesFuncs.remove>) =>
       placesFuncs.remove(this.httpClient, data),
+    removeById: (id: SecondArgOfFunction<typeof placesFuncs.removeById>) =>
+      placesFuncs.removeById(this.httpClient, id),
     update: (data: SecondArgOfFunction<typeof placesFuncs.update>) =>
       placesFuncs.update(this.httpClient, data),
   };
