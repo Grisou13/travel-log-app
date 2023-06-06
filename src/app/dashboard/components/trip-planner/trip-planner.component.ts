@@ -1,9 +1,9 @@
-import { Trip } from './../../httpClients/travelLogApi/trips/schema';
+import { Trip } from '@httpClients/travelLogApi/trips/schema';
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { indicate } from 'src/app/helpers';
-import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
+import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 
 @Component({
   selector: 'app-trip-planner',

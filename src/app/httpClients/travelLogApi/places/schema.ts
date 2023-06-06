@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const validator = z.object({
-  name: z.string().min(1), // "Somewhere",
-  description: z.string(), //"Over the rainbow",
+  name: z.string().min(3).max(100), // "Somewhere",
+  description: z.string().min(5).max(50000), //"Over the rainbow",
   location: z.object({
     type: z.enum([
       'Point',
@@ -14,7 +14,7 @@ export const validator = z.object({
     ]),
     coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],
   }),
-  pictureUrl: z.string().url().optional(), // "https://www.example.com/picture.jpg",
+  pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
   tripHref: z.string().optional(), // "/api/trips/7f063c6e-7717-401a-aa47-34a52f6a45cf",
   tripId: z.string().optional(), //"7f063c6e-7717-401a-aa47-34a52f6a45cf",
 });

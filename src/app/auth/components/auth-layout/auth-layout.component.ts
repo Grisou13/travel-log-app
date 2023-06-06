@@ -1,11 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { LogoComponent } from '@shared/components/logo/logo.component';
 import { Observable, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.component.html',
   styleUrls: ['./auth-layout.component.sass'],
+  standalone: true,
+  imports: [LogoComponent, CommonModule, RouterModule],
 })
 export class AuthLayoutComponent implements OnInit, OnDestroy {
   title: string | undefined = ''; //Observable<string | undefined>;

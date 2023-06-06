@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const validator = z.object({
-  name: z.string().min(1), // "Somewhere",
-  password: z.string().min(1), //"Over the rainbow",
+  name: z.string().min(3).max(25), // "Somewhere",
+  password: z.string().min(4), //"Over the rainbow",
 });
 export const schema = z
   .object({

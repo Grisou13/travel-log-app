@@ -1,12 +1,7 @@
-import { NgModule, inject } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { authGuard } from './auth/guards/auth-guard.guard';
 import { anonGuard } from './auth/guards/anon-guard.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { IndexComponent } from './pages/index/index.component';
-import { HomeComponent } from './pages/home/home.component';
-import { TripListComponent } from './pages/trip-list/trip-list.component';
-import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
 
 const routes: Routes = [
   {
@@ -17,20 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    canActivate: [authGuard],
-    component: DashboardComponent,
-    title: 'TrekTrack',
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        component: TripListComponent,
-      },
-      {
-        path: 'trips/:id',
-        component: TripDetailComponent,
-      },
-    ],
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'register',

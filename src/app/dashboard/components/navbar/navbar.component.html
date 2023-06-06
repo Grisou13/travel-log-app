@@ -15,7 +15,32 @@
     >
       <!-- Hamburger icon -->
       <span class="[&>svg]:w-7">
-        <img src="assets/logo-small.svg" />
+        <svg
+          width="800px"
+          height="800px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 18L20 18"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M4 12L20 12"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M4 6L20 6"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
       </span>
     </button>
 
@@ -30,7 +55,10 @@
         class="mb-4 mr-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
         href="#"
       >
-        <svg
+        <div class="w-10 h-10">
+          <app-logo [displaySlogan]="false"></app-logo>
+        </div>
+        <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 72 56"
           class="svg-logo"
@@ -67,7 +95,7 @@
               ></path>
             </g>
           </g>
-        </svg>
+        </svg> -->
       </a>
       <!-- Left navigation links -->
       <ul
@@ -206,10 +234,11 @@
               type="button"
               class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
               (click)="logout()"
-              data-te-dropdown-item-ref>
-                Logout</button>
+              data-te-dropdown-item-ref
+            >
+              Logout
+            </button>
           </li>
-
         </ul>
       </div>
     </div>
