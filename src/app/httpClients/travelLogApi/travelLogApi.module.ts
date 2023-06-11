@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   BaseUrlInterceptor,
   BearerAuthTokenInterceptor,
-  TRAVEL_LOG_BASE_API_URL,
-  TRAVEL_LOG_HTTP_INTERCEPTORS,
   TravelLogHttp,
   baseUrl,
 } from './travel-log.http';
 import { TravelLogService } from './travel-log.service';
+import {
+  TRAVEL_LOG_BASE_API_URL,
+  TRAVEL_LOG_HTTP_INTERCEPTORS,
+} from '@httpClients/commont';
 
 @NgModule({
   imports: [HttpClientModule],

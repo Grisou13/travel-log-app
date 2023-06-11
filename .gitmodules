@@ -1,0 +1,3 @@
+[submodule "comem-travel-log-api"]
+	path = comem-travel-log-api
+	url = git@gitlab.com:grisou13/comem-travel-log-api.git

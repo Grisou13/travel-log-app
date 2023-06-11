@@ -1,5 +1,4 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { fetchToken } from '../../auth/services/auth-service.service';
 import { Observable } from 'rxjs';
 import {
   HTTP_INTERCEPTORS,
@@ -13,31 +12,17 @@ import {
 import { environment } from '../../../environments/environment';
 import {
   InterceptingHandler,
-  TRAVEL_LOG_BASE_API_URL,
-  TRAVEL_LOG_HTTP_INTERCEPTORS,
+  InterceptorHandler,
+  OPEN_ROUTE_BASE_URL,
 } from '@httpClients/common';
+import { OPEN_ROUTE_INTERCEPTORS } from '@httpClients/common';
 
-export const baseUrl = () => environment.travelLogApi;
-
-@Injectable()
-export class BearerAuthTokenInterceptor implements HttpInterceptor {
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    return next.handle(
-      request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${fetchToken()}`,
-        },
-      })
-    );
-  }
-}
+export const baseUrl = () => environment.openRouteUrl;
+export const fetchToken = () => environment.openRouteServiceApiKey;
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
-  constructor(@Inject(TRAVEL_LOG_BASE_API_URL) private baseUrl: string) {
+  constructor(@Inject(OPEN_ROUTE_BASE_URL) private baseUrl: string) {
     this.baseUrl =
       this.baseUrl.charAt(this.baseUrl.length - 1) == '/'
         ? this.baseUrl.substr(0, this.baseUrl.length - 1) //remove trailing /
@@ -56,12 +41,33 @@ export class BaseUrlInterceptor implements HttpInterceptor {
 }
 
 @Injectable()
-export class TravelLogHttp extends HttpClient {
+export class ApiTokenInterceptor implements HttpInterceptor {
+  token: string;
+  constructor() {
+    this.token = fetchToken();
+  }
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    let req = request.clone({
+      setHeaders: {
+        Authorization: `${fetchToken()}`,
+      },
+    });
+    if (request.method == 'GET') {
+      req = request.clone({ setParams: { api_key: fetchToken() } });
+    }
+    return next.handle(req);
+  }
+}
+@Injectable()
+export class OpenRouteHttp extends HttpClient {
   constructor(
     backend: HttpBackend,
     @Optional() @Inject(HTTP_INTERCEPTORS) interceptors: HttpInterceptor[] = [],
     @Optional()
-    @Inject(TRAVEL_LOG_HTTP_INTERCEPTORS)
+    @Inject(OPEN_ROUTE_INTERCEPTORS)
     moduleInterceptors: HttpInterceptor[] = []
   ) {
     super(
