@@ -6,6 +6,7 @@ https://mediacomem.github.io/comem-masrad-dfa/latest/subjects/intro/#7
 
 - npm >= 9
 - node >= 16
+- @angular/cli >= 16.0.2
 
 # Install
 
@@ -13,7 +14,11 @@ https://mediacomem.github.io/comem-masrad-dfa/latest/subjects/intro/#7
 npm i -g @angular/cli
 git clone <repo>
 cd <repo>
+git submodule update --init --recursive
 npm i
+cd comem-travel-log-api
+npm i
+cd ..
 npm run start
 ```
 # Locator
