@@ -1,28 +1,37 @@
 import { z } from 'zod';
+import { common } from '../common';
 
-export const validator = z.object({
-  name: z.string().min(3).max(100), // "Somewhere",
-  description: z.string().min(5).max(50000), //"Over the rainbow",
-  location: z.object({
-    type: z.enum([
-      'Point',
-      'LineString',
-      'Polygon',
-      'MultiPoint',
-      'MultiLineString',
-      'MultiPolygon',
-    ]),
-    coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],
-  }),
-  pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
-  tripHref: z.string().optional(), // "/api/trips/7f063c6e-7717-401a-aa47-34a52f6a45cf",
-  tripId: z.string().optional(), //"7f063c6e-7717-401a-aa47-34a52f6a45cf",
-});
+export const validator = z
+  .object({
+    name: z.string().min(3).max(100), // "Somewhere",
+    description: z.string().min(5).max(50000), //"Over the rainbow",
+    directions: z.object({
+      distance: z.number(),
+      previous: z.object({}),
+      next: z.object({}),
+    }),
+    type: z.enum(['PlaceOfInterest', 'TripStop']).default('TripStop'),
+    location: z.object({
+      type: z.enum([
+        'Point',
+        'LineString',
+        'Polygon',
+        'MultiPoint',
+        'MultiLineString',
+        'MultiPolygon',
+      ]),
+      coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],
+    }),
+    pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
+    tripId: z.string().optional(), //"7f063c6e-7717-401a-aa47-34a52f6a45cf",
+  })
+  .merge(common);
 
 export const schema = z
   .object({
     id: z.string(), // "0860ab21-98e8-4cdd-a407-06d2a50989eb",
     href: z.string(), //"/api/places/0860ab21-98e8-4cdd-a407-06d2a50989eb",
+    tripHref: z.string().optional(), // "/api/trips/7f063c6e-7717-401a-aa47-34a52f6a45cf",
     updatedAt: z.date().optional(),
     createdAt: z.date().optional(),
   })
