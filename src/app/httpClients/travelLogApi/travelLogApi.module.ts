@@ -11,7 +11,7 @@ import { TravelLogService } from './travel-log.service';
 import {
   TRAVEL_LOG_BASE_API_URL,
   TRAVEL_LOG_HTTP_INTERCEPTORS,
-} from '@httpClients/commont';
+} from '@httpClients/common';
 
 @NgModule({
   imports: [HttpClientModule],
