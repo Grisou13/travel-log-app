@@ -1,3 +1,3 @@
 export const environment = {
-    travelLogApi: "https://comem-travel-log-api.onrender.com/api"
+  travelLogApi: 'https://trek-traks-api.onrender.com/api', //TODO move to localhost
 };
