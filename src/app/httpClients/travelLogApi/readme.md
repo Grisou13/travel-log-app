@@ -4,4 +4,4 @@ The back bone of this app
 
 # docs
 
-https://comem-travel-log-api.onrender.com/
+https://trek-traks-api.onrender.com/
