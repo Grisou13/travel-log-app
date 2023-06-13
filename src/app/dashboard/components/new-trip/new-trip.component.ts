@@ -3,7 +3,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { City } from 'src/app/httpClients/teleport';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
 import { concatMap, forkJoin, mergeMap, of, switchMap } from 'rxjs';
-import { CitySearchResult } from '../../../shared/components/cities-search/cities-search.component';
+import {
+  CitySearchResult,
+  Result,
+} from '../../../shared/components/cities-search/cities-search.component';
 import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
 
 @Component({
@@ -17,11 +20,12 @@ export class NewTripComponent implements OnInit {
   ngOnInit(): void {
     initTE({ Modal, Ripple });
   }
-  public onCitySelect($event: CitySearchResult) {
+  public onCitySelect($event: Result) {
     this.travelLogService.trips
       .create({
-        title: $event.full_name,
-        description: "{'description':'Trip to " + $event.full_name + "'}",
+        title: $event.name,
+        description: 'Trip to ' + $event.name,
+        startDate: new Date(),
       })
       .pipe(
         mergeMap((trip) => {
@@ -29,24 +33,22 @@ export class NewTripComponent implements OnInit {
             of(trip),
             this.travelLogService.places.create({
               tripId: trip.id,
-              name: $event.full_name,
-              description: '{}',
-              location: {
-                type: 'Point',
-                coordinates: [
-                  $event.location.latlon.longitude,
-                  $event.location.latlon.latitude,
-                ],
+              type: 'TripStop',
+              startDate: new Date(),
+              directions: {
+                distance: 0,
+                next: {},
+                previous: {},
               },
-            }),
-            this.travelLogService.trips.update({
-              ...trip,
-              pictureUrl: $event.pictures?.at(0)?.image.web ?? '',
+              name: $event.name,
+              pictureUrl: $event.pictureUrl || undefined,
+              description: 'First stop',
+              location: $event.location,
             }),
           ]);
         })
       )
-      .subscribe(([originalTrip, place, trip]) => {
+      .subscribe(([trip, place]) => {
         console.log(trip);
         this.tripCreated.emit(trip);
       });

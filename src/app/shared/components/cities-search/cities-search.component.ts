@@ -23,9 +23,16 @@ import {
   UrbanAreasService,
 } from '@httpClients/teleport';
 import { CommonModule } from '@angular/common';
+import { Point } from 'geojson';
 
 export type CitySearchResult = City & {
   pictures?: Array<Photo>;
+};
+
+export type Result = {
+  name: string;
+  location: Point;
+  pictureUrl: string | undefined;
 };
 
 @Component({
@@ -34,7 +41,7 @@ export type CitySearchResult = City & {
   styleUrls: ['./cities-search.component.sass'],
 })
 export class CitiesSearchComponent {
-  @Output() selectedCity = new EventEmitter<CitySearchResult>();
+  @Output() selectedCity = new EventEmitter<Result>();
 
   protected search$ = new BehaviorSubject('');
   protected loading$ = new BehaviorSubject(false);
@@ -65,7 +72,17 @@ export class CitiesSearchComponent {
       .getUrbanAreaImages(baseCity._embedded['city:urban_area'].ua_id)
       .pipe(
         tap((pictures) => {
-          this.selectedCity.emit({ ...baseCity, pictures: pictures.photos });
+          this.selectedCity.emit({
+            name: baseCity.full_name,
+            location: {
+              type: 'Point',
+              coordinates: [
+                baseCity.location.latlon.longitude,
+                baseCity.location.latlon.latitude,
+              ],
+            },
+            pictureUrl: pictures.photos?.at(0)?.image.web,
+          });
         })
       );
   }

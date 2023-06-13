@@ -10,18 +10,27 @@ import {
   catchError,
   shareReplay,
   withLatestFrom,
+  forkJoin,
+  mergeMap,
+  mergeAll,
+  scan,
+  concatMap,
+  merge,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddTrip, Trip } from '../models/trips';
-
+import type { Trip as ApiTrip } from '@httpClients/travelLogApi/trips/schema';
 @Injectable({
   providedIn: 'root',
 })
 export class TripService {
   private itemsSubject = new BehaviorSubject<Trip[]>([]);
-  public items$ = this.itemsSubject
-    .asObservable()
-    .pipe(withLatestFrom(this.fetch), shareReplay());
+  public items$ = this.fetch()
+    .pipe(
+      withLatestFrom(this.itemsSubject.asObservable()),
+      switchMap((x) => x)
+    )
+    .pipe(shareReplay());
 
   constructor(
     private authService: AuthService,
@@ -66,19 +75,22 @@ export class TripService {
     );
   }
 
-  private fetchItem(id: string): Observable<Trip | boolean> {
-    return this.travelLogService.trips.fetchById(id).pipe(
-      catchError((err) => {
-        return of(false);
-      })
-    );
+  private fetchItem(id: string): Observable<Trip | null> {
+    return this.travelLogService.trips
+      .fetchById(id)
+      .pipe(switchMap(this.fetchPlacesForTrip))
+      .pipe(
+        catchError((err) => {
+          return of(null);
+        })
+      );
   }
 
   update(id: string, payload: Trip) {
     return this.travelLogService.trips.update(payload).pipe(
       tap((item) => {
         if (item) {
-          this.updateItem(id, item);
+          this.updateItem(id, { ...item, places: payload.places });
         }
       }), // when success result, update the item in the local service
       catchError((err) => {
@@ -89,6 +101,7 @@ export class TripService {
 
   add(payload: AddTrip) {
     return this.travelLogService.trips.create(payload).pipe(
+      map((t) => ({ ...t, places: [] })),
       tap((item) => {
         if (item) {
           this.addItem(item);
@@ -136,7 +149,7 @@ export class TripService {
     return false;
   }
 
-  fetch(): Observable<boolean | Trip[]> {
+  fetch(): Observable<Trip[]> {
     // this.clear();
 
     return this.authService.user$.pipe(
@@ -145,14 +158,24 @@ export class TripService {
 
         return this.travelLogService.trips.fetchAll({ user: user.id });
       }),
+      mergeMap((trips) =>
+        forkJoin(trips.map((t) => this.fetchPlacesForTrip(t)))
+      ),
+
       tap((items) => {
         if (items) {
           this.itemsSubject.next(items);
         }
       }),
       catchError((err) => {
-        return of(false);
+        return of([]);
       })
     );
+  }
+
+  private fetchPlacesForTrip(trip: ApiTrip) {
+    return this.travelLogService.places
+      .fetchAll({ trip: trip.id })
+      .pipe(map((places) => ({ ...trip, places: places })));
   }
 }

@@ -136,7 +136,7 @@ export class PlaceService {
     return false;
   }
 
-  fetch(): Observable<boolean | Place[]> {
+  fetch(): Observable<Place[]> {
     // this.clear();
 
     return this.authService.user$.pipe(
@@ -150,7 +150,7 @@ export class PlaceService {
         }
       }),
       catchError((err) => {
-        return of(false);
+        return of([]);
       })
     );
   }

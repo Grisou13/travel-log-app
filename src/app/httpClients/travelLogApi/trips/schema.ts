@@ -1,6 +1,6 @@
 import { common, transportMethod } from './../common';
 import { z } from 'zod';
-
+import { schema as placeSchema } from '../places/schema';
 export const validator = z
   .object({
     title: z.string().min(3).max(100), // "Somewhere",

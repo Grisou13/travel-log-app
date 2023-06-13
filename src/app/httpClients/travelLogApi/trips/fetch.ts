@@ -10,7 +10,9 @@ import {
 } from './schema';
 
 export const fetchAll = (httpClient: HttpClient, data: SearchParams) => {
-  return from(searchParamValidator.parseAsync(data)).pipe(
+  return from(
+    searchParamValidator.parseAsync({ include: 'places', ...data })
+  ).pipe(
     switchMap((data) => httpClient.get<Trip[]>('/trips', { params: data }))
   );
 };
