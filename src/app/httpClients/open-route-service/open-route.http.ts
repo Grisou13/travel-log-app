@@ -10,11 +10,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {
-  InterceptingHandler,
-  InterceptorHandler,
-  OPEN_ROUTE_BASE_URL,
-} from '@httpClients/common';
+import { InterceptingHandler, OPEN_ROUTE_BASE_URL } from '@httpClients/common';
 import { OPEN_ROUTE_INTERCEPTORS } from '@httpClients/common';
 
 export const baseUrl = () => environment.openRouteUrl;
