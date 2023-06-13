@@ -12,13 +12,7 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
-import {
-  AddTrip,
-  Trip,
-  mapApiToData,
-  mapDataToApi,
-  mapValidatorToApi,
-} from '../models/trips';
+import type { AddTrip, Trip } from '../models/trips';
 
 @Injectable({
   providedIn: 'root',
@@ -74,7 +68,6 @@ export class TripService {
 
   private fetchItem(id: string): Observable<Trip | boolean> {
     return this.travelLogService.trips.fetchById(id).pipe(
-      map(mapApiToData),
       catchError((err) => {
         return of(false);
       })
@@ -82,8 +75,7 @@ export class TripService {
   }
 
   update(id: string, payload: Trip) {
-    return this.travelLogService.trips.update(mapDataToApi(payload)).pipe(
-      map(mapApiToData),
+    return this.travelLogService.trips.update(payload).pipe(
       tap((item) => {
         if (item) {
           this.updateItem(id, item);
@@ -96,8 +88,7 @@ export class TripService {
   }
 
   add(payload: AddTrip) {
-    return this.travelLogService.trips.create(mapValidatorToApi(payload)).pipe(
-      map(mapApiToData),
+    return this.travelLogService.trips.create(payload).pipe(
       tap((item) => {
         if (item) {
           this.addItem(item);
@@ -152,9 +143,7 @@ export class TripService {
       switchMap((user) => {
         if (!user) return of([]);
 
-        return this.travelLogService.trips
-          .fetchAll({ user: user.id })
-          .pipe(map((x) => x.map(mapApiToData)));
+        return this.travelLogService.trips.fetchAll({ user: user.id });
       }),
       tap((items) => {
         if (items) {
