@@ -1,4 +1,4 @@
-<input class="border-b-2 border-black-400 focus:outline-2 focus:outline-blue-400 focus:outline-none" type="text" (input)="search$.next($any($event.target).value)" placeholder="What city?" />
+<input class="border-b-2 border-black-400 focus:outline-2 focus:outline-blue-400 focus:outline-none" type="text" [value]="inputSearch" (input)="search$.next($any($event.target).value)" placeholder="What city?" />
 
 
 <div *ngIf="cities$ | async as data">

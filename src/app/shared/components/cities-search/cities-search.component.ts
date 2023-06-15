@@ -43,9 +43,11 @@ export type Result = {
 export class CitiesSearchComponent {
   @Output() selectedCity = new EventEmitter<Result>();
 
+  protected inputSearch = '';
   protected search$ = new BehaviorSubject('');
   protected loading$ = new BehaviorSubject(false);
   cities$ = this.search$.pipe(
+    tap((x) => (this.inputSearch = x)),
     debounceTime(200),
     filter((x) => x.length > 3),
     distinctUntilChanged(),
@@ -67,6 +69,7 @@ export class CitiesSearchComponent {
     private urbanAreaService: UrbanAreasService
   ) {}
   resolveCity(city: CitySearchResults['_embedded']['city:search-results'][0]) {
+    this.inputSearch = city.matching_full_name;
     const baseCity = city._embedded['city:item'];
     this.urbanAreaService
       .getUrbanAreaImages(baseCity._embedded['city:urban_area'].ua_id)

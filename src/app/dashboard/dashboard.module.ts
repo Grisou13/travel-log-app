@@ -13,7 +13,6 @@ import { TripListComponent } from './pages/trip-list/trip-list.component';
 import { NewTripComponent } from './components/new-trip/new-trip.component';
 import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
-import { CitiesSearchComponent } from '../shared/components/cities-search/cities-search.component';
 import { LogoComponent } from '@shared/components/logo/logo.component';
 import { TripService } from './services/trip.service';
 
@@ -27,15 +26,8 @@ import { TripService } from './services/trip.service';
     NewTripComponent,
     TripPlannerComponent,
     UserDashboardComponent,
-    CitiesSearchComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
-    LogoComponent,
-    ReactiveFormsModule,
-  ],
+  imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class DashboardModule {

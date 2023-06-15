@@ -8,6 +8,7 @@ import { AuthLayoutComponent } from './components/auth-layout/auth-layout.compon
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '@shared/shared.module';
 
 const initAuth = (authService: AuthService) => () => {
   return authService.boot();
@@ -15,12 +16,7 @@ const initAuth = (authService: AuthService) => () => {
 
 @NgModule({
   declarations: [SignupComponent, LoginComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    TravelLogApiModule,
-  ],
+  imports: [SharedModule, RouterModule.forChild(routes), TravelLogApiModule],
   exports: [RouterModule],
 })
 export class AuthModule {
