@@ -4,9 +4,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WithLoadingPipe } from './pipes/with-loading.pipe';
 import { CitiesSearchComponent } from './components/cities-search/cities-search.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
-  declarations: [WithLoadingPipe, CitiesSearchComponent, LogoComponent],
+  declarations: [
+    WithLoadingPipe,
+    CitiesSearchComponent,
+    LogoComponent,
+    HighlightDirective,
+  ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
     CitiesSearchComponent,
@@ -14,6 +20,7 @@ import { LogoComponent } from './components/logo/logo.component';
     WithLoadingPipe,
     CommonModule,
     ReactiveFormsModule,
+    HighlightDirective,
   ],
 })
 export class SharedModule {

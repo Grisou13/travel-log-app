@@ -8,12 +8,14 @@ import { AuthModule } from './auth/auth.module';
 import { Configuration, TeleportApiModule } from './httpClients/teleport';
 import { SharedModule } from '@shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { OpenRouteServiceModule } from '@httpClients/open-route-service/open-route-service.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    OpenRouteServiceModule,
     TeleportApiModule.forRoot(() => new Configuration({})),
     TravelLogApiModule,
     SharedModule,

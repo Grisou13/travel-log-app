@@ -24,6 +24,8 @@ import {
 } from '@httpClients/teleport';
 import { CommonModule } from '@angular/common';
 import { Point } from 'geojson';
+import { SearchService } from '@httpClients/open-route-service/search/search.service';
+import { GeocodeResponse } from '@httpClients/open-route-service/search/types';
 
 export type CitySearchResult = City & {
   pictures?: Array<Photo>;
@@ -41,35 +43,48 @@ export type Result = {
   styleUrls: ['./cities-search.component.sass'],
 })
 export class CitiesSearchComponent {
+  search(term: string) {
+    this.searchTerm = term;
+    this.search$.next(term);
+  }
   @Output() selectedCity = new EventEmitter<Result>();
-
-  protected inputSearch = '';
-  protected search$ = new BehaviorSubject('');
+  public searchTerm = '';
+  protected search$ = new BehaviorSubject(this.searchTerm);
   protected loading$ = new BehaviorSubject(false);
+
   cities$ = this.search$.pipe(
-    tap((x) => (this.inputSearch = x)),
-    debounceTime(200),
-    filter((x) => x.length > 3),
+    debounceTime(450),
+    filter((x) => x.trim().length > 3),
     distinctUntilChanged(),
+
     switchMap((query) =>
-      this.cityService
-        .searchCities(query, 10, [
-          'city:search-results/city:item',
-          'city:search-results/city:item/city:urban_area',
-        ])
-        .pipe(tap(console.log), indicate(this.loading$))
+      this.searchService
+        .autocomplete({
+          text: query,
+          size: 5,
+          layers: ['locality'],
+        })
+        .pipe(indicate(this.loading$))
     ),
+    tap(console.debug),
     map((res) => {
-      return res._embedded['city:search-results'];
+      return res.features;
     })
   );
 
   constructor(
     private cityService: CitiesService,
-    private urbanAreaService: UrbanAreasService
+    private urbanAreaService: UrbanAreasService,
+    private searchService: SearchService
   ) {}
-  resolveCity(city: CitySearchResults['_embedded']['city:search-results'][0]) {
-    this.inputSearch = city.matching_full_name;
+  resolveCity(city: GeocodeResponse['features'][0]) {
+    this.searchTerm = city.properties.label;
+    this.selectedCity.emit({
+      name: city.properties.label,
+      location: city.geometry,
+      pictureUrl: '', // pictures.photos?.at(0)?.image.web,
+    });
+    /*this.inputSearch = city.matching_full_name;
     const baseCity = city._embedded['city:item'];
     this.urbanAreaService
       .getUrbanAreaImages(baseCity._embedded['city:urban_area'].ua_id)
@@ -87,6 +102,6 @@ export class CitiesSearchComponent {
             pictureUrl: pictures.photos?.at(0)?.image.web,
           });
         })
-      );
+      );*/
   }
 }
