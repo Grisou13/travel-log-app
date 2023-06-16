@@ -3,39 +3,48 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch via NPM",
+      "name": "Launch Api",
       "request": "launch",
       "cwd": "${workspaceFolder}/comem-travel-log-api",
-      "runtimeArgs": [
-        "run-script",
-        "start:dev"
-      ],
+      "runtimeArgs": ["run-script", "start:dev"],
       "envFile": "${workspaceFolder}/comem-travel-log-api/.env",
       "runtimeExecutable": "npm",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "type": "node"
     },
-  {
-    "name": "Attach by Process ID",
-    "processId": "${command:PickProcess}",
-    "request": "attach",
-    "skipFiles": [
-      "<node_internals>/**"
-    ],
-    "type": "node"
-  },
+    {
+      "name": "Attach to Process ID",
+      "processId": "${command:PickProcess}",
+      "request": "attach",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
     {
       "type": "firefox",
       "request": "launch",
       "reAttach": true,
-      "name": "Launch localhost",
+      "name": "Launch localhost (chrome)",
       "url": "http://localhost:4200/",
       "webRoot": "${workspaceFolder}"
     },
     {
-      "name": "ng serve",
+      "name": "ng serve (chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": "http://localhost:4200/"
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "name": "Launch localhost (firefox)",
+      "url": "http://localhost:4200/",
+      "webRoot": "${workspaceFolder}"
+    },
+
+    {
+      "name": "ng serve (firefox)",
       "type": "firefox",
       "firefoxArgs": [],
       "request": "launch",
@@ -43,7 +52,7 @@
       "url": "http://localhost:4200/"
     },
     {
-      "name": "ng test",
+      "name": "ng test (firefox)",
       "type": "firefox",
       "request": "launch",
       "preLaunchTask": "npm: test",
