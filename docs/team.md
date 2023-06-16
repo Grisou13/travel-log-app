@@ -17,6 +17,8 @@
 - *[ ] Error handler
 - *[ ] Success handler
 - *[ ] Search for cities
+  - *[ ] Keyboard navigation
+  - *[ ] On enter get first element and validate  
 - *[ ] Search for related stops on a trip
 - *[ ] directions for a trip
 - *[ ] Maps for a trip
