@@ -3,6 +3,30 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch via NPM",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/comem-travel-log-api",
+      "runtimeArgs": [
+        "run-script",
+        "start:dev"
+      ],
+      "envFile": "${workspaceFolder}/comem-travel-log-api/.env",
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+  {
+    "name": "Attach by Process ID",
+    "processId": "${command:PickProcess}",
+    "request": "attach",
+    "skipFiles": [
+      "<node_internals>/**"
+    ],
+    "type": "node"
+  },
+    {
       "type": "firefox",
       "request": "launch",
       "reAttach": true,
