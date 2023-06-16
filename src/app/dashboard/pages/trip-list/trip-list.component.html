@@ -1,34 +1,42 @@
-<p>trip-planner works!</p>
-<div *ngIf="loading$ | async">
-  loading...
-</div>
-<div #elseBlock class="flex flex-row justify-between p-6 overflow-x-scroll">
-  <!-- <div
-  class="flex rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-60 h-60 items-center justify-center"> -->
+<div class="flex flex-row p-6 overflow-y-scroll">
+  <app-new-trip (tripCreated)="navigateToNewTrip($event)"></app-new-trip>
 
-    <app-new-trip (tripCreated)="navigateToNewTrip($event)"></app-new-trip>
-  <!-- </div> -->
-
-  <a *ngFor="let trip of trips$ | async" href="#!" class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-60 h-60" href="{{'/dashboard/trips/'+trip.id}}">
-    <img
-      class="rounded-t-lg"
-      src="https://place-hold.it/300x500?text=New Text&italic"
-      alt="" />
-    <div class="p-6">
-      <h5
-        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-        {{trip.title}}
-      </h5>
-      <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-        {{trip.description}}
-      </p>
-      <button
-        type="button"
-        class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-        data-te-ripple-init
-        data-te-ripple-color="light">
-        Edit
-      </button>
-    </div>
-  </a>
+  <div *ngIf="trips$ | withLoadingStatus | async as obs">
+    <ng-template [ngIf]="obs.loading">
+      <p>Loading....</p>
+    </ng-template>
+    <ng-template [ngIf]="obs.value">
+      <a
+        *ngFor="let trip of obs.value"
+        class="block ml-4 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-60 h-60"
+        (click)="navigateToNewTrip(trip)"
+      >
+        <img
+          class="rounded-t-lg h-2/3 w-2/3"
+          src="https://place-hold.it/300x500?text=New Text&italic"
+          alt=""
+        />
+        <div class="p-6">
+          <h5
+            class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
+          >
+            {{ trip.title }}
+          </h5>
+          <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+            {{ trip.description }}
+          </p>
+          <p>Start: {{ getStartOfTrip(trip).name }}</p>
+          <p *ngIf="hasTripEnd(trip)">End: {{ getTripEnd(trip).name }}</p>
+          <button
+            type="button"
+            class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+            data-te-ripple-init
+            data-te-ripple-color="light"
+          >
+            Edit
+          </button>
+        </div>
+      </a>
+    </ng-template>
+  </div>
 </div>

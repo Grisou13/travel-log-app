@@ -7,7 +7,7 @@ import {
   CitySearchResult,
   Result,
 } from '../../../shared/components/cities-search/cities-search.component';
-import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
+import { Trip } from './../../models/trips';
 
 @Component({
   selector: 'app-new-trip',
@@ -15,16 +15,19 @@ import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
   styleUrls: ['./new-trip.component.sass'],
 })
 export class NewTripComponent implements OnInit {
+  selectedStart: Result | null = null;
   constructor(private travelLogService: TravelLogService) {}
   @Output() tripCreated = new EventEmitter<Trip>();
   ngOnInit(): void {
     initTE({ Modal, Ripple });
   }
-  public onCitySelect($event: Result) {
+  public createTrip() {
+    if (!this.selectedStart) return;
+    const startCity = this.selectedStart;
     this.travelLogService.trips
       .create({
-        title: $event.name,
-        description: 'Trip to ' + $event.name,
+        title: startCity.name + ' ' + new Date().toLocaleDateString(),
+        description: 'Trip to ' + startCity.name,
         startDate: new Date(),
       })
       .pipe(
@@ -41,17 +44,20 @@ export class NewTripComponent implements OnInit {
                 next: {},
                 previous: {},
               },
-              name: $event.name,
-              pictureUrl: $event.pictureUrl || undefined,
+              name: startCity.name,
+              pictureUrl: startCity.pictureUrl || undefined,
               description: 'First stop',
-              location: $event.location,
+              location: startCity.location,
             }),
           ]);
         })
       )
       .subscribe(([trip, place]) => {
         console.log(trip);
-        this.tripCreated.emit(trip);
+        this.tripCreated.emit({ ...trip, places: [place] });
       });
+  }
+  public onCitySelect($event: Result) {
+    this.selectedStart = $event;
   }
 }

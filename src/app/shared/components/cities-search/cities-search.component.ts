@@ -50,26 +50,22 @@ export class CitiesSearchComponent {
   @Output() selectedCity = new EventEmitter<Result>();
   public searchTerm = '';
   protected search$ = new BehaviorSubject(this.searchTerm);
-  protected loading$ = new BehaviorSubject(false);
 
   cities$ = this.search$.pipe(
     debounceTime(450),
     filter((x) => x.trim().length > 3),
     distinctUntilChanged(),
-
-    switchMap((query) =>
-      this.searchService
-        .autocomplete({
+    switchMap(
+      (query) =>
+        this.searchService.autocomplete({
           text: query,
           size: 5,
           layers: ['locality'],
         })
-        .pipe(indicate(this.loading$))
+      // .pipe(indicate(this.loading$))
     ),
     tap(console.debug),
-    map((res) => {
-      return res.features;
-    })
+    map((res: GeocodeResponse) => res.features)
   );
 
   constructor(

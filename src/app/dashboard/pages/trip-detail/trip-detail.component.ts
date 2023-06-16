@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { Place } from '@httpClients/travelLogApi/places/schema';
+import { Observable, concatMap, forkJoin, of, switchMap } from 'rxjs';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
 import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
+import { TripService } from '../../services/trip.service';
 
 @Component({
   selector: 'app-trip-detail',
@@ -11,16 +13,16 @@ import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
 })
 export class TripDetailComponent {
   selectedId: string = '';
-  trip$: Observable<Trip>;
+  trip$: Observable<Trip | null> = this.route.paramMap.pipe(
+    switchMap((params) => {
+      const id = params.get('id') || null;
+      if (id === null) return of(null);
+      this.selectedId = id;
+      return this.tripService.get(id);
+    })
+  );
   constructor(
     private route: ActivatedRoute,
-    private travelService: TravelLogService
-  ) {
-    this.trip$ = this.route.paramMap.pipe(
-      switchMap((params) => {
-        this.selectedId = params.get('id') || '';
-        return this.travelService.trips.fetchById(this.selectedId);
-      })
-    );
-  }
+    private tripService: TripService
+  ) {}
 }

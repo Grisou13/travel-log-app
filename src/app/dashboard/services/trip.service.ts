@@ -1,5 +1,6 @@
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
 import {
   BehaviorSubject,
   map,
@@ -176,6 +177,8 @@ export class TripService {
   private fetchPlacesForTrip(trip: ApiTrip) {
     return this.travelLogService.places
       .fetchAll({ trip: trip.id })
-      .pipe(map((places) => ({ ...trip, places: places })));
+      .pipe(
+        map((places) => ({ ...trip, places: _.sortBy(places, ['order']) }))
+      );
   }
 }

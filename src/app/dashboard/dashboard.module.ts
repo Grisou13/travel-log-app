@@ -9,7 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
-import { TripListComponent } from './pages/trip-list/trip-list.component';
+import TripListComponent from './pages/trip-list/trip-list.component';
 import { NewTripComponent } from './components/new-trip/new-trip.component';
 import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';

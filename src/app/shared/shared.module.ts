@@ -5,6 +5,7 @@ import { WithLoadingPipe } from './pipes/with-loading.pipe';
 import { CitiesSearchComponent } from './components/cities-search/cities-search.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { HighlightDirective } from './directives/highlight.directive';
+import { WithLoadingStatusPipe } from './pipes/with-loading-status.pipe';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     CitiesSearchComponent,
     LogoComponent,
     HighlightDirective,
+    WithLoadingStatusPipe,
   ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
@@ -21,6 +23,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     CommonModule,
     ReactiveFormsModule,
     HighlightDirective,
+    WithLoadingStatusPipe,
   ],
 })
 export class SharedModule {
