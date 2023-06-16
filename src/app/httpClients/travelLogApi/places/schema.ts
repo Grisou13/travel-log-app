@@ -5,6 +5,7 @@ export const validator = z
   .object({
     name: z.string().min(3).max(100), // "Somewhere",
     description: z.string().min(5).max(50000), //"Over the rainbow",
+    order: z.number(),
     directions: z.object({
       distance: z.number(),
       previous: z.object({}),

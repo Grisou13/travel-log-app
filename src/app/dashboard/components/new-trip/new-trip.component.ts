@@ -33,6 +33,7 @@ export class NewTripComponent implements OnInit {
             of(trip),
             this.travelLogService.places.create({
               tripId: trip.id,
+              order: 0,
               type: 'TripStop',
               startDate: new Date(),
               directions: {
