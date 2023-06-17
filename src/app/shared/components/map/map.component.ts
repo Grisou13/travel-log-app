@@ -22,7 +22,8 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.sass'],
 })
 export class MapComponent implements AfterViewInit {
-  @Input() markers: L.Marker[] = [];
+  @Input() markers: GeoJSON.Point[] = [];
+  private map: L.Map | null = null;
   public options = {
     layers: [
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -37,13 +38,15 @@ export class MapComponent implements AfterViewInit {
   constructor() {}
   getMarkers() {
     return this.markers.map((x) =>
-      L.marker(x.getLatLng(), { icon: iconDefault })
+      //leaflet inverses and uses lat/lng instead of lng/lat
+      L.marker([x.coordinates[1], x.coordinates[0]], { icon: iconDefault })
     );
   }
   ngAfterViewInit(): void {
     // this.initMap();
   }
   onMapReady(map: L.Map) {
+    this.map = map;
     setTimeout(() => map.invalidateSize(), 0);
   }
 }

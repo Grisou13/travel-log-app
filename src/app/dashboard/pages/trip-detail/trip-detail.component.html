@@ -3,10 +3,12 @@
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
     <p>{{obs.value.title}}</p>
-    <div style="height: 300px">
-
+    <div style="height: 500px;">
       <app-map [markers]="getPlacesAsMarkers(obs.value)"></app-map>
     </div>
-    <pre>{{obs.value | json }}</pre>
+    <!-- <pre>{{obs.value | json }}</pre> -->
+  </ng-template>
+  <ng-template [ngIf]="obs.error">
+    <pre>{{obs.error | json}}</pre>
   </ng-template>
 </div>

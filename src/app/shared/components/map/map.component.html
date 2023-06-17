@@ -2,7 +2,10 @@
 class="map"
      leaflet
      [leafletOptions]="options"
+     [leafletLayers]="getMarkers()"
      (leafletMapReady)="onMapReady($event)"
      >
-     <div *ngIf="markers.length > 0" [leafletLayers]="getMarkers()"></div>
+     <!-- <div *ngIf="markers.length > 0" [leafletLayers]="getMarkers()"></div> -->
 </div>
+
+<pre>{{getMarkers() | json }}</pre>

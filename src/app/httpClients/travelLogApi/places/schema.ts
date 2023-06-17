@@ -13,14 +13,7 @@ export const validator = z
     }),
     type: z.enum(['PlaceOfInterest', 'TripStop']).default('TripStop'),
     location: z.object({
-      type: z.enum([
-        'Point',
-        'LineString',
-        'Polygon',
-        'MultiPoint',
-        'MultiLineString',
-        'MultiPolygon',
-      ]),
+      type: z.enum(['Point']),
       coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],
     }),
     pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
