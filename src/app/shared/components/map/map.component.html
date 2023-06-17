@@ -1,4 +1,8 @@
-<div style="height: 300px;"
+<div
+class="map"
      leaflet
-     [leafletOptions]="options">
+     [leafletOptions]="options"
+     (leafletMapReady)="onMapReady($event)"
+     >
+     <div *ngIf="markers.length > 0" [leafletLayers]="getMarkers()"></div>
 </div>

@@ -5,6 +5,7 @@ import { Observable, concatMap, forkJoin, of, switchMap } from 'rxjs';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
 import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-trip-detail',
@@ -25,4 +26,10 @@ export class TripDetailComponent {
     private route: ActivatedRoute,
     private tripService: TripService
   ) {}
+
+  getPlacesAsMarkers(trip: Trip) {
+    return trip.places.map((x) =>
+      L.marker([x.location.coordinates[0], x.location.coordinates[0]])
+    );
+  }
 }
