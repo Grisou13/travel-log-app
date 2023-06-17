@@ -22,29 +22,20 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.sass'],
 })
 export class MapComponent implements AfterViewInit {
-  private map: L.Map | null = null;
-
-  private initMap(): void {
-    this.map = L.map('map', {
-      center: [39.8282, -98.5795],
-      zoom: 3,
-    });
-    const tiles = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
+  public options = {
+    layers: [
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        minZoom: 3,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }
-    );
-
-    tiles.addTo(this.map);
-  }
+        // attribution: '',
+      }),
+    ],
+    zoom: 5,
+    center: L.latLng(46.879966, -121.726909),
+  };
 
   constructor() {}
 
   ngAfterViewInit(): void {
-    this.initMap();
+    // this.initMap();
   }
 }

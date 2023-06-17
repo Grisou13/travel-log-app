@@ -7,6 +7,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { HighlightDirective } from './directives/highlight.directive';
 import { WithLoadingStatusPipe } from './pipes/with-loading-status.pipe';
 import { MapComponent } from './components/map/map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,14 @@ import { MapComponent } from './components/map/map.component';
     WithLoadingStatusPipe,
     MapComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LeafletModule],
   exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    LeafletModule,
     CitiesSearchComponent,
     LogoComponent,
     WithLoadingPipe,
-    CommonModule,
-    ReactiveFormsModule,
     HighlightDirective,
     WithLoadingStatusPipe,
     MapComponent,

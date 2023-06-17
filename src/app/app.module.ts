@@ -9,6 +9,7 @@ import { Configuration, TeleportApiModule } from './httpClients/teleport';
 import { SharedModule } from '@shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { OpenRouteServiceModule } from '@httpClients/open-route-service/open-route-service.module';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [AppComponent],
