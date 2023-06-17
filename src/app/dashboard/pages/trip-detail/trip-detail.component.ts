@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Place } from '@httpClients/travelLogApi/places/schema';
 import { Observable, concatMap, forkJoin, of, switchMap } from 'rxjs';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
-import { Trip } from 'src/app/httpClients/travelLogApi/trips/schema';
 import { TripService } from '../../services/trip.service';
+import { Trip } from '../../models/trips';
 
 @Component({
   selector: 'app-trip-detail',

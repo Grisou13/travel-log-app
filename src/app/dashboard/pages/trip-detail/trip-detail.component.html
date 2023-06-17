@@ -1,1 +1,9 @@
-<p>trip-detail works!</p>
+
+<div *ngIf="trip$ | withLoadingStatus | async as obs">
+  <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
+  <ng-template [ngIf]="obs.value">
+    <p>{{obs.value.title}}</p>
+    <app-map></app-map>
+    <pre>{{obs.value | json }}</pre>
+  </ng-template>
+</div>
