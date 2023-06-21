@@ -9,12 +9,15 @@ import { map, of, switchMap } from 'rxjs';
 })
 export class DirectionsService {
   constructor(private http: OpenRouteHttp) {}
-  fetchDirections(profile: DrivingProfils, path: Array<MultiPoint>) {
+  fetchDirections(
+    waypoints: MultiPoint,
+    profile: DrivingProfils = 'driving-car'
+  ) {
     const request = DirectionRequest.parse({
-      coordinates: path.flatMap((x) => x.coordinates),
+      coordinates: waypoints.coordinates,
     });
     return this.http
       .post<DirectionsResponse>(`/v2/directions/${profile}/json`, request)
-      .pipe(switchMap((v) => of(DirectionsResponse.parseAsync(v))));
+      .pipe(switchMap((v) => DirectionsResponse.parseAsync(v)));
   }
 }
