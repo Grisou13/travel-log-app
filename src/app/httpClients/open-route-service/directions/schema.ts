@@ -1,6 +1,6 @@
 import { MultiPolygon, Polygon } from 'geojson';
 import { z } from 'zod';
-export const DrivingProfils = z.enum(['driving-car']).brand<'DrivingProfils'>();
+export const DrivingProfils = z.enum(['driving-car']);
 export type DrivingProfils = z.infer<typeof DrivingProfils>;
 
 export const DirectionRequest = z
@@ -93,48 +93,46 @@ export const DirectionRequest = z
   .brand<'DirectionRequest'>();
 export type DirectionRequest = z.infer<typeof DirectionRequest>;
 
-export const DirectionsResponse = z
-  .object({
-    routes: z.array(
-      z.object({
-        summary: z.object({ distance: z.number(), duration: z.number() }),
-        segments: z.array(
-          z.object({
-            distance: z.number(),
-            duration: z.number(),
-            steps: z.array(
-              z.object({
-                distance: z.number(),
-                duration: z.number(),
-                type: z.number(),
-                instruction: z.string(),
-                name: z.string(),
-                way_points: z.array(z.number()),
-              })
-            ),
-          })
-        ),
-        bbox: z.array(z.number()),
-        geometry: z.string(),
-        way_points: z.array(z.number()),
-      })
-    ),
-    bbox: z.array(z.number()),
-    metadata: z.object({
-      attribution: z.string(),
-      service: z.string(),
-      timestamp: z.number(),
-      query: z.object({
-        coordinates: z.array(z.array(z.number())),
-        profile: z.string(),
-        format: z.string(),
-      }),
-      engine: z.object({
-        version: z.string(),
-        build_date: z.string(),
-        graph_date: z.string(),
-      }),
+export const DirectionsResponse = z.object({
+  routes: z.array(
+    z.object({
+      summary: z.object({ distance: z.number(), duration: z.number() }),
+      segments: z.array(
+        z.object({
+          distance: z.number(),
+          duration: z.number(),
+          steps: z.array(
+            z.object({
+              distance: z.number(),
+              duration: z.number(),
+              type: z.number(),
+              instruction: z.string(),
+              name: z.string(),
+              way_points: z.array(z.number()),
+            })
+          ),
+        })
+      ),
+      bbox: z.array(z.number()),
+      geometry: z.string(),
+      way_points: z.array(z.number()),
+    })
+  ),
+  bbox: z.array(z.number()),
+  metadata: z.object({
+    attribution: z.string(),
+    service: z.string(),
+    timestamp: z.number(),
+    query: z.object({
+      coordinates: z.array(z.array(z.number())),
+      profile: z.string(),
+      format: z.string(),
     }),
-  })
-  .brand<'DirectionsResponse'>();
+    engine: z.object({
+      version: z.string(),
+      build_date: z.string(),
+      graph_date: z.string(),
+    }),
+  }),
+});
 export type DirectionsResponse = z.infer<typeof DirectionsResponse>;
