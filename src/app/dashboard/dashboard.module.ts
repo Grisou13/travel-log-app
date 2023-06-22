@@ -15,6 +15,8 @@ import { TripPlannerComponent } from './components/trip-planner/trip-planner.com
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { LogoComponent } from '@shared/components/logo/logo.component';
 import { TripService } from './services/trip.service';
+import { AddPlaceComponent } from './components/add-place/add-place.component';
+import { TripCardComponent } from './pages/trip-list/trip-card/trip-card.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { TripService } from './services/trip.service';
     NewTripComponent,
     TripPlannerComponent,
     UserDashboardComponent,
+    AddPlaceComponent,
+    TripCardComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],

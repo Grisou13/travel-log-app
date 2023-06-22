@@ -6,7 +6,7 @@ import { concatMap, forkJoin, mergeMap, of, switchMap } from 'rxjs';
 import {
   CitySearchResult,
   Result,
-} from '../../../shared/components/cities-search/cities-search.component';
+} from '@shared/components/cities-search/cities-search.component';
 import { Trip } from './../../models/trips';
 
 @Component({
@@ -54,7 +54,7 @@ export class NewTripComponent implements OnInit {
       )
       .subscribe(([trip, place]) => {
         console.log(trip);
-        this.tripCreated.emit({ ...trip, places: [place] });
+        this.tripCreated.emit({ ...trip });
       });
   }
   public onCitySelect($event: Result) {

@@ -1,3 +1,4 @@
+import { ArgumentTypes } from 'src/app/helpers';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { Injectable } from '@angular/core';
 import {
@@ -13,15 +14,17 @@ import {
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddPlace, Place } from '../models/places';
+import { Trip } from '../models/trips';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaceService {
   private itemsSubject = new BehaviorSubject<Place[]>([]);
-  public items$ = this.itemsSubject
-    .asObservable()
-    .pipe(withLatestFrom(this.fetch), shareReplay());
+  public items$ = this.fetch({}).pipe(
+    withLatestFrom(this.itemsSubject.asObservable()),
+    shareReplay()
+  );
 
   constructor(
     private authService: AuthService,
@@ -99,6 +102,13 @@ export class PlaceService {
       })
     );
   }
+  fetchForTrip(trip: Trip) {
+    const localItems = this.getAll();
+    //TODO keep a map of places for trips by tripid for this to be better
+    const placesForTrip = localItems.filter((x) => x.tripId === trip.id);
+    if (placesForTrip.length > 0) return of(placesForTrip);
+    return this.fetch({ trip: trip.id });
+  }
 
   private deleteItem(id: string): boolean {
     const currentItems: Place[] = this.getAll();
@@ -136,13 +146,15 @@ export class PlaceService {
     return false;
   }
 
-  fetch(): Observable<Place[]> {
+  fetch(
+    ...params: ArgumentTypes<typeof this.travelLogService.places.fetchAll>
+  ): Observable<Place[]> {
     // this.clear();
 
     return this.authService.user$.pipe(
       switchMap((user) => {
         if (!user) return of([]);
-        return this.travelLogService.places.fetchAll({});
+        return this.travelLogService.places.fetchAll(...params);
       }),
       tap((items) => {
         if (items) {

@@ -91,7 +91,7 @@ export class TripService {
     return this.travelLogService.trips.update(payload).pipe(
       tap((item) => {
         if (item) {
-          this.updateItem(id, { ...item, places: payload.places });
+          this.updateItem(id, { ...item });
         }
       }), // when success result, update the item in the local service
       catchError((err) => {
@@ -159,9 +159,9 @@ export class TripService {
 
         return this.travelLogService.trips.fetchAll({ user: user.id });
       }),
-      mergeMap((trips) =>
-        forkJoin(trips.map((t) => this.fetchPlacesForTrip(t)))
-      ),
+      // mergeMap((trips) =>
+      //   forkJoin(trips.map((t) => this.fetchPlacesForTrip(t)))
+      // ),
 
       tap((items) => {
         if (items) {

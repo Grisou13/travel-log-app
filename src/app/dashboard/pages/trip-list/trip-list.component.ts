@@ -13,38 +13,12 @@ import { Place } from '../../models/places';
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.sass'],
 })
-export default class TripListComponent implements AfterViewInit {
-  getTripEnd(trip: Trip): Place {
-    const place = trip.places.filter((x) => x.type === 'TripStop').pop();
-    if (place === undefined) {
-      throw new Error('Could not find start of trip');
-    }
-    return place;
-  }
-  hasTripEnd(trip: Trip): boolean {
-    return trip.places.filter((x) => x.type === 'TripStop').length > 1;
-  }
-  getStartOfTrip(trip: Trip): Place {
-    const place = trip.places.filter((x) => x.type === 'TripStop').shift();
-    if (place === undefined) {
-      throw new Error('Could not find start of trip');
-    }
-    return place;
-  }
+export default class TripListComponent {
   loading$ = new BehaviorSubject(false);
 
   trips$ = this.tripService.items$;
 
-  constructor(
-    private tripService: TripService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
-  ngAfterViewInit(): void {}
-
-  ngOnInit() {
-    // this.trips$ = this.trips$.pipe(indicate(this.loading$));
-  }
+  constructor(private router: Router, private tripService: TripService) {}
 
   navigateToNewTrip($event: Trip) {
     const id = $event.id || null;

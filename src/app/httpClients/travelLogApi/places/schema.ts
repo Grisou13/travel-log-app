@@ -16,6 +16,11 @@ export const validator = z
       type: z.enum(['Point']),
       coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],
     }),
+    infos: z
+      .object({
+        relatedToPlace: z.string(),
+      })
+      .optional(),
     pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
     tripId: z.string().optional(), //"7f063c6e-7717-401a-aa47-34a52f6a45cf",
   })
