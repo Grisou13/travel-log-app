@@ -22,6 +22,12 @@ export class PlaceService {
   public items$ = this.itemsSubject
     .asObservable()
     .pipe(withLatestFrom(this.fetch), shareReplay());
+  private onUpdate = new BehaviorSubject<Place | null>(null);
+  public onUpdate$ = this.onUpdate.asObservable();
+  private onCreate = new BehaviorSubject<Place | null>(null);
+  public onCreate$ = this.onCreate.asObservable();
+  private onDelete = new BehaviorSubject<Place | null>(null);
+  public onDelete$ = this.onDelete.asObservable();
 
   constructor(
     private authService: AuthService,
@@ -30,6 +36,7 @@ export class PlaceService {
 
   clear(): void {
     this.itemsSubject.next([]);
+    this.onUpdate.next(null);
   }
 
   private getAll(): Place[] {
@@ -87,7 +94,7 @@ export class PlaceService {
     );
   }
 
-  add(payload: AddPlace) {
+  add(payload: AddPlace): Observable<false | Place> {
     return this.travelLogService.places.create(payload).pipe(
       tap((item) => {
         if (item) {
@@ -107,8 +114,9 @@ export class PlaceService {
         return element.id === id;
       });
       if (index1 >= 0) {
-        currentItems.splice(index1, 1);
+        const item = currentItems.splice(index1, 1);
         this.itemsSubject.next(currentItems);
+        this.onDelete.next(item[0]);
         return true;
       }
     }
@@ -119,6 +127,7 @@ export class PlaceService {
     const currentItems: Place[] = this.getAll();
     currentItems.push(item);
     this.itemsSubject.next(currentItems);
+    this.onCreate.next(item);
   }
 
   private updateItem(id: string, item: Place): boolean {
@@ -130,6 +139,7 @@ export class PlaceService {
       if (index1 >= 0) {
         currentItems[index1] = item;
         this.itemsSubject.next(currentItems);
+        this.onUpdate.next(item);
         return true;
       }
     }

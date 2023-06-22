@@ -17,26 +17,91 @@ import {
   scan,
   concatMap,
   merge,
+  filter,
+  zip,
+  combineLatest,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddTrip, Trip } from '../models/trips';
 import type { Trip as ApiTrip } from '@httpClients/travelLogApi/trips/schema';
+import { PlaceService } from './place.service';
 @Injectable({
   providedIn: 'root',
 })
 export class TripService {
   private itemsSubject = new BehaviorSubject<Trip[]>([]);
-  public items$ = this.fetch()
-    .pipe(
-      withLatestFrom(this.itemsSubject.asObservable()),
-      switchMap((x) => x)
-    )
-    .pipe(shareReplay());
+  public items$;
 
   constructor(
     private authService: AuthService,
+    private placeService: PlaceService,
     private travelLogService: TravelLogService
-  ) {}
+  ) {
+    const placeCreate$ = this.placeService.onCreate$.pipe(
+      switchMap((place) => {
+        if (!place) return of(null);
+        if (!place.tripId) return of(null);
+
+        return this.get(place.tripId).pipe(
+          tap((trip) => {
+            if (!trip) return;
+            this.updateItem(trip.id, {
+              ...trip,
+              places: [...trip.places, place],
+            });
+          })
+        );
+      })
+    );
+    const placeDelete$ = this.placeService.onDelete$.pipe(
+      switchMap((place) => {
+        if (!place) return of(null);
+        if (!place.tripId) return of(null);
+
+        return this.get(place.tripId).pipe(
+          tap((trip) => {
+            if (!trip) return;
+            let index = trip.places.findIndex((x) => x.id === place.id);
+            if (index < 0) return;
+            trip.places.splice(index, 1);
+            this.updateItem(trip.id, {
+              ...trip,
+            });
+          })
+        );
+      })
+    );
+    const placeUpdate$ = this.placeService.onUpdate$.pipe(
+      switchMap((place) => {
+        if (!place) return of(null);
+        if (!place.tripId) return of(null);
+
+        return this.get(place.tripId).pipe(
+          tap((trip) => {
+            if (!trip) return;
+            this.updateItem(trip?.id, {
+              ...trip,
+              places: trip?.places.map((x) => (x.id == place.id ? place : x)),
+            });
+          })
+        );
+      })
+    );
+    const dataLoader$ = this.fetch().pipe(
+      withLatestFrom(this.itemsSubject.asObservable()),
+      switchMap((x) => x)
+    );
+    this.items$ = dataLoader$.pipe(shareReplay());
+
+    // zip(placeCreate$, placeUpdate$, placeDelete$);
+    // this.items$ = combineLatest([
+    //   dataLoader$,
+    //   zip(placeCreate$, placeUpdate$, placeDelete$),
+    // ]).pipe(
+    //   switchMap(([x, ...y]) => x),
+    //   shareReplay()
+    // );
+  }
 
   clear(): void {
     this.itemsSubject.next([]);
@@ -150,7 +215,7 @@ export class TripService {
     return false;
   }
 
-  fetch(): Observable<Trip[]> {
+  fetch(): Observable<Array<Trip>> {
     // this.clear();
 
     return this.authService.user$.pipe(
