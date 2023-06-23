@@ -17,10 +17,16 @@ export class WithLoadingStatusPipe implements PipeTransform {
   transform<T = any>(val: Observable<T>): Observable<ObsWithStatusResult<T>> {
     return val.pipe(
       map((value: any) => {
+        if (typeof value.type === 'string' && value.type === 'start')
+          return {
+            loading: value.type === 'start',
+            error: value.type === 'error' ? defaultError : '',
+            value: value.type ? value.value : value,
+          };
         return {
-          loading: value.type === 'start',
-          error: value.type === 'error' ? defaultError : '',
-          value: value.type ? value.value : value,
+          loading: false,
+          error: '',
+          value: value,
         };
       }),
       startWith({ loading: true }),

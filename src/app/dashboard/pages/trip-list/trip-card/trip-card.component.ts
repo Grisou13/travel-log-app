@@ -1,9 +1,19 @@
 import { Component, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, filter, last, map, of, startWith, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  last,
+  map,
+  of,
+  share,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { Trip } from 'src/app/dashboard/models/trips';
 import { PlaceService } from 'src/app/dashboard/services/place.service';
-import { AsObservable, Observe } from 'src/app/helpers';
+import { AsObservable, ObservableInput, Observe } from 'src/app/helpers';
 
 @Component({
   selector: 'app-trip-card',
@@ -11,30 +21,35 @@ import { AsObservable, Observe } from 'src/app/helpers';
   styleUrls: ['./trip-card.component.sass'],
 })
 export class TripCardComponent {
-  @Input({ required: true, alias: 'trip' })
-  public trip!: Trip;
+  // @Observe<Trip>('trip')
+  // public trip$!: Observable<Trip>;
 
-  @Observe('trip')
-  public trip$!: Observable<Trip>;
+  // @Input('trip') @AsObservable() trip$!: Observable<Trip>;
+  @Input({ required: true }) set trip(t: Trip) {
+    this.tripState.next(t);
+  }
 
+  private tripState = new BehaviorSubject<Trip | null>(null);
+
+  trip$ = this.tripState.asObservable();
   places$ = this.trip$.pipe(
     switchMap((trip) => {
       if (trip === null) return of([]);
       return this.placeService.fetchForTrip(trip);
-    })
+    }),
+    share()
   );
   tripStops$ = this.places$.pipe(
     map((places) => places.filter((x) => x.type === 'TripStop'))
   );
   tripEnd$ = this.tripStops$.pipe(
-    startWith(null),
     map((places) => {
       if (places === null) return null;
+      if (places.length <= 1) return null;
       return places.pop();
     })
   );
   tripStart$ = this.tripStops$.pipe(
-    startWith(null),
     map((places) => {
       if (places === null) return null;
       return places.shift();

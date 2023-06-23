@@ -33,7 +33,7 @@ export class AuthService {
   private isAuthenticatedEvent = new BehaviorSubject<boolean>(false);
   public IsAuthenticated$: Observable<boolean> = this.isAuthenticatedEvent
     .asObservable()
-    .pipe(startWith(false));
+    .pipe(shareReplay(1));
   //.pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
   private userEvent = new BehaviorSubject<null | User>(null);
@@ -44,7 +44,8 @@ export class AuthService {
       }
       return this.resolveUser().pipe(shareReplay(1));
       //return this.userEvent.asObservable();
-    })
+    }),
+    shareReplay(1)
   );
   //.pipe(shareReplay({ bufferSize: 1, refCount: false }));
 

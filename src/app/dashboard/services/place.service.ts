@@ -151,7 +151,7 @@ export class PlaceService {
   ): Observable<Place[]> {
     // this.clear();
 
-    return this.authService.user$.pipe(
+    return this.authService.IsAuthenticated$.pipe(
       switchMap((user) => {
         if (!user) return of([]);
         return this.travelLogService.places.fetchAll(...params);

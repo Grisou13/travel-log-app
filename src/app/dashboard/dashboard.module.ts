@@ -17,6 +17,7 @@ import { LogoComponent } from '@shared/components/logo/logo.component';
 import { TripService } from './services/trip.service';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
 import { TripCardComponent } from './pages/trip-list/trip-card/trip-card.component';
+import { PlaceService } from './services/place.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ export class DashboardModule {
 
       providers: [
         TripService,
+        PlaceService,
         /*{
           provide: APP_INITIALIZER,
           useFactory: initAuth,
