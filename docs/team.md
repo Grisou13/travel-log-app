@@ -17,6 +17,7 @@
 - *[ ] Error handler - Thomas
 - *[ ] Success handler
 - *[X] Search for cities
+  - *[ ] Geolocation on autocomplete field
 - *[ ] Search for related poi on a trip
 - *[ ] directions for a trip
 - *[X] Maps for a trip - Thomas
@@ -26,6 +27,8 @@
 - *[ ] Past trips
 - *[ ] Present trips
 - *[ ] Add a new trip
+  - *[ ] Clickable map under city search field
+  - *[ ] on click add point to city
 - *[ ] Add place to trip
 - *[ ] Change order of place in trip
 - *[X] Login
