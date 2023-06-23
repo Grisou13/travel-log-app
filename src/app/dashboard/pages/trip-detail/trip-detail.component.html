@@ -12,6 +12,8 @@
         Error loading places for your trip, please reload...
       </ng-template>
     </div>
+
+    <app-cities-search (selectedCity)="addPlace($event)"></app-cities-search>
     <!-- <pre>{{obs.value | json }}</pre> -->
   </ng-template>
   <ng-template [ngIf]="obs.error">

@@ -1,11 +1,22 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, concatMap, forkJoin, map, of, switchMap } from 'rxjs';
+import {
+  Observable,
+  concatMap,
+  forkJoin,
+  map,
+  of,
+  share,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
 import { DirectionsService } from '@httpClients/open-route-service/directions/directions.service';
 import { PlaceService } from '../../services/place.service';
 import { Point } from 'geojson';
+import { Result } from '@shared/components/cities-search/cities-search.component';
 
 @Component({
   selector: 'app-trip-detail',
@@ -24,7 +35,15 @@ export class TripDetailComponent {
     switchMap((trip) => {
       if (trip === null) return of([]);
       return this.placeService.fetchForTrip(trip);
-    })
+    }),
+    switchMap((_) => this.placeService.items$),
+    tap({
+      next: (p) => {
+        console.log('Places new items');
+        console.log(p);
+      },
+    }),
+    share()
   );
   placesAsMarkers$ = this.places$.pipe(
     map((x) => {
@@ -53,4 +72,32 @@ export class TripDetailComponent {
     private placeService: PlaceService,
     private directionService: DirectionsService
   ) {}
+
+  addPlace($event: Result) {
+    this.trip$
+      .pipe(
+        switchMap((trip) => {
+          if (trip === null) return of(null);
+          return this.placeService.add({
+            name: $event.name,
+            tripId: trip.id,
+            description: 'Stop at ' + $event.name,
+            type: 'TripStop',
+            startDate: new Date(),
+            order: trip?.placesCount || -1,
+            directions: {
+              distance: 0,
+              previous: {},
+              next: {},
+            },
+            location: $event.location,
+          });
+        })
+      )
+      .subscribe({
+        next: console.log,
+        complete: console.log,
+        error: console.error,
+      });
+  }
 }
