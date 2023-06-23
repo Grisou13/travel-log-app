@@ -17,7 +17,7 @@
     <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
       {{ trip.description }}
     </p>
-    <div *ngIf="tripStart$ | withLoadingStatus | async as obs" class="m-10">
+    <div *ngIf="tripStart$ | withLoadingStatus | async as obs">
       <ng-template [ngIf]="obs.loading">
         <p>Loading....</p>
       </ng-template>
