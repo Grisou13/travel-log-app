@@ -11,19 +11,23 @@ import {
   catchError,
   shareReplay,
   withLatestFrom,
+  combineLatest,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddPlace, Place } from '../models/places';
 import { Trip } from '../models/trips';
-
+import { Guid } from 'guid-typescript';
 @Injectable({
   providedIn: 'root',
 })
 export class PlaceService {
   private itemsSubject = new BehaviorSubject<Place[]>([]);
-  public items$ = this.fetch({}).pipe(
-    withLatestFrom(this.itemsSubject.asObservable()),
-    shareReplay()
+  public items$ = combineLatest([
+    this.itemsSubject.asObservable(),
+    this.fetch({}),
+  ]).pipe(
+    switchMap((x) => x),
+    shareReplay({ refCount: true, bufferSize: 1 })
   );
 
   constructor(

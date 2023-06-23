@@ -17,21 +17,24 @@ import {
   scan,
   concatMap,
   merge,
+  combineLatest,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddTrip, Trip } from '../models/trips';
 import type { Trip as ApiTrip } from '@httpClients/travelLogApi/trips/schema';
+import { ArgumentTypes } from 'src/app/helpers';
 @Injectable({
   providedIn: 'root',
 })
 export class TripService {
   private itemsSubject = new BehaviorSubject<Trip[]>([]);
-  public items$ = this.fetch()
-    .pipe(
-      withLatestFrom(this.itemsSubject.asObservable()),
-      switchMap((x) => x)
-    )
-    .pipe(shareReplay());
+  public items$ = combineLatest([
+    this.itemsSubject.asObservable(),
+    this.fetch(),
+  ]).pipe(
+    switchMap((x) => x),
+    shareReplay({ refCount: true, bufferSize: 1 })
+  );
 
   constructor(
     private authService: AuthService,
@@ -77,14 +80,11 @@ export class TripService {
   }
 
   private fetchItem(id: string): Observable<Trip | null> {
-    return this.travelLogService.trips
-      .fetchById(id)
-      .pipe(switchMap(this.fetchPlacesForTrip))
-      .pipe(
-        catchError((err) => {
-          return of(null);
-        })
-      );
+    return this.travelLogService.trips.fetchById(id).pipe(
+      catchError((err) => {
+        return of(null);
+      })
+    );
   }
 
   update(id: string, payload: Trip) {
@@ -157,7 +157,9 @@ export class TripService {
       switchMap((user) => {
         if (!user) return of([]);
 
-        return this.travelLogService.trips.fetchAll({ user: user.id });
+        return this.travelLogService.trips.fetchAll({
+          user: user.id,
+        });
       }),
       // mergeMap((trips) =>
       //   forkJoin(trips.map((t) => this.fetchPlacesForTrip(t)))
@@ -172,13 +174,5 @@ export class TripService {
         return of([]);
       })
     );
-  }
-
-  private fetchPlacesForTrip(trip: ApiTrip) {
-    return this.travelLogService.places
-      .fetchAll({ trip: trip.id })
-      .pipe(
-        map((places) => ({ ...trip, places: _.sortBy(places, ['order']) }))
-      );
   }
 }
