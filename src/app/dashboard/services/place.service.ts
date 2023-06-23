@@ -95,16 +95,23 @@ export class PlaceService {
   }
 
   add(payload: AddPlace) {
-    return this.travelLogService.places.create(payload).pipe(
-      tap((item) => {
-        if (item) {
-          this.addItem(item);
-        }
-      }), // when success, add the item to the local service
-      catchError((err) => {
-        return of(false);
-      })
-    );
+    const id = Guid.create().toString();
+    return of({
+      ...payload,
+      id: id,
+      href: `/places/${id}`,
+      tripHref: `/trips/${payload.tripId}`,
+    }) /*this.travelLogService.places.create(payload)*/
+      .pipe(
+        tap((item) => {
+          if (item) {
+            this.addItem(item);
+          }
+        }), // when success, add the item to the local service
+        catchError((err) => {
+          return of(false);
+        })
+      );
   }
   fetchForTrip(trip: Trip) {
     const localItems = this.getAll();
