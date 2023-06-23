@@ -4,15 +4,19 @@ import {
   BehaviorSubject,
   Observable,
   Subject,
+  catchError,
   concat,
   debounceTime,
   distinctUntilChanged,
   filter,
   map,
   of,
+  retry,
+  retryWhen,
   startWith,
   switchMap,
   tap,
+  throwError,
 } from 'rxjs';
 import { indicate } from 'src/app/helpers';
 import {
@@ -64,6 +68,13 @@ export class CitiesSearchComponent {
         })
       // .pipe(indicate(this.loading$))
     ),
+    catchError((err) =>
+      concat(
+        of([]),
+        throwError(() => new Error(err))
+      )
+    ),
+    retry({ delay: () => this.search$ }),
     tap(console.debug),
     map((res: GeocodeResponse) => res.features)
   );
