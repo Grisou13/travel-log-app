@@ -96,13 +96,14 @@ export class PlaceService {
 
   add(payload: AddPlace) {
     const id = Guid.create().toString();
-    return of({
+    return this.travelLogService.places
+      .create(payload)
+      /*of({
       ...payload,
       id: id,
       href: `/places/${id}`,
       tripHref: `/trips/${payload.tripId}`,
-    }) /*this.travelLogService.places.create(payload)*/
-      .pipe(
+    }) */ .pipe(
         tap((item) => {
           if (item) {
             this.addItem(item);
