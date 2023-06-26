@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
 import { Point } from 'geojson';
 import { SearchService } from '@httpClients/open-route-service/search/search.service';
 import { GeocodeResponse } from '@httpClients/open-route-service/search/types';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 export type CitySearchResult = City & {
   pictures?: Array<Photo>;
@@ -52,24 +52,22 @@ export class CitiesSearchComponent {
     this.searchInput.setValue(term);
   }
   @Output() selectedCity = new EventEmitter<Result>();
-  public searchInput = new FormControl('', []);
+  public searchInput = new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]);
 
   cities$ = this.searchInput.valueChanges.pipe(
     debounceTime(450),
-    filter(
-      (x) => typeof x !== 'undefined' && x != null && x?.trim().length > 3
-    ),
     distinctUntilChanged(),
-    switchMap(
-      (query) =>
-        query === null
-          ? of([])
-          : this.searchService.autocomplete({
-              text: query,
-              size: 5,
-              layers: ['locality'],
-            })
-      // .pipe(indicate(this.loading$))
+    switchMap((query) =>
+      query === null
+        ? of([])
+        : this.searchService.autocomplete({
+            text: query,
+            size: 5,
+            layers: ['locality'],
+          })
     ),
     catchError((err) =>
       concat(
@@ -88,7 +86,7 @@ export class CitiesSearchComponent {
     private searchService: SearchService
   ) {}
   resolveCity(city: GeocodeResponse['features'][0]) {
-    this.searchInput.setValue(city.properties.label);
+    this.searchInput.setValue(city.properties.label, { emitEvent: false });
     this.selectedCity.emit({
       name: city.properties.label,
       location: city.geometry,

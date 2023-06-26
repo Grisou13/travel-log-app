@@ -31,7 +31,7 @@
   </div>
 
   <div *ngIf="cities$ | withLoadingStatus | async as obs">
-    <ng-template [ngIf]="obs.loading && this.searchInput.getRawValue()!.trim().length>=3 || false"><p>Loading...</p></ng-template>
+    <ng-template [ngIf]="obs.loading && this.searchInput.valid"><p>Loading...</p></ng-template>
     <ng-template [ngIf]="obs.value">
       <ul>
         <li
