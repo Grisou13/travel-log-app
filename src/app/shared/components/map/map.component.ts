@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
 import * as L from 'leaflet';
+import * as _ from 'lodash';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Place } from 'src/app/dashboard/models/places';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -22,7 +26,14 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.sass'],
 })
 export class MapComponent implements AfterViewInit {
-  @Input() markers: GeoJSON.Point[] = [];
+  // @Input() markers: GeoJSON.Point[] = [];
+
+  @Input({ required: true }) set markers(t: L.Marker[]) {
+    this.markersState.next(t);
+  }
+
+  private markersState = new BehaviorSubject<L.Marker[]>([]);
+
   private map: L.Map | null = null;
   public options = {
     layers: [
@@ -35,13 +46,20 @@ export class MapComponent implements AfterViewInit {
     center: L.latLng(46.879966, -121.726909),
   };
 
+  layers$: Observable<L.Marker[]> = this.markersState
+    .asObservable()
+    .pipe
+    // map((points) => {
+    //   // const markers = points.map((x) =>
+    //   //   L.marker(x.getL, {
+    //   //     icon: iconDefault,
+    //   //   })
+    //   // );
+    //   return [...markers];
+    // })
+    ();
   constructor() {}
-  getMarkers() {
-    return this.markers.map((x) =>
-      //leaflet inverses and uses lat/lng instead of lng/lat
-      L.marker([x.coordinates[1], x.coordinates[0]], { icon: iconDefault })
-    );
-  }
+
   ngAfterViewInit(): void {
     // this.initMap();
   }

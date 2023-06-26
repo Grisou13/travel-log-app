@@ -2,8 +2,7 @@
 class="map"
      leaflet
      [leafletOptions]="options"
-     [leafletLayers]="getMarkers()"
      (leafletMapReady)="onMapReady($event)"
      >
-     <!-- <div *ngIf="markers.length > 0" [leafletLayers]="getMarkers()"></div> -->
+     <div *ngIf="layers$ | async as layers" [leafletLayers]="layers"></div>
 </div>

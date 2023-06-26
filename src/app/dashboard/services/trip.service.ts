@@ -21,8 +21,7 @@ import {
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddTrip, Trip } from '../models/trips';
-import type { Trip as ApiTrip } from '@httpClients/travelLogApi/trips/schema';
-import { ArgumentTypes } from 'src/app/helpers';
+
 @Injectable({
   providedIn: 'root',
 })
