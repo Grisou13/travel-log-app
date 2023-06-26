@@ -1,6 +1,10 @@
 import { z } from 'zod';
 import { common } from '../common';
 
+export const placeType = z.enum(['PlaceOfInterest', 'TripStop']);
+
+export type PlaceType = z.infer<typeof placeType>;
+
 export const validator = z
   .object({
     name: z.string().min(3).max(100), // "Somewhere",
@@ -11,7 +15,7 @@ export const validator = z
       previous: z.object({}),
       next: z.object({}),
     }),
-    type: z.enum(['PlaceOfInterest', 'TripStop']).default('TripStop'),
+    type: placeType.default('TripStop'),
     location: z.object({
       type: z.enum(['Point']),
       coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],

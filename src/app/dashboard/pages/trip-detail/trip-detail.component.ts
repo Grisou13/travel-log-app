@@ -26,6 +26,8 @@ import { iconDefault } from '@shared/components/map/map.component';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import { Place } from '../../models/places';
+import { FormArray, FormControl } from '@angular/forms';
+import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 
 @Component({
   selector: 'app-trip-detail',
@@ -99,6 +101,7 @@ export class TripDetailComponent {
     private directionService: DirectionsService
   ) {}
 
+  public placeType = new FormControl<PlaceType>('TripStop', []);
   addPlace($event: Result) {
     zip([this.trip$, this.places$])
       .pipe(
@@ -108,7 +111,8 @@ export class TripDetailComponent {
             name: $event.name,
             tripId: trip.id,
             description: 'Stop at ' + $event.name,
-            type: 'TripStop',
+            type:
+              this.placeType.value === null ? 'TripStop' : this.placeType.value,
             startDate: new Date(),
             order: places.length - 1 || -1,
             directions: {
