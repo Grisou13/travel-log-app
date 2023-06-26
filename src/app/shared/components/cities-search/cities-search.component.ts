@@ -30,6 +30,7 @@ import { CommonModule } from '@angular/common';
 import { Point } from 'geojson';
 import { SearchService } from '@httpClients/open-route-service/search/search.service';
 import { GeocodeResponse } from '@httpClients/open-route-service/search/types';
+import { FormControl } from '@angular/forms';
 
 export type CitySearchResult = City & {
   pictures?: Array<Photo>;
@@ -48,24 +49,26 @@ export type Result = {
 })
 export class CitiesSearchComponent {
   search(term: string) {
-    this.searchTerm = term;
-    this.search$.next(term);
+    this.searchInput.setValue(term);
   }
   @Output() selectedCity = new EventEmitter<Result>();
-  public searchTerm = '';
-  protected search$ = new BehaviorSubject(this.searchTerm);
+  public searchInput = new FormControl('', []);
 
-  cities$ = this.search$.pipe(
+  cities$ = this.searchInput.valueChanges.pipe(
     debounceTime(450),
-    filter((x) => x.trim().length > 3),
+    filter(
+      (x) => typeof x !== 'undefined' && x != null && x?.trim().length > 3
+    ),
     distinctUntilChanged(),
     switchMap(
       (query) =>
-        this.searchService.autocomplete({
-          text: query,
-          size: 5,
-          layers: ['locality'],
-        })
+        query === null
+          ? of([])
+          : this.searchService.autocomplete({
+              text: query,
+              size: 5,
+              layers: ['locality'],
+            })
       // .pipe(indicate(this.loading$))
     ),
     catchError((err) =>
@@ -74,7 +77,7 @@ export class CitiesSearchComponent {
         throwError(() => new Error(err))
       )
     ),
-    retry({ delay: () => this.search$ }),
+    retry({ delay: () => this.searchInput.valueChanges }),
     tap(console.debug),
     map((res: GeocodeResponse) => res.features)
   );
@@ -85,7 +88,7 @@ export class CitiesSearchComponent {
     private searchService: SearchService
   ) {}
   resolveCity(city: GeocodeResponse['features'][0]) {
-    this.searchTerm = city.properties.label;
+    this.searchInput.setValue(city.properties.label);
     this.selectedCity.emit({
       name: city.properties.label,
       location: city.geometry,
