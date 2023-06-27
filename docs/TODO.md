@@ -19,7 +19,8 @@
 - *[X] Search for cities
   - *[ ] Geolocation on autocomplete field
 - *[ ] Search for related poi on a trip
-- *[ ] directions for a trip
+- *[X] directions for a trip
+  - *[ ] Allow hover effect on directions, maybe pop an overlay with directions?
 - *[X] Maps for a trip - Thomas
 - *[ ] Toast service to notify user
 - *[ ] Remove a place from a trip

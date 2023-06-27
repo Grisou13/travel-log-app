@@ -6,6 +6,7 @@ import {
   combineLatest,
   concatMap,
   delay,
+  distinctUntilChanged,
   filter,
   forkJoin,
   map,
@@ -61,6 +62,15 @@ function distance(
   return dist;
 }
 
+function getPlaceClosest(places: Place[], $event: Result): string {
+  const distances = places.reduce((acc, cur) => {
+    acc.push({ id: cur.id, dist: distance($event.location, cur.location) });
+    return acc;
+  }, [] as { id: string; dist: number }[]);
+  const sorted = _.sortBy(distances, 'dist');
+  return _.first(sorted)?.id || '-1';
+}
+
 @Component({
   selector: 'app-trip-detail',
   templateUrl: './trip-detail.component.html',
@@ -94,6 +104,7 @@ export class TripDetailComponent {
         console.log(p);
       },
     }),
+    distinctUntilChanged((p, c) => _.isEqual(p, c)),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
   tripStops$ = this.places$.pipe(
@@ -183,7 +194,8 @@ export class TripDetailComponent {
         type: 'MultiPoint',
         coordinates: waypoints,
       });
-    })
+    }),
+    shareReplay({ refCount: true, bufferSize: 1 })
   );
   layers$ = combineLatest([this.markers$, this.directions$]).pipe(
     map(([markers, directions]) => ({ markers, directions }))
@@ -224,12 +236,4 @@ export class TripDetailComponent {
         error: console.error,
       });
   }
-}
-function getPlaceClosest(places: Place[], $event: Result): string {
-  const distances = places.reduce((acc, cur) => {
-    acc.push({ id: cur.id, dist: distance($event.location, cur.location) });
-    return acc;
-  }, [] as { id: string; dist: number }[]);
-  const sorted = _.sortBy(distances, 'dist');
-  return _.first(sorted)?.id || '-1';
 }
