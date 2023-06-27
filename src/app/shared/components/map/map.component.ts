@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
+import { FeatureCollection } from 'geojson';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
@@ -34,12 +35,14 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.sass'],
 })
 export class MapComponent implements AfterViewInit {
-  // @Input() markers: GeoJSON.Point[] = [];
-
   @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
   }
-
+  @Input() set directions(t: GeoJSON.FeatureCollection) {
+    this.directionsState.next(t);
+  }
+  private directionsState =
+    new BehaviorSubject<GeoJSON.FeatureCollection | null>(null);
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
   private map: L.Map | null = null;
@@ -54,6 +57,13 @@ export class MapComponent implements AfterViewInit {
     center: L.latLng(46.879966, -121.726909),
   };
 
+  directions$ = this.directionsState.pipe(
+    map((x) => {
+      if (x === null) return [];
+
+      return [L.geoJSON(x, {})];
+    })
+  );
   layers$: Observable<L.Marker[]> = this.markersState.asObservable().pipe(
     tap({
       next: (val) => {

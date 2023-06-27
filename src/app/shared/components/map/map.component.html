@@ -5,4 +5,5 @@ class="map"
      (leafletMapReady)="onMapReady($event)"
      >
      <div *ngIf="layers$ | async as layers" [leafletLayers]="layers"></div>
+     <div *ngIf="directions$ | async as directions" [leafletLayers]="directions"></div>
 </div>

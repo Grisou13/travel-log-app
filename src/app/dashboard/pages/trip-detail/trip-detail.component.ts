@@ -168,22 +168,26 @@ export class TripDetailComponent {
   );
 
   directions$ = this.tripStops$.pipe(
-    switchMap((stops) => {
-      if (stops === null) return of([]);
+    filter((stops) => {
+      if (stops === null) return false;
       if (stops.length < 2) {
-        return of([]);
+        return false;
       }
+      return true;
+    }),
+    switchMap((stops) => {
       const waypoints = _.sortBy(stops, 'order').map(
         (s) => s.location.coordinates
       );
-      const directions = this.directionService.fetchDirections({
+      return this.directionService.fetchDirectionsGeoJson({
         type: 'MultiPoint',
         coordinates: waypoints,
       });
-      return directions;
     })
   );
-
+  layers$ = combineLatest([this.markers$, this.directions$]).pipe(
+    map(([markers, directions]) => ({ markers, directions }))
+  );
   public placeType = new FormControl<PlaceType>('TripStop', []);
   addPlace($event: Result) {
     zip([this.trip$, this.places$])

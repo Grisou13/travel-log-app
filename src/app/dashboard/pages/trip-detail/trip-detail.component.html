@@ -3,8 +3,8 @@
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
     <p>{{obs.value.title}}</p>
-    <div style="height: 500px;" *ngIf="markers$ | async as markersObs">
-      <app-map [markers]="markersObs"></app-map>
+    <div style="height: 500px;" *ngIf="layers$ | async as layers" >
+      <app-map [markers]="layers.markers" [directions]="layers.directions"></app-map>
       <!-- <ng-template [ngIf]="markersObs.loading">Loading map....</ng-template>
       <ng-template [ngIf]="markersObs.value"> -->
         <!-- <app-map [markers]="markersObs.value"></app-map> -->
