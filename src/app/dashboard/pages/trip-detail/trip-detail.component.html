@@ -3,7 +3,7 @@
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
     <p>{{obs.value.title}}</p>
-    <div style="height: 500px;" *ngIf="placesAsMarkers$ | withLoadingStatus | async as markersObs">
+    <div style="height: 500px;" *ngIf="markers$ | withLoadingStatus | async as markersObs">
       <ng-template [ngIf]="markersObs.loading">Loading map....</ng-template>
       <ng-template [ngIf]="markersObs.value">
         <app-map [markers]="markersObs.value"></app-map>
