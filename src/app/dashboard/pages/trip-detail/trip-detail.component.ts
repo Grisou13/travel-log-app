@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
   Observable,
   combineLatest,
   concatMap,
+  delay,
   filter,
   forkJoin,
   map,
@@ -66,6 +67,14 @@ function distance(
   styleUrls: ['./trip-detail.component.sass'],
 })
 export class TripDetailComponent {
+  constructor(
+    private route: ActivatedRoute,
+    private tripService: TripService,
+    private placeService: PlaceService,
+    private directionService: DirectionsService,
+    private zone: NgZone
+  ) {}
+
   trip$: Observable<Trip | null> = this.route.paramMap.pipe(
     switchMap((params) => {
       const id = params.get('id') || null;
@@ -78,7 +87,7 @@ export class TripDetailComponent {
       if (trip === null) return of([]);
       return this.placeService.fetchForTrip(trip);
     }),
-    switchMap((_) => this.placeService.items$),
+    // switchMap((_) => this.placeService.items$),
     tap({
       next: (p) => {
         console.log('Places new items');
@@ -101,16 +110,18 @@ export class TripDetailComponent {
           .bindTooltip(y.name)
           .addEventListener('click', () => {
             console.log('CLicking on:', y);
-            const currentlySelected = this.selectedPlaceState.getValue();
+            this.zone.run(() => {
+              const currentlySelected = this.selectedPlaceState.getValue();
 
-            if (currentlySelected === null) {
-              this.selectedPlaceState.next(y);
-              return;
-            }
-            if (currentlySelected.id === y.id) {
-              this.selectedPlaceState.next(null);
-              return;
-            }
+              if (currentlySelected === null) {
+                this.selectedPlaceState.next(y);
+                return;
+              }
+              if (currentlySelected.id === y.id) {
+                this.selectedPlaceState.next(null);
+                return;
+              }
+            });
 
             //this.selectedPlaceState.next(y);
           })
@@ -151,7 +162,10 @@ export class TripDetailComponent {
       })
     ),
     this.placesAsMarkers$,
-  ]).pipe(map(([pois, places]) => [...places, ...pois]));
+  ]).pipe(
+    map(([pois, places]) => [...pois, ...places]),
+    shareReplay({ refCount: true, bufferSize: 1 })
+  );
 
   directions$ = this.tripStops$.pipe(
     switchMap((stops) => {
@@ -169,12 +183,6 @@ export class TripDetailComponent {
       return directions;
     })
   );
-  constructor(
-    private route: ActivatedRoute,
-    private tripService: TripService,
-    private placeService: PlaceService,
-    private directionService: DirectionsService
-  ) {}
 
   public placeType = new FormControl<PlaceType>('TripStop', []);
   addPlace($event: Result) {
