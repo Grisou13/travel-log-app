@@ -3,14 +3,15 @@
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
     <p>{{obs.value.title}}</p>
-    <div style="height: 500px;" *ngIf="markers$ | withLoadingStatus | async as markersObs">
-      <ng-template [ngIf]="markersObs.loading">Loading map....</ng-template>
-      <ng-template [ngIf]="markersObs.value">
-        <app-map [markers]="markersObs.value"></app-map>
-      </ng-template>
+    <div style="height: 500px;" *ngIf="markers$ | async as markersObs">
+      <app-map [markers]="markersObs"></app-map>
+      <!-- <ng-template [ngIf]="markersObs.loading">Loading map....</ng-template>
+      <ng-template [ngIf]="markersObs.value"> -->
+        <!-- <app-map [markers]="markersObs.value"></app-map> -->
+      <!-- </ng-template>
       <ng-template [ngIf]="markersObs.error">
         Error loading places for your trip, please reload...
-      </ng-template>
+      </ng-template> -->
     </div>
 
     <app-cities-search (selectedCity)="addPlace($event)"></app-cities-search>
