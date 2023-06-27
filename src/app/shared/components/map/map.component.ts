@@ -1,8 +1,16 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { Place } from 'src/app/dashboard/models/places';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -28,7 +36,7 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements AfterViewInit {
   // @Input() markers: GeoJSON.Point[] = [];
 
-  @Input({ required: true }) set markers(t: L.Marker[]) {
+  @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
   }
 
@@ -46,18 +54,14 @@ export class MapComponent implements AfterViewInit {
     center: L.latLng(46.879966, -121.726909),
   };
 
-  layers$: Observable<L.Marker[]> = this.markersState
-    .asObservable()
-    .pipe
-    // map((points) => {
-    //   // const markers = points.map((x) =>
-    //   //   L.marker(x.getL, {
-    //   //     icon: iconDefault,
-    //   //   })
-    //   // );
-    //   return [...markers];
-    // })
-    ();
+  layers$: Observable<L.Marker[]> = this.markersState.asObservable().pipe(
+    tap({
+      next: (val) => {
+        console.log('New value for markers');
+        console.log(val);
+      },
+    })
+  );
   constructor() {}
 
   ngAfterViewInit(): void {
