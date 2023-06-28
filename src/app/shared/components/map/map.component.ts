@@ -38,7 +38,7 @@ export class MapComponent implements AfterViewInit {
   @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
   }
-  @Input() set directions(t: GeoJSON.FeatureCollection) {
+  @Input() set directions(t: GeoJSON.FeatureCollection | null) {
     this.directionsState.next(t);
   }
   private directionsState =

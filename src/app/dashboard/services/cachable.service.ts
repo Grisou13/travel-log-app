@@ -28,12 +28,16 @@ export abstract class CacheableService<
   K = string
 > {
   protected timer$ = timer(0, this.cacheTolerance);
-  protected reload$ = new Subject<void>();
+  protected reload$ = new BehaviorSubject<void>(undefined);
 
   constructor(protected cacheTolerance: number = -1) {}
 
   protected itemsSubject = new BehaviorSubject<T[]>([]);
-  public items$ = this.timer$.pipe(
+  public items$ /*combineLatest([
+    this.fetch({}),
+    this.itemsSubject.asObservable(),
+  ])
+    .pipe(switchMap((x) => x))*/ = this.timer$.pipe(
     switchMap(() =>
       combineLatest([this.fetch({}), this.itemsSubject.asObservable()]).pipe(
         switchMap((x) => x)

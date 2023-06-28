@@ -29,7 +29,7 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     private authService: AuthService,
     private travelLogService: TravelLogService
   ) {
-    super(1000 * 30); //every second refresh data
+    super(-1); //every second refresh data
   }
 
   fetchForTrip(trip: Trip) {
@@ -38,9 +38,10 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     //TODO keep a map of places for trips by tripid for this to be better
     const placesForTrip = localItems.filter(filterFn);
     if (placesForTrip.length > 0) return of(placesForTrip);
-    return this.fetch({ trip: trip.id }).pipe(
+
+    return this.fetch({ trip: trip.id }); /*.pipe(
       switchMap(() => this.items$.pipe(map((i) => i.filter(filterFn))))
-    );
+    );*/
   }
 
   override fetchRemote(

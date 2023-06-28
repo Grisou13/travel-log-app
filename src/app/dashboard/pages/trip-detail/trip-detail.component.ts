@@ -2,6 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
+  EMPTY,
   Observable,
   combineLatest,
   concatMap,
@@ -179,14 +180,15 @@ export class TripDetailComponent {
   );
 
   directions$ = this.tripStops$.pipe(
-    filter((stops) => {
-      if (stops === null) return false;
+    map((stops) => {
+      if (stops === null) return [];
       if (stops.length < 2) {
-        return false;
+        return [];
       }
-      return true;
+      return stops;
     }),
     switchMap((stops) => {
+      if (stops.length <= 0) return of(null);
       const waypoints = _.sortBy(stops, 'order').map(
         (s) => s.location.coordinates
       );
@@ -195,6 +197,7 @@ export class TripDetailComponent {
         coordinates: waypoints,
       });
     }),
+    startWith(null),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
   layers$ = combineLatest([this.markers$, this.directions$]).pipe(
