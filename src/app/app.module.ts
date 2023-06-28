@@ -10,12 +10,20 @@ import { SharedModule } from '@shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { OpenRouteServiceModule } from '@httpClients/open-route-service/open-route-service.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { AppErrorHandler } from '@shared/app-error-handler';
+import { ErrorHandlingInterceptor } from '@shared/error-handling.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { ErrorHandlerService } from '@shared/error-handler.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({}),
     OpenRouteServiceModule,
     TeleportApiModule.forRoot(() => new Configuration({})),
     TravelLogApiModule,
@@ -24,14 +32,20 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     DashboardModule.forRoot(),
   ],
   providers: [
+    ErrorHandlerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlingInterceptor,
+      multi: true,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: AppErrorHandler,
+    },
     TravelLogApiModule,
     TeleportApiModule,
     AuthModule,
     DashboardModule,
-    // {
-    //   provide: ErrorHandler,
-    //   useClass: () => {}
-    // }
   ],
   bootstrap: [AppComponent],
 })

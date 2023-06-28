@@ -14,7 +14,7 @@
 
 # Components
 
-- *[ ] Error handler - Thomas
+- *[X] Error handler - Thomas
 - *[ ] Success handler
 - *[X] Search for cities
   - *[ ] Geolocation on autocomplete field
@@ -22,7 +22,8 @@
 - *[X] directions for a trip
   - *[ ] Allow hover effect on directions, maybe pop an overlay with directions?
 - *[X] Maps for a trip - Thomas
-- *[ ] Toast service to notify user
+- *[X] Toast service to notify user
+ - *[ ] Notify user on create
 - *[ ] Remove a place from a trip
 - *[ ] Remove a trip
 - *[ ] Past trips
