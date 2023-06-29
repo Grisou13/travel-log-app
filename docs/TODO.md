@@ -18,7 +18,8 @@
 - *[ ] Success handler
 - *[X] Search for cities
   - *[ ] Geolocation on autocomplete field
-- *[ ] Search for related poi on a trip
+- *[X] Search for related poi on a trip
+  - *[ ] Use open route service to find pois
 - *[X] directions for a trip
   - *[ ] Allow hover effect on directions, maybe pop an overlay with directions?
 - *[X] Maps for a trip - Thomas
