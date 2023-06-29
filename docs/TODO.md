@@ -17,7 +17,16 @@
 - *[X] Error handler - Thomas
 - *[ ] Success handler
 - *[X] Search for cities
-  - *[ ] Geolocation on autocomplete field
+  - *[ ] Button to trigger Geolocation on autocomplete field - Eric
+    - *[ ] Service for geolocation of navigator - Eric
+    - *[ ] Ability to center map - Eric
+  - *[ ] Map for cities search - Eric
+    - *[ ] Requires abaility to get events from map (Modify `app-map`) - Eric
+  - *[ ] On click of map reverse geocode to address - Eric
+    - *[ ] Update geocode service to be able to reverse geocode from lat/lng httpClient/open-route-service
+      - *[ ] map api models in typescript
+      - *[ ] add function in service to call api
+      - *[ ] Handle api errors
 - *[X] Search for related poi on a trip
   - *[ ] Use open route service to find pois
 - *[X] directions for a trip
@@ -31,7 +40,6 @@
 - *[ ] Present trips
 - *[ ] Add a new trip
   - *[ ] Clickable map under city search field
-  - *[ ] on click add point to city
 - *[ ] Add place to trip
 - *[ ] Change order of place in trip
 - *[X] Login
