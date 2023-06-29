@@ -9,7 +9,7 @@ export class GeolocationService {
 
   constructor() { }
 
-  getCurrentPosition(options: PositionOptions = {}): Promise<GeolocationPosition> {
+  getCurrentPosition(options: PositionOptions = {timeout:5000, enableHighAccuracy:true}): Promise<GeolocationPosition> {
     return new Promise((resolve, reject) => {
       if(!browserHasApi) {
         reject("Geolocation not available");
