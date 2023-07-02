@@ -31,6 +31,7 @@ import { Point } from 'geojson';
 import { SearchService } from '@httpClients/open-route-service/search/search.service';
 import { GeocodeResponse } from '@httpClients/open-route-service/search/types';
 import { FormControl, Validators } from '@angular/forms';
+import { GeolocationService } from '@shared/services/geolocation/geolocation.service';
 
 export type CitySearchResult = City & {
   pictures?: Array<Photo>;
@@ -89,8 +90,21 @@ export class CitiesSearchComponent {
   constructor(
     private cityService: CitiesService,
     private urbanAreaService: UrbanAreasService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private geoService: GeolocationService
   ) {}
+  geolocateUser() {
+    this.geoService
+      .getCurrentPosition()
+      .then((pos) => console.log(pos))
+      .catch((error) => console.error(error));
+  }
+  geolocateFromAutoComplete() {
+    this.geoService
+      .getCurrentPosition()
+      .then((pos) => console.log(pos))
+      .catch((error) => console.error(error));
+  }
 
   inputValid(val: string = '') {
     return val.length > 3;
