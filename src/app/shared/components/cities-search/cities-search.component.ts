@@ -49,19 +49,25 @@ export type Result = {
 })
 export class CitiesSearchComponent {
   search(term: string) {
-    this.searchInput.setValue(term);
+    this.searchValue = term;
   }
   @Output() selectedCity = new EventEmitter<Result>();
-  public searchInput = new FormControl('', [
-    Validators.required,
-    Validators.minLength(3),
-  ]);
 
-  cities$ = this.searchInput.valueChanges.pipe(
-    debounceTime(450),
+  public searchValue = '';
+  searchSubject = new BehaviorSubject('');
+
+  cities$ = this.searchSubject.asObservable().pipe(
+    tap({
+      next: (v) => {
+        this.searchValue = v;
+        console.log('New input status: ', v);
+      },
+    }),
+    debounceTime(100),
     distinctUntilChanged(),
+    filter((x) => this.inputValid(x)),
     switchMap((query) =>
-      query === null
+      query === null || query.length <= 3
         ? of([])
         : this.searchService.autocomplete({
             text: query,
@@ -75,7 +81,7 @@ export class CitiesSearchComponent {
         throwError(() => new Error(err))
       )
     ),
-    retry({ delay: () => this.searchInput.valueChanges }),
+    retry({ delay: () => this.searchSubject.asObservable() }),
     tap(console.debug),
     map((res: GeocodeResponse) => res.features)
   );
@@ -85,8 +91,12 @@ export class CitiesSearchComponent {
     private urbanAreaService: UrbanAreasService,
     private searchService: SearchService
   ) {}
+
+  inputValid(val: string = '') {
+    return val.length > 3;
+  }
   resolveCity(city: GeocodeResponse['features'][0]) {
-    this.searchInput.setValue(city.properties.label, { emitEvent: false });
+    this.searchValue = city.properties.label; //.setValue(city.properties.label, { emitEvent: false });
     this.selectedCity.emit({
       name: city.properties.label,
       location: city.geometry,

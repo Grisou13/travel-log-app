@@ -19,7 +19,6 @@ import {
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddPlace, Place } from '../models/places';
 import { Trip } from '../models/trips';
-import { Guid } from 'guid-typescript';
 import { CacheableService } from './cachable.service';
 @Injectable({
   providedIn: 'root',

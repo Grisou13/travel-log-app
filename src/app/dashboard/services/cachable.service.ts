@@ -16,7 +16,6 @@ import {
   Subject,
   takeUntil,
 } from 'rxjs';
-import { Guid } from 'guid-typescript';
 
 export type EntityWithId<K> = {
   id: K;
@@ -110,7 +109,6 @@ export abstract class CacheableService<
   }
 
   add(payload: C) {
-    const id = Guid.create().toString();
     return this.createRemote(payload)
       /*of({
       ...payload,

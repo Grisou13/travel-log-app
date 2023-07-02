@@ -3,8 +3,9 @@
     <input
       class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-black focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
       type="text"
-      [formControl]="searchInput"
-
+      [value]="searchValue"
+      (change)="searchSubject.next($any($event.target).value)"
+      (blur)="searchSubject.next($any($event.target).value)"
       placeholder="What city?"
     />
     <!--Search button-->
@@ -31,7 +32,7 @@
   </div>
 
   <div *ngIf="cities$ | withLoadingStatus | async as obs">
-    <ng-template [ngIf]="obs.loading && this.searchInput.valid"><p>Loading...</p></ng-template>
+    <ng-template [ngIf]="obs.loading && !inputValid(this.searchSubject.getValue())"><p>Loading...</p></ng-template>
     <ng-template [ngIf]="obs.value">
       <ul>
         <li
