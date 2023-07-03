@@ -1,7 +1,7 @@
 <div class="flex flex-row p-6 overflow-y-scroll">
   <app-new-trip (tripCreated)="navigateToNewTrip($event)"></app-new-trip>
 
-  <div *ngIf="trips$ | withLoadingStatus | async as obs">
+  <div class="flex" *ngIf="trips$ | withLoadingStatus | async as obs">
     <ng-template [ngIf]="obs.loading">
       <p>Loading....</p>
     </ng-template>
