@@ -53,28 +53,26 @@ export class CitiesSearchComponent {
     this.searchValue = term;
   }
   @Output() selectedCity = new EventEmitter<Result>();
-
+  // the only reason we use this
   public searchValue = '';
   searchSubject = new BehaviorSubject('');
 
   cities$ = this.searchSubject.asObservable().pipe(
+    debounceTime(100),
+    distinctUntilChanged(),
     tap({
       next: (v) => {
         this.searchValue = v;
         console.log('New input status: ', v);
       },
     }),
-    debounceTime(100),
-    distinctUntilChanged(),
     filter((x) => this.inputValid(x)),
     switchMap((query) =>
-      query === null || query.length <= 3
-        ? of([])
-        : this.searchService.autocomplete({
-            text: query,
-            size: 5,
-            layers: ['locality'],
-          })
+      this.searchService.autocomplete({
+        text: query,
+        size: 5,
+        layers: ['locality'],
+      })
     ),
     catchError((err) =>
       concat(
@@ -88,8 +86,6 @@ export class CitiesSearchComponent {
   );
 
   constructor(
-    private cityService: CitiesService,
-    private urbanAreaService: UrbanAreasService,
     private searchService: SearchService,
     private geoService: GeolocationService
   ) {}
@@ -107,7 +103,7 @@ export class CitiesSearchComponent {
   }
 
   inputValid(val: string = '') {
-    return val.length > 3;
+    return val.length >= 3;
   }
   resolveCity(city: GeocodeResponse['features'][0]) {
     this.searchValue = city.properties.label; //.setValue(city.properties.label, { emitEvent: false });
