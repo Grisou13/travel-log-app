@@ -31,18 +31,19 @@ export abstract class CacheableService<
 
   constructor(protected cacheTolerance: number = -1) {}
 
-  protected itemsSubject = new BehaviorSubject<T[]>([]);
-  public items$ /*combineLatest([
+  protected cacheSubject = new BehaviorSubject<T[]>([]);
+  public items$ = /*combineLatest([
     this.fetch({}),
     this.itemsSubject.asObservable(),
   ])
-    .pipe(switchMap((x) => x))*/ = this.timer$.pipe(
+    .pipe(switchMap((x) => x)) = this.timer$.pipe(
     switchMap(() =>
-      combineLatest([this.fetch({}), this.itemsSubject.asObservable()]).pipe(
+      combineLatest([this.fetch({}), this.cacheSubject.asObservable()]).pipe(
         switchMap((x) => x)
       )
-    ),
-    takeUntil(this.reload$),
+    ),*/
+    this.cacheSubject.asObservable().pipe(
+    // takeUntil(this.reload$),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
   forceReload() {
@@ -50,11 +51,11 @@ export abstract class CacheableService<
   }
 
   clear(): void {
-    this.itemsSubject.next([]);
+    this.cacheSubject.next([]);
   }
 
   protected getAll(): T[] {
-    return this.itemsSubject.getValue();
+    return this.cacheSubject.getValue();
   }
 
   get(id: K) {
@@ -135,7 +136,7 @@ export abstract class CacheableService<
       });
       if (index1 >= 0) {
         currentItems.splice(index1, 1);
-        this.itemsSubject.next(currentItems);
+        this.cacheSubject.next(currentItems);
         return true;
       }
     }
@@ -145,7 +146,7 @@ export abstract class CacheableService<
   protected addItem(item: T): void {
     const currentItems: T[] = this.getAll();
     currentItems.push(item);
-    this.itemsSubject.next(currentItems);
+    this.cacheSubject.next(currentItems);
   }
 
   protected updateItem(id: K, item: T): boolean {
@@ -156,7 +157,7 @@ export abstract class CacheableService<
       });
       if (index1 >= 0) {
         currentItems[index1] = item;
-        this.itemsSubject.next(currentItems);
+        this.cacheSubject.next(currentItems);
         return true;
       }
     }
@@ -169,7 +170,7 @@ export abstract class CacheableService<
     return this.fetchRemote(params).pipe(
       tap((items) => {
         if (items) {
-          this.itemsSubject.next(items);
+          this.cacheSubject.next(items);
         }
       }),
       catchError((err) => {

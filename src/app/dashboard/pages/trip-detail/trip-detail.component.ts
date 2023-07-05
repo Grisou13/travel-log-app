@@ -98,14 +98,29 @@ export class TripDetailComponent {
       if (trip === null) return of([]);
       return this.placeService.fetchForTrip(trip);
     }),
-    // switchMap((_) => this.placeService.items$),
+    switchMap(places => {
+      console.log("Got places from api");
+      console.log(places);
+      //doing this is pretty stupid, but for now it will work.
+      // the idea is that fetchFor trip does not bring us from the cacheed items and will never emit a new value.
+      // what we need here is an operator that allows us to add/update stuff and has an internal cache of it's own.
+      // this allows us to keep the fetch for trip to be 
+      if(places.length <= 0) return of([]);
+      const tripId = places.at(0)?.tripId;
+      if(tripId === undefined) return of([]);
+      console.log("Filtering for tripId: ", tripId)
+      return this.placeService.items$.pipe(map(items => {
+        console.log("Items in cache: ", items);
+        return items.filter(i => i.tripId === tripId)
+      }))
+    }),
     tap({
       next: (p) => {
         console.log('Places new items');
         console.log(p);
       },
     }),
-    distinctUntilChanged((p, c) => _.isEqual(p, c)),
+    distinctUntilChanged(),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
   tripStops$ = this.places$.pipe(
