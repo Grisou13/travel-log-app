@@ -10,27 +10,19 @@ import { map, of, switchMap } from 'rxjs';
 export class DirectionsService {
   constructor(private http: OpenRouteHttp) {}
   fetchDirections(
-    waypoints: MultiPoint,
+    request: DirectionRequest,
     profile: DrivingProfils = 'driving-car',
-    opts: DirectionRequest
   ) {
-    const request = DirectionRequest.parse({
-      ...opts,
-      coordinates: waypoints.coordinates,
-    });
+    
     return this.http
       .post<DirectionsResponse>(`/v2/directions/${profile}/json`, request)
       .pipe(switchMap((v) => DirectionsResponse.parseAsync(v)));
   }
   fetchDirectionsGeoJson(
-    waypoints: MultiPoint,
-    profile: DrivingProfils = 'driving-car',
-    opts: DirectionRequest | null = null
+    request: DirectionRequest,
+    profile: DrivingProfils = 'driving-car'
   ) {
-    const request = DirectionRequest.parse({
-      ...opts,
-      coordinates: waypoints.coordinates,
-    });
+    
     return this.http.post<GeoJSON.FeatureCollection>(
       `/v2/directions/${profile}/geojson`,
       request

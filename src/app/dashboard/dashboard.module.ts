@@ -18,6 +18,10 @@ import { TripService } from './services/trip.service';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
 import { TripCardComponent } from './pages/trip-list/trip-card/trip-card.component';
 import { PlaceService } from './services/place.service';
+import { TripMapComponent } from './components/trip-map/trip-map.component';
+import { PlaceAddComponent } from './components/place-add/place-add.component';
+import { PlaceListComponent } from './components/place-list/place-list.component';
+import { PlaceDetailComponent } from './pages/place-detail/place-detail.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { PlaceService } from './services/place.service';
     UserDashboardComponent,
     AddPlaceComponent,
     TripCardComponent,
+    TripMapComponent,
+    PlaceAddComponent,
+    PlaceListComponent,
+    PlaceDetailComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],

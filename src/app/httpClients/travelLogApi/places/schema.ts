@@ -22,7 +22,7 @@ export const validator = z
     }),
     infos: z
       .object({
-        relatedToPlace: z.string(),
+        relatedToPlace: z.string().nullable(),
       })
       .optional(),
     pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
