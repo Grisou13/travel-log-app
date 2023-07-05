@@ -38,11 +38,11 @@ export class MapComponent implements AfterViewInit {
   @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
   }
-  @Input() set directions(t: GeoJSON.FeatureCollection | null) {
+  @Input() set directions(t: L.GeoJSON<any> | null) {
     this.directionsState.next(t);
   }
   private directionsState =
-    new BehaviorSubject<GeoJSON.FeatureCollection | null>(null);
+    new BehaviorSubject<L.GeoJSON<any> | null>(null);
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
   private map: L.Map | null = null;
@@ -61,7 +61,7 @@ export class MapComponent implements AfterViewInit {
     map((x) => {
       if (x === null) return [];
 
-      return [L.geoJSON(x, {})];
+      return [x];
     })
   );
   layers$: Observable<L.Marker[]> = this.markersState.asObservable().pipe(

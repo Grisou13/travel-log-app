@@ -192,10 +192,22 @@ export class TripDetailComponent {
       const waypoints = _.sortBy(stops, 'order').map(
         (s) => s.location.coordinates
       );
+      console.log("Stops for the trip: ", stops)
+      console.log("Getting waypoints for directions: ", waypoints)
       return this.directionService.fetchDirectionsGeoJson({
         type: 'MultiPoint',
         coordinates: waypoints,
       });
+    }),
+    map(geoJson => {
+      if(geoJson === null) return null;
+
+      return new L.GeoJSON(geoJson, {onEachFeature: (feature, layer) => {
+        layer.on("mouseover", function(e){
+          console.log(e)
+          console.log(feature);
+        })
+      }})
     }),
     startWith(null),
     shareReplay({ refCount: true, bufferSize: 1 })
