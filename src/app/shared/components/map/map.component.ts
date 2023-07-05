@@ -38,11 +38,10 @@ export class MapComponent implements AfterViewInit {
   @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
   }
-  @Input() set directions(t: L.GeoJSON<any> | null) {
+  @Input() set directions(t: L.GeoJSON<any>[] | null) {
     this.directionsState.next(t);
   }
-  private directionsState =
-    new BehaviorSubject<L.GeoJSON<any> | null>(null);
+  private directionsState = new BehaviorSubject<L.GeoJSON<any>[] | null>(null);
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
   private map: L.Map | null = null;
@@ -61,17 +60,19 @@ export class MapComponent implements AfterViewInit {
     map((x) => {
       if (x === null) return [];
 
-      return [x];
+      return [...x];
     })
   );
   layers$: Observable<L.Marker[]> = this.markersState.asObservable().pipe(
     tap({
       next: (val) => {
-        if(this.map === null) return;
-        const bounds = new L.LatLngBounds(val.map(x => {
-          const r = x.getLatLng();
-          return [r.lat, r.lng]
-          }))
+        if (this.map === null) return;
+        const bounds = new L.LatLngBounds(
+          val.map((x) => {
+            const r = x.getLatLng();
+            return [r.lat, r.lng];
+          })
+        );
         this.map.fitBounds(bounds);
         console.log('New value for markers');
         console.log(val);
