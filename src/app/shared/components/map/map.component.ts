@@ -67,6 +67,12 @@ export class MapComponent implements AfterViewInit {
   layers$: Observable<L.Marker[]> = this.markersState.asObservable().pipe(
     tap({
       next: (val) => {
+        if(this.map === null) return;
+        const bounds = new L.LatLngBounds(val.map(x => {
+          const r = x.getLatLng();
+          return [r.lat, r.lng]
+          }))
+        this.map.fitBounds(bounds);
         console.log('New value for markers');
         console.log(val);
       },
