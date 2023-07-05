@@ -31,16 +31,23 @@
   - *[ ] Use open route service to find pois
 - *[X] directions for a trip
   - *[ ] Allow hover effect on directions, maybe pop an overlay with directions?
+  - *[X] Center map on markers
 - *[X] Maps for a trip - Thomas
 - *[X] Toast service to notify user
- - *[ ] Notify user on create
+  - *[X] Notify user on create trip
+  - *[ ] Notify user on create place
+  - *[ ] Notify user on delete trip
+  - *[ ] Notify user on delete place
+  - *[ ] Notify user on poi add
+  - *[ ] Notify user on poi delete
 - *[ ] Remove a place from a trip
 - *[ ] Remove a trip
 - *[ ] Past trips
 - *[ ] Present trips
-- *[ ] Add a new trip
-  - *[ ] Clickable map under city search field
-- *[ ] Add place to trip
+- *[X] Add a new trip
+  - *[ ] Use component Eric is doing to create the new trip
+  - *[ ] Multi step form to create a trip
+- *[X] Add place to trip
 - *[ ] Change order of place in trip
 - *[X] Login
 - *[X] Register
