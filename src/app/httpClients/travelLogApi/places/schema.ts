@@ -10,11 +10,13 @@ export const validator = z
     name: z.string().min(3).max(100), // "Somewhere",
     description: z.string().min(5).max(50000), //"Over the rainbow",
     order: z.number(),
-    directions: z.object({
-      distance: z.number(),
-      previous: z.object({}),
-      next: z.object({}),
-    }),
+    directions: z
+      .object({
+        distance: z.number().optional(),
+        previous: z.any().optional(),
+        next: z.any().optional(),
+      })
+      .optional(),
     type: placeType.default('TripStop'),
     location: z.object({
       type: z.enum(['Point']),

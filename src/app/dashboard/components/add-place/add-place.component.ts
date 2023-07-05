@@ -84,7 +84,10 @@ export class AddPlaceComponent {
           const lastStop = _.orderBy(stops, 'order').pop();
 
           const request = DirectionRequest.parse({
-            coordinates: [lastStop?.location.coordinates, $event.location.coordinates],
+            coordinates: [
+              lastStop?.location.coordinates,
+              $event.location.coordinates,
+            ],
             extra_info: ['tollways', 'roadaccessrestrictions'],
           });
 
@@ -101,7 +104,7 @@ export class AddPlaceComponent {
 
           const type =
             this.placeType.value === null ? 'TripStop' : this.placeType.value;
-          return this.placeService.add({
+          const payload = {
             name: $event.name,
             tripId: trip.id,
             description: 'Stop at ' + $event.name,
@@ -126,7 +129,8 @@ export class AddPlaceComponent {
                   : null,
             },
             location: $event.location,
-          });
+          };
+          return this.placeService.add(payload);
         })
       )
       .subscribe({
