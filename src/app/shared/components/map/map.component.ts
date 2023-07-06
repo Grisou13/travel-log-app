@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
+import { GeolocationService } from '@shared/services/geolocation/geolocation.service';
 import { FeatureCollection } from 'geojson';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
@@ -79,13 +80,34 @@ export class MapComponent implements AfterViewInit {
       },
     })
   );
-  constructor() {}
+  constructor(
+    private geoService: GeolocationService,
+  ) {}
 
   ngAfterViewInit(): void {
     // this.initMap();
   }
   onMapReady(map: L.Map) {
     this.map = map;
+    this.showUserLocation(map);
     setTimeout(() => map.invalidateSize(), 0);
+  }
+  showUserLocation(map: L.Map) {
+    this.map = map;
+
+    this.geoService.getUserPosition()
+      .subscribe((position: any) => {
+        map.flyTo([position.latitude, position.longitude], 18);
+
+        const icon = L.icon({
+          iconUrl: '/assets/pin.png',
+          iconSize: [48, 48],
+          iconAnchor: [24, 42], 
+          popupAnchor: [0, -32],
+        });
+
+        const marker = L.marker([position.latitude, position.longitude], { icon }).bindPopup('You are here!');
+        marker.addTo(map);
+      });
   }
 }

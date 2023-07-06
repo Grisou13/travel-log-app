@@ -16,10 +16,16 @@
 
 - *[X] Error handler - Thomas
 - *[ ] Success handler
+- *[ ] Map component
+  - *[X] Add markers to map
+  - *[X] add directions to map
+  - *[ ] Add Input/Output for center of map
+  - *[ ] Add Input/Output for map bounding box
+  - *[ ] Output onMapReady with map ref
 - *[X] Search for cities
   - *[ ] Button to trigger Geolocation on autocomplete field - Eric
-    - *[ ] Service for geolocation of navigator - Eric
-    - *[ ] Ability to center map - Eric
+    - *[X] Service for geolocation of navigator - Eric
+    - *[X] Ability to center map - Eric
   - *[ ] Map for cities search - Eric
     - *[ ] Requires abaility to get events from map (Modify `app-map`) - Eric
   - *[ ] On click of map reverse geocode to address - Eric
