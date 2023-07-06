@@ -80,9 +80,9 @@ export class TripMapComponent {
           return items.filter((i) => i.tripId === tripId);
         })
       );
-    })
-    // distinctUntilChanged(),
-    // shareReplay({refCount: true, bufferSize: 1})
+    }),
+    distinctUntilChanged(),
+    shareReplay({ refCount: true, bufferSize: 1 })
   );
   tripStops$ = this.places$.pipe(
     map((x) => x.filter((y) => y.type === 'TripStop'))
