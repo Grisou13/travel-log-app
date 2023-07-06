@@ -64,7 +64,7 @@
           class="hover:bg-blue-400 hover:cursor-pointer"
           (click)="resolveCity(item)"
         >
-          <span>{{ item.properties.label }}</span>
+          <p [outerHTML]="item.properties.label | highlight:this.searchValue "></p>
         </li>
       </ul>
     </ng-template>

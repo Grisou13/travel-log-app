@@ -9,6 +9,7 @@ import { WithLoadingStatusPipe } from './pipes/with-loading-status.pipe';
 import { MapComponent } from './components/map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { GeolocationService } from './services/geolocation/geolocation.service';
+import { HighlightPipe } from './pipes/highlight.pipe';
 
 @NgModule({
   declarations: [
@@ -18,10 +19,9 @@ import { GeolocationService } from './services/geolocation/geolocation.service';
     HighlightDirective,
     WithLoadingStatusPipe,
     MapComponent,
+    HighlightPipe,
   ],
-  providers: [
-    GeolocationService,
-  ],
+  providers: [GeolocationService],
   imports: [CommonModule, ReactiveFormsModule, LeafletModule],
   exports: [
     CommonModule,
