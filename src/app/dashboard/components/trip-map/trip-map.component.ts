@@ -5,38 +5,23 @@ import {
   EMPTY,
   Observable,
   combineLatest,
-  concatMap,
-  delay,
   distinctUntilChanged,
-  filter,
   forkJoin,
   map,
-  merge,
-  mergeMap,
   of,
-  pairwise,
-  share,
   shareReplay,
   startWith,
   switchMap,
-  tap,
-  withLatestFrom,
-  zip,
 } from 'rxjs';
 import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
 import { DirectionsService } from '@httpClients/open-route-service/directions/directions.service';
 import { PlaceService } from '../../services/place.service';
-import { Point } from 'geojson';
-import { Result } from '@shared/components/cities-search/cities-search.component';
 import { iconDefault } from '@shared/components/map/map.component';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import { Place } from '../../models/places';
-import { FormArray, FormControl } from '@angular/forms';
-import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 import { DirectionRequest } from '@httpClients/open-route-service/directions/schema';
-import { distance } from '../../../helpers';
 
 @Component({
   selector: 'app-trip-map',
@@ -165,7 +150,7 @@ export class TripMapComponent {
     }),
     switchMap((stops) => {
       if (stops.length <= 0) return of(null);
-      return combineLatest(
+      return forkJoin(
         stops.map((s, index) => {
           //if we have directions we good
           if (s.directions?.previous !== undefined) {
@@ -181,12 +166,28 @@ export class TripMapComponent {
           ];
           console.log('Stops for the trip: ', s);
           console.log('Getting waypoints for directions: ', waypoints);
-          return this.directionService.fetchDirectionsGeoJson(
-            DirectionRequest.parse({
-              coordinates: waypoints,
-              extra_info: ['tollways', 'roadaccessrestrictions'],
-            })
-          ); //TODO update the actual place?
+          return this.directionService
+            .fetchDirectionsGeoJson(
+              DirectionRequest.parse({
+                coordinates: waypoints,
+                extra_info: ['tollways', 'roadaccessrestrictions'],
+              })
+            )
+            .pipe(
+              switchMap((result) => {
+                return forkJoin([
+                  of(result),
+                  //TODO trigger update for directions/next?
+                  this.placeService.update(s.id, {
+                    ...s,
+                    directions: {
+                      previous: result,
+                    },
+                  }),
+                ]);
+              }),
+              map(([geoJson, updatedPlace]) => geoJson)
+            );
         })
       );
     }),
@@ -216,7 +217,7 @@ export class TripMapComponent {
                 console.log(layer);
                 console.log('===============');
               });
-              layer.on('click', function (e) {
+              layer.on('click', (e) => {
                 console.log('CLicked feature');
                 if (layer.isPopupOpen()) {
                   geojsonLayer.resetStyle(e.target);
