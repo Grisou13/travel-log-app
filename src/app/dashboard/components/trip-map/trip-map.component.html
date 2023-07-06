@@ -1,5 +1,3 @@
 <div style="height: 500px;" *ngIf="layers$ | async as layers" >
     <app-map [markers]="layers.markers" [directions]="layers.directions"></app-map>
 </div>
-
-<app-stop-list *ngIf="tripStops$ | async as stops" [places]="stops"></app-stop-list>

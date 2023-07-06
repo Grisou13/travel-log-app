@@ -15,6 +15,7 @@ import {
   combineLatest,
   throwError,
   filter,
+  distinctUntilChanged,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddPlace, Place } from '../models/places';
@@ -24,6 +25,7 @@ import { CacheableService } from './cachable.service';
   providedIn: 'root',
 })
 export class PlaceService extends CacheableService<Place, AddPlace, string> {
+  private lastRefresh = -1;
   constructor(
     private authService: AuthService,
     private travelLogService: TravelLogService
@@ -34,11 +36,32 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
   fetchForTrip(trip: Trip) {
     const localItems = this.getAll();
     const filterFn = (x: Place) => x.tripId === trip.id;
-    //TODO keep a map of places for trips by tripid for this to be better
+    //TODO maybe update this somehow every couple of times so things keep in sync?
     const placesForTrip = localItems.filter(filterFn);
     if (placesForTrip.length > 0) return of(placesForTrip);
 
-    return this.fetch({ trip: trip.id }); /*.pipe(
+    return this.fetch({ trip: trip.id }).pipe(
+      switchMap((places) => {
+        console.log('Got places from api');
+        console.log(places);
+        //doing this is pretty stupid, but for now it will work.
+        // the idea is that fetchFor trip does not bring us from the cacheed items and will never emit a new value.
+        // what we need here is an operator that allows us to add/update stuff and has an internal cache of it's own.
+        // this allows us to keep the fetch for trip to be
+        if (places.length <= 0) return of([]);
+        const tripId = trip.id;
+        if (tripId === undefined) return of([]);
+        console.log('Filtering for tripId: ', tripId);
+        return this.items$.pipe(
+          map((items) => {
+            console.log('Items in cache: ', items);
+            return items.filter((i) => i.tripId === tripId);
+          })
+        );
+      }),
+      distinctUntilChanged(),
+      shareReplay({ refCount: true, bufferSize: 1 })
+    ); /*.pipe(
       switchMap(() => this.items$.pipe(map((i) => i.filter(filterFn))))
     );*/
   }

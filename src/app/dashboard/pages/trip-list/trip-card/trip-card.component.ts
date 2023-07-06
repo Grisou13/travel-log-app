@@ -8,6 +8,7 @@ import {
   map,
   of,
   share,
+  shareReplay,
   startWith,
   switchMap,
 } from 'rxjs';
@@ -37,7 +38,7 @@ export class TripCardComponent {
       if (trip === null) return of([]);
       return this.placeService.fetchForTrip(trip);
     }),
-    share()
+    shareReplay(1)
   );
   tripStops$ = this.places$.pipe(
     map((places) => places.filter((x) => x.type === 'TripStop'))

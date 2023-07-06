@@ -1,11 +1,11 @@
 
-<div *ngIf="trip$ | withLoadingStatus | async as obs">
+<div *ngIf="loadable$ | withLoadingStatus | async as obs">
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
-    <p>{{obs.value.title}}</p>
-    <app-trip-map [trip]="obs.value"></app-trip-map>
-
-    <app-add-place [trip]="obs.value"></app-add-place>
+    <p>{{obs.value.trip.title}}</p>
+    <app-trip-map [trip]="obs.value.trip"></app-trip-map>
+    <app-stop-list [places]="obs.value.places"></app-stop-list>
+    <app-add-place [trip]="obs.value.trip"></app-add-place>
     <!-- <pre>{{obs.value | json }}</pre> -->
   </ng-template>
   <ng-template [ngIf]="obs.error">

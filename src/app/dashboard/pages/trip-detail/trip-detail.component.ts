@@ -34,7 +34,6 @@ import { Place } from '../../models/places';
 import { FormArray, FormControl } from '@angular/forms';
 import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 
-
 @Component({
   selector: 'app-trip-detail',
   templateUrl: './trip-detail.component.html',
@@ -43,7 +42,8 @@ import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 export class TripDetailComponent {
   constructor(
     private route: ActivatedRoute,
-    private tripService: TripService
+    private tripService: TripService,
+    private placeService: PlaceService
   ) {}
 
   trip$: Observable<Trip | null> = this.route.paramMap.pipe(
@@ -52,6 +52,18 @@ export class TripDetailComponent {
       if (id === null) return of(null);
       return this.tripService.get(id);
     })
-  );  
-  
+  );
+  loadable$ = this.trip$.pipe(
+    switchMap((trip) => {
+      if (trip === null) return EMPTY;
+      return combineLatest([
+        of(trip),
+        this.placeService.fetchForTrip(trip),
+      ]).pipe(
+        map(([trip, places]) => {
+          return { trip, places };
+        })
+      );
+    })
+  );
 }
