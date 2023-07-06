@@ -97,7 +97,7 @@ export class MapComponent implements AfterViewInit {
 
     this.geoService.getUserPosition()
       .subscribe((position: any) => {
-        map.flyTo([position.latitude, position.longitude], 18);
+        map.setView([position.latitude, position.longitude], 8);
 
         const icon = L.icon({
           iconUrl: '/assets/pin.png',
