@@ -1,10 +1,5 @@
 <div style="height: 500px;" *ngIf="layers$ | async as layers" >
     <app-map [markers]="layers.markers" [directions]="layers.directions"></app-map>
-    <!-- <ng-template [ngIf]="markersObs.loading">Loading map....</ng-template>
-    <ng-template [ngIf]="markersObs.value"> -->
-    <!-- <app-map [markers]="markersObs.value"></app-map> -->
-    <!-- </ng-template>
-    <ng-template [ngIf]="markersObs.error">
-    Error loading places for your trip, please reload...
-    </ng-template> -->
 </div>
+
+<app-stop-list *ngIf="tripStops$ | async as stops" [places]="stops"></app-stop-list>

@@ -22,6 +22,8 @@ import { TripMapComponent } from './components/trip-map/trip-map.component';
 import { PlaceAddComponent } from './components/place-add/place-add.component';
 import { PlaceListComponent } from './components/place-list/place-list.component';
 import { PlaceDetailComponent } from './pages/place-detail/place-detail.component';
+import { StopListComponent } from './components/stop-list/stop-list.component';
+import { StopCardComponent } from './components/stop-list/stop-card/stop-card.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { PlaceDetailComponent } from './pages/place-detail/place-detail.componen
     PlaceAddComponent,
     PlaceListComponent,
     PlaceDetailComponent,
+    StopListComponent,
+    StopCardComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
