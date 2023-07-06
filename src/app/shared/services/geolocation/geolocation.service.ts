@@ -10,15 +10,7 @@ export class GeolocationService {
 
   constructor() { }
 
-  getCurrentPosition(options: PositionOptions = {timeout:5000, enableHighAccuracy:true}): Promise<GeolocationPosition> {
-    return new Promise((resolve, reject) => {
-      if(!browserHasApi) {
-        reject("Geolocation not available");
-      }
-      navigator.geolocation.getCurrentPosition(resolve, reject, options);
-    })
-  };
-  getUserPosition(options: PositionOptions = {timeout:500, enableHighAccuracy:true}): Observable<GeolocationPosition> {
+  getUserPosition(options: PositionOptions = {timeout:5000}): Observable<GeolocationPosition> {
     return new Observable((observer: Subscriber<any>) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
