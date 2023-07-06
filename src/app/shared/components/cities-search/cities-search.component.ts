@@ -89,18 +89,6 @@ export class CitiesSearchComponent {
     private searchService: SearchService,
     private geoService: GeolocationService
   ) {}
-  geolocateUser() {
-    this.geoService
-      .getCurrentPosition()
-      .then((pos) => console.log(pos))
-      .catch((error) => console.error(error));
-  }
-  geolocateFromAutoComplete() {
-    this.geoService
-      .getCurrentPosition()
-      .then((pos) => console.log(pos))
-      .catch((error) => console.error(error));
-  }
 
   inputValid(val: string = '') {
     return val.length >= 3;
