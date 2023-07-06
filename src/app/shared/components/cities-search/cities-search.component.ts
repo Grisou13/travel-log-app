@@ -94,30 +94,11 @@ export class CitiesSearchComponent {
     return val.length >= 3;
   }
   resolveCity(city: GeocodeResponse['features'][0]) {
-    this.searchValue = city.properties.label; //.setValue(city.properties.label, { emitEvent: false });
+    this.searchValue = city.properties.label;
     this.selectedCity.emit({
       name: city.properties.label,
       location: city.geometry,
       pictureUrl: '', // pictures.photos?.at(0)?.image.web,
     });
-    /*this.inputSearch = city.matching_full_name;
-    const baseCity = city._embedded['city:item'];
-    this.urbanAreaService
-      .getUrbanAreaImages(baseCity._embedded['city:urban_area'].ua_id)
-      .pipe(
-        tap((pictures) => {
-          this.selectedCity.emit({
-            name: baseCity.full_name,
-            location: {
-              type: 'Point',
-              coordinates: [
-                baseCity.location.latlon.longitude,
-                baseCity.location.latlon.latitude,
-              ],
-            },
-            pictureUrl: pictures.photos?.at(0)?.image.web,
-          });
-        })
-      );*/
   }
 }
