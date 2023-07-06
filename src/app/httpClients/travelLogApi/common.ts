@@ -6,11 +6,8 @@ export const transportMethod = z.object({
   unit: z.enum(['km', 'flight', 'trip']),
 });
 export const dates = z.object({
-  startDate: z
-    .date()
-    .optional()
-    .default(() => new Date()),
-  endDate: z.date().optional(),
+  startDate: z.coerce.date().optional(),
+  endDate: z.coerce.date().nullable().optional(),
 });
 export type TransportType = z.infer<typeof transportTypes>;
 export const common = z

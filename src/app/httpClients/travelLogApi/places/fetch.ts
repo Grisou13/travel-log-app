@@ -1,11 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { from, switchMap } from 'rxjs';
+import { from, map, switchMap } from 'rxjs';
 import { z } from 'zod';
-import { Place, SearchParams, searchParamsSchema, validator } from './schema';
+import {
+  Place,
+  SearchParams,
+  schema,
+  searchParamsSchema,
+  validator,
+} from './schema';
 
 export const fetchAll = (httpClient: HttpClient, data: SearchParams) => {
   return from(searchParamsSchema.parseAsync(data)).pipe(
     switchMap((data) => httpClient.get<Place[]>('/places', { params: data }))
+    //map((data) => data.map((x) => schema.parse(x)))
   );
 };
 

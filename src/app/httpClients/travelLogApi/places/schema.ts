@@ -37,8 +37,16 @@ export const schema = z
     id: z.string(), // "0860ab21-98e8-4cdd-a407-06d2a50989eb",
     href: z.string(), //"/api/places/0860ab21-98e8-4cdd-a407-06d2a50989eb",
     tripHref: z.string().optional(), // "/api/trips/7f063c6e-7717-401a-aa47-34a52f6a45cf",
-    updatedAt: z.date().optional(),
-    createdAt: z.date().optional(),
+    updatedAt: z
+      .string()
+      .datetime({ offset: true })
+      .pipe(z.coerce.date())
+      .optional(),
+    createdAt: z
+      .string()
+      .datetime({ offset: true })
+      .pipe(z.coerce.date())
+      .optional(),
   })
   .merge(validator);
 export type Place = z.infer<typeof schema>;

@@ -32,7 +32,7 @@ export abstract class CacheableService<
   constructor(protected cacheTolerance: number = -1) {}
 
   protected cacheSubject = new BehaviorSubject<T[]>([]);
-  public items$ = /*combineLatest([
+  public items$ /*combineLatest([
     this.fetch({}),
     this.itemsSubject.asObservable(),
   ])
@@ -41,8 +41,7 @@ export abstract class CacheableService<
       combineLatest([this.fetch({}), this.cacheSubject.asObservable()]).pipe(
         switchMap((x) => x)
       )
-    ),*/
-    this.cacheSubject.asObservable().pipe(
+    ),*/ = this.cacheSubject.asObservable().pipe(
     // takeUntil(this.reload$),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
@@ -104,6 +103,7 @@ export abstract class CacheableService<
         }
       }), // when success result, update the item in the local service
       catchError((err) => {
+        console.error(err);
         return of(false);
       })
     );

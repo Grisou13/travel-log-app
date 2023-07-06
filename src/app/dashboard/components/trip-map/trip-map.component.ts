@@ -12,6 +12,7 @@ import {
   shareReplay,
   startWith,
   switchMap,
+  tap,
 } from 'rxjs';
 import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
@@ -156,18 +157,23 @@ export class TripMapComponent {
             )
             .pipe(
               switchMap((result) => {
-                return forkJoin([
-                  of(result),
-                  //TODO trigger update for directions/next?
-                  this.placeService.update(s.id, {
-                    ...s,
-                    directions: {
-                      previous: result,
-                    },
-                  }),
-                ]);
-              }),
-              map(([geoJson, updatedPlace]) => geoJson)
+                const payload = {
+                  ...s,
+                  directions: {
+                    previous: result,
+                  },
+                };
+                return this.placeService
+                  .update(s.id, payload)
+                  .pipe(
+                    tap({
+                      next: (val) => {
+                        console.log('Updated place in api ', val);
+                      },
+                    })
+                  )
+                  .pipe(map((_) => result));
+              })
             );
         })
       );
