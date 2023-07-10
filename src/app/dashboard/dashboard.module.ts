@@ -24,6 +24,7 @@ import { PlaceListComponent } from './components/place-list/place-list.component
 import { PlaceDetailComponent } from './pages/place-detail/place-detail.component';
 import { StopListComponent } from './components/stop-list/stop-list.component';
 import { StopCardComponent } from './components/stop-list/stop-card/stop-card.component';
+import { PlaceCardComponent } from './components/place-list/place-card/place-card.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { StopCardComponent } from './components/stop-list/stop-card/stop-card.co
     PlaceDetailComponent,
     StopListComponent,
     StopCardComponent,
+    PlaceCardComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],

@@ -6,6 +6,8 @@
     <app-trip-map [trip]="obs.value.trip"></app-trip-map>
     <app-stop-list [places]="obs.value.places"></app-stop-list>
     <app-add-place [trip]="obs.value.trip"></app-add-place>
+
+    <app-place-list [places]="obs.value.places"></app-place-list>
     <!-- <pre>{{obs.value | json }}</pre> -->
   </ng-template>
   <ng-template [ngIf]="obs.error">
