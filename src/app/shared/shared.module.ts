@@ -10,6 +10,7 @@ import { MapComponent } from './components/map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { GeolocationService } from './services/geolocation/geolocation.service';
 import { HighlightPipe } from './pipes/highlight.pipe';
+import { LocationSearchComponent } from './components/location-search/location-search.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     WithLoadingStatusPipe,
     MapComponent,
     HighlightPipe,
+    LocationSearchComponent,
   ],
   providers: [GeolocationService],
   imports: [CommonModule, ReactiveFormsModule, LeafletModule],
@@ -33,6 +35,7 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     HighlightDirective,
     WithLoadingStatusPipe,
     MapComponent,
+    LocationSearchComponent,
   ],
 })
 export class SharedModule {

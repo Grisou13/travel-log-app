@@ -111,3 +111,15 @@ export const GeocodeResponse = z
   .brand<'GeocodeResponse'>(); //satisfies z.ZodType<FeatureCollection<Feature<Point>>>;
 //https://github.com/colinhacks/zod/discussions/2116
 export type GeocodeResponse = z.infer<typeof GeocodeResponse>;
+
+export const reverseGeocodeSearchSchema = GeocodeSearch.omit({
+  text: true,
+  'focus.point.lat': true,
+  'focus.point.lon': true,
+}).merge(
+  z.object({
+    'point.lat': z.number().optional(),
+    'point.lon': z.number().optional(),
+  })
+);
+export type ReverseGeocodeSearch = z.infer<typeof reverseGeocodeSearchSchema>;

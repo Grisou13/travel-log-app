@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnInit,
   Output,
@@ -10,7 +12,7 @@ import {
 } from '@angular/core';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
 import { GeolocationService } from '@shared/services/geolocation/geolocation.service';
-import { FeatureCollection } from 'geojson';
+import { FeatureCollection, Point } from 'geojson';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
@@ -37,6 +39,7 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.sass'],
 })
 export class MapComponent implements AfterViewInit {
+  @Output() onClicked = new EventEmitter<Point>();
 
   @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
@@ -74,6 +77,7 @@ export class MapComponent implements AfterViewInit {
     tap({
       next: (val) => {
         if (this.map === null) return;
+        if (val.length <= 0) return;
         const bounds = new L.LatLngBounds(
           val.map((x) => {
             const r = x.getLatLng();
@@ -87,10 +91,7 @@ export class MapComponent implements AfterViewInit {
     })
   );
 
-
-  constructor(
-    private geoService: GeolocationService,
-  ) {}
+  constructor(private geoService: GeolocationService, private zone: NgZone) {}
 
   ngAfterViewInit(): void {
     // this.initMap();
@@ -98,28 +99,41 @@ export class MapComponent implements AfterViewInit {
   onMapReady(map: L.Map) {
     this.map = map;
     setTimeout(() => map.invalidateSize(), 0);
+    this.map.on('click', (event) => {
+      this.zone.run(() => {
+        this.onClicked.emit({
+          type: 'Point',
+          coordinates: [
+            event.latlng.lng,
+            event.latlng.lat,
+            event.latlng?.alt ?? 0,
+          ],
+        });
+      });
+    });
     //this.showUserLocation(map);
   }
-  checkGeo(){
+  checkGeo() {
     this.geoStatus = this.geoService.checkNavigatorGeolocation();
-    return this.geoStatus
+    return this.geoStatus;
   }
   showUserLocation(map: L.Map) {
     this.map = map;
 
-    this.geoService.getUserPosition()
-      .subscribe((position: any) => {
-        map.setView([position.latitude, position.longitude], 8);
+    this.geoService.getUserPosition().subscribe((position: any) => {
+      map.setView([position.latitude, position.longitude], 8);
 
-        const icon = L.icon({
-          iconUrl: '/assets/pin.png',
-          iconSize: [48, 48],
-          iconAnchor: [24, 42], 
-          popupAnchor: [0, -32],
-        });
-
-        const marker = L.marker([position.latitude, position.longitude], { icon }).bindPopup('You are here!');
-        marker.addTo(map);
+      const icon = L.icon({
+        iconUrl: '/assets/pin.png',
+        iconSize: [48, 48],
+        iconAnchor: [24, 42],
+        popupAnchor: [0, -32],
       });
+
+      const marker = L.marker([position.latitude, position.longitude], {
+        icon,
+      }).bindPopup('You are here!');
+      marker.addTo(map);
+    });
   }
 }
