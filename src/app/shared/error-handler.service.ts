@@ -6,7 +6,7 @@ export type ErrorMessage = { message: string; status: any; context: string };
 export class ErrorHandlerService {
   constructor(private toastr: ToastrService) {}
   handleError(error: ErrorMessage): void {
-    console.error(error.message);
+    console.error(error);
     this.toastr.error(error.message);
     //throw new Error('Method not implemented.');
   }

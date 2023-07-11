@@ -96,9 +96,11 @@ export class MapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     // this.initMap();
   }
-  onMapReady(map: L.Map) {
+  async onMapReady(map: L.Map) {
     this.map = map;
     setTimeout(() => map.invalidateSize(), 0);
+    await this.initGeolocation();
+
     this.map.on('click', (event) => {
       this.zone.run(() => {
         this.onClicked.emit({
@@ -113,27 +115,38 @@ export class MapComponent implements AfterViewInit {
     });
     //this.showUserLocation(map);
   }
-  checkGeo() {
-    this.geoStatus = this.geoService.checkNavigatorGeolocation();
-    return this.geoStatus;
+
+  async initGeolocation() {
+    const geoStatus = await this.geoService.checkNavigatorGeolocation();
+    this.geoStatus = geoStatus;
+
+    if (geoStatus === 'denied') {
+      return;
+    }
+    await this.showUserLocation(this.map);
   }
-  showUserLocation(map: L.Map) {
-    this.map = map;
 
-    this.geoService.getUserPosition().subscribe((position: any) => {
-      map.setView([position.latitude, position.longitude], 8);
+  async showUserLocation(map: L.Map | null) {
+    if (map === null) return;
 
-      const icon = L.icon({
-        iconUrl: '/assets/pin.png',
-        iconSize: [48, 48],
-        iconAnchor: [24, 42],
-        popupAnchor: [0, -32],
-      });
+    const position = await this.geoService.getUserPosition();
+    if (position === null) return;
 
-      const marker = L.marker([position.latitude, position.longitude], {
-        icon,
-      }).bindPopup('You are here!');
-      marker.addTo(map);
+    map.setView([position.coords.latitude, position.coords.longitude], 8);
+
+    const icon = L.icon({
+      iconUrl: '/assets/pin.png',
+      iconSize: [48, 48],
+      iconAnchor: [24, 42],
+      popupAnchor: [0, -32],
     });
+
+    const marker = L.marker(
+      [position.coords.latitude, position.coords.longitude],
+      {
+        icon,
+      }
+    ).bindPopup('You are here!');
+    marker.addTo(map);
   }
 }

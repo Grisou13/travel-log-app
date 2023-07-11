@@ -8,10 +8,10 @@
   <div *ngIf="layers$ | async as layers" [leafletLayers]="layers"></div>
   <div *ngIf="directions$ | async as directions" [leafletLayers]="directions"></div>
   <div class="absolute bottom-4 left-3 h-9 w-9" style="z-index: 10000;">
-    <button 
+    <button
     type="button"
     id="findme"
-    (click)="checkGeo()"
+    (click)="initGeolocation()"
     [ngClass]="{geoLive: this.geoStatus}"
     class="rounded bg-white border-2 border-black/[.2] geoInit"
     >
