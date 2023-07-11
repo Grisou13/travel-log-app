@@ -23,6 +23,7 @@ import * as L from 'leaflet';
 import * as _ from 'lodash';
 import { Place } from '../../models/places';
 import { DirectionRequest } from '@httpClients/open-route-service/directions/schema';
+import { distConverter, timeConverter } from '../../helpers';
 
 @Component({
   selector: 'app-trip-map',
@@ -189,15 +190,15 @@ export class TripMapComponent {
             },
             onEachFeature: (feature, layer) => {
               const popup = L.popup({
-                content: `${feature.properties.summary.distance} m \n ${
-                  feature.properties.summary.duration / 60
-                } min`,
+                content: `<b>Stop to stop informations:</b><br>
+                Distance: ${distConverter(feature.properties.summary.distance)}<br>
+                Duration: ${timeConverter(feature.properties.summary.duration)}`,
               });
               layer.bindPopup(popup);
 
               layer.on('mouseover', function (e) {
                 console.log('Moused over geo json layer: ');
-                e.target.setStyle({ weight: 10, color: '#333' });
+                e.target.setStyle({ weight: 7, color: 'red' });
                 layer.openPopup();
                 console.log(e);
                 console.log(feature);
@@ -209,7 +210,7 @@ export class TripMapComponent {
                 if (layer.isPopupOpen()) {
                   geojsonLayer.resetStyle(e.target);
                 } else {
-                  e.target.setStyle({ wight: 10, color: '#333' });
+                  e.target.setStyle({ weight: 7, color: 'red' });
                 }
                 layer.togglePopup();
               });

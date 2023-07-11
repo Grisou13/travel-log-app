@@ -5,6 +5,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
@@ -36,6 +37,7 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.sass'],
 })
 export class MapComponent implements AfterViewInit {
+
   @Input() set markers(t: L.Marker[]) {
     this.markersState.next(t);
   }
@@ -46,14 +48,18 @@ export class MapComponent implements AfterViewInit {
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
   private map: L.Map | null = null;
+  public geoStatus: any | null = null;
+
   public options = {
     layers: [
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 3,
         maxZoom: 18,
         // attribution: '',
       }),
     ],
     zoom: 5,
+    zoomControl: false,
     center: L.latLng(46.879966, -121.726909),
   };
 
@@ -80,6 +86,8 @@ export class MapComponent implements AfterViewInit {
       },
     })
   );
+
+
   constructor(
     private geoService: GeolocationService,
   ) {}
@@ -89,8 +97,12 @@ export class MapComponent implements AfterViewInit {
   }
   onMapReady(map: L.Map) {
     this.map = map;
-    this.showUserLocation(map);
     setTimeout(() => map.invalidateSize(), 0);
+    //this.showUserLocation(map);
+  }
+  checkGeo(){
+    this.geoStatus = this.geoService.checkNavigatorGeolocation();
+    return this.geoStatus
   }
   showUserLocation(map: L.Map) {
     this.map = map;
