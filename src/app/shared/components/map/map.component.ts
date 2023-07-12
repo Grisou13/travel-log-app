@@ -51,7 +51,9 @@ export class MapComponent implements AfterViewInit {
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
   private map: L.Map | null = null;
-  public geoStatus: any | null = null;
+  geoStatus: any | null = null;
+  geoDenied: boolean | null = null;
+  geoGranted: boolean | null = null;
 
   public options = {
     layers: [
@@ -117,12 +119,14 @@ export class MapComponent implements AfterViewInit {
   }
 
   async initGeolocation() {
-    const geoStatus = await this.geoService.checkNavigatorGeolocation();
-    this.geoStatus = geoStatus;
+    const geoStatusResponse = await this.geoService.checkNavigatorGeolocation();
+    this.geoStatus = geoStatusResponse;
 
-    if (geoStatus === 'denied') {
+    if (geoStatusResponse === 'denied') {
+      this.geoDenied = true;
       return;
     }
+    this.geoGranted = true;
     await this.showUserLocation(this.map);
   }
 
@@ -139,6 +143,7 @@ export class MapComponent implements AfterViewInit {
       iconSize: [48, 48],
       iconAnchor: [24, 42],
       popupAnchor: [0, -32],
+      tooltipAnchor: [0, -28],
     });
 
     const marker = L.marker(
@@ -146,7 +151,7 @@ export class MapComponent implements AfterViewInit {
       {
         icon,
       }
-    ).bindPopup('You are here!');
+    ).bindTooltip('You are here!');
     marker.addTo(map);
   }
 }
