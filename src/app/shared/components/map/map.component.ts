@@ -98,8 +98,9 @@ export class MapComponent implements AfterViewInit {
   }
   async onMapReady(map: L.Map) {
     this.map = map;
+    this.map.addControl(L.control.zoom({ position: 'bottomright' }));
     setTimeout(() => map.invalidateSize(), 0);
-    await this.initGeolocation();
+    // await this.initGeolocation();
 
     this.map.on('click', (event) => {
       this.zone.run(() => {
@@ -113,7 +114,6 @@ export class MapComponent implements AfterViewInit {
         });
       });
     });
-    //this.showUserLocation(map);
   }
 
   async initGeolocation() {
