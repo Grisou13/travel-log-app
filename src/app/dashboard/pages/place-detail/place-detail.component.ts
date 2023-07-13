@@ -30,11 +30,17 @@ export class PlaceDetailComponent {
   markers$ = this.place$.pipe(
     map((p) => {
       if (p === null) return [];
-      return [
+      const ret = [
         placeToMarker(p.current, {
           icon: iconDefault,
         }),
+
+        ...p.pois.map((x) => placeToMarker(x, { icon: iconDefault })),
       ];
+      if (p.previousPlace !== undefined) {
+        ret.push(placeToMarker(p.previousPlace, { icon: iconDefault }));
+      }
+      return ret;
     })
   );
 
