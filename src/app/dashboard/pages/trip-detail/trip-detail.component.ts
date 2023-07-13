@@ -48,7 +48,7 @@ export class TripDetailComponent {
 
   trip$: Observable<Trip | null> = this.route.paramMap.pipe(
     switchMap((params) => {
-      const id = params.get('id') || null;
+      const id = params.get('tripId') || null;
       if (id === null) return of(null);
       return this.tripService.get(id);
     })

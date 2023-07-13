@@ -15,7 +15,7 @@ import { Place } from '../../models/places';
 export class PlaceDetailComponent {
   place$ = this.route.paramMap.pipe(
     switchMap((params) => {
-      const id = params.get('id');
+      const id = params.get('placeId');
       if (id === null) return of(null);
       if (id.length <= 0) return of(null);
 
