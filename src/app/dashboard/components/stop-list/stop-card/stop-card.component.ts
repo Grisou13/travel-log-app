@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Place } from 'src/app/dashboard/models/places';
 
 @Component({
@@ -8,6 +9,8 @@ import { Place } from 'src/app/dashboard/models/places';
 })
 export class StopCardComponent {
   @Input({ required: true }) place!: Place;
-
-  navigateTo(place: Place) {}
+  constructor(private router: Router) {}
+  navigateTo(place: Place) {
+    this.router.navigate(['places/', place.id]);
+  }
 }

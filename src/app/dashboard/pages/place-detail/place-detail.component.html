@@ -1,1 +1,105 @@
-<p>place-detail works!</p>
+<div *ngIf="place$ | async as place">
+  <ng-container *ngIf="place === null"
+    ><p>
+      Could not load your place, please refresh and try again later
+    </p></ng-container
+  >
+  <div class="flex flex-row gap-2">
+    <div *ngIf="mapData$ | async as mapData" class="w-5/6">
+      <div style="height: 500px">
+        <app-map
+          [markers]="mapData.markers"
+          [directions]="mapData.direction"
+        ></app-map>
+      </div>
+    </div>
+    <div class="flex-1">
+      <ol class="border-l-2 border-neutral-300 dark:border-neutral-500">
+        <!-- Previous place -->
+        <li *ngIf="place.previousPlace" [routerLink]="['../',place.previousPlace.id]">
+          <div class="flex-start flex items-center pt-2">
+            <div
+              class="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
+            <p class="text-sm text-neutral-500 dark:text-neutral-300">
+              <span
+                class="inline-block whitespace-nowrap rounded-full bg-neutral-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-secondary-100"
+              >
+                {{ place.previousPlace.order }}
+              </span>
+              <span
+                *ngIf="place.current.budget"
+                class="inline-block whitespace-nowrap rounded-full bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+                >{{ place.previousPlace.budget }}$</span
+              >
+            </p>
+          </div>
+          <div class="mb-6 ml-4 mt-2">
+            <h4 class="mb-1.5 text-xl font-semibold">
+              Stop at {{ place.previousPlace.name }}
+            </h4>
+            <p class="mb-3 text-neutral-500 dark:text-neutral-300">
+              {{ place.previousPlace.startDate }} -
+              {{ place.previousPlace.endDate }}
+            </p>
+          </div>
+        </li>
+        <!-- This place -->
+
+        <li [routerLink]="['../',place.current.id]">
+          <div class="flex-start flex items-center pt-3">
+            <div
+              class="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-sky-600 dark:bg-neutral-500"></div>
+            <p class="text-sm text-neutral-500 dark:text-neutral-300">
+              <span
+                class="inline-block whitespace-nowrap rounded-full bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+              >
+                {{ place.current.order }}
+              </span>
+              <span
+                *ngIf="place.current.budget"
+                class="inline-block whitespace-nowrap rounded-full bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+                >{{ place.current.budget }}$</span
+              >
+            </p>
+          </div>
+          <div class="mb-6 ml-4 mt-2">
+            <h4 class="mb-1.5 text-xl font-semibold">
+              Stop at {{ place.current.name }}
+            </h4>
+            <p class="mb-3 text-neutral-500 dark:text-neutral-300">
+              {{ place.current.startDate }} - {{ place.current.endDate }}
+            </p>
+          </div>
+        </li>
+
+        <!-- Next place -->
+        <li *ngIf="place.nextPlace" [routerLink]="['../',place.nextPlace.id]">
+          <div class="flex-start flex items-center pt-2">
+            <div
+              class="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
+            <p class="text-sm text-neutral-500 dark:text-neutral-300">
+              <span
+                class="inline-block whitespace-nowrap rounded-full bg-neutral-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-secondary-100"
+              >
+                {{ place.nextPlace.order }}
+              </span>
+              <span
+                *ngIf="place.current.budget"
+                class="inline-block whitespace-nowrap rounded-full bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+                >{{ place.nextPlace.budget }}$</span
+              >
+            </p>
+          </div>
+          <div class="mb-6 ml-4 mt-2">
+            <h4 class="mb-1.5 text-xl font-semibold">
+              Stop at {{ place.nextPlace.name }}
+            </h4>
+            <p class="mb-3 text-neutral-500 dark:text-neutral-300">
+              {{ place.nextPlace.startDate }} - {{ place.nextPlace.endDate }}
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
