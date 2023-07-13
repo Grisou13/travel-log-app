@@ -115,7 +115,7 @@ export class AddPlaceComponent {
             // also having an order that starts at -1 has no incidence
             order:
               type === 'TripStop'
-                ? places.filter((x) => x.type === 'TripStop').length - 1
+                ? places.filter((x) => x.type === 'TripStop').length + 1
                 : -1,
             directions: {
               distance: 0,
