@@ -9,8 +9,4 @@ import { Place } from 'src/app/dashboard/models/places';
 })
 export class StopCardComponent {
   @Input({ required: true }) place!: Place;
-  constructor(private router: Router) {}
-  navigateTo(place: Place) {
-    this.router.navigate(['places/', place.id]);
-  }
 }
