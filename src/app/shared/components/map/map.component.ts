@@ -21,7 +21,7 @@ import { Place } from 'src/app/dashboard/models/places';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
-export const iconDefault = L.icon({
+/* export const iconDefault = L.icon({
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
@@ -30,6 +30,14 @@ export const iconDefault = L.icon({
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
   shadowSize: [41, 41],
+}); */
+export const iconDefault = L.divIcon({
+  className: 'place-icon',
+  html: '01',
+  iconSize: [36, 36],
+  iconAnchor: [18, 18],
+  popupAnchor: [18, 0],
+  tooltipAnchor: [18, 0],
 });
 L.Marker.prototype.options.icon = iconDefault;
 
@@ -101,6 +109,7 @@ export class MapComponent implements AfterViewInit {
   async onMapReady(map: L.Map) {
     this.map = map;
     this.map.addControl(L.control.zoom({ position: 'bottomright' }));
+    this.map.addControl(L.control.scale({metric: true, imperial: false}).addTo(map));
     setTimeout(() => map.invalidateSize(), 0);
     // await this.initGeolocation();
 

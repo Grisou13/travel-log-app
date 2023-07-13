@@ -1,5 +1,5 @@
 <div
-  class="map z-10"
+  class="map z-10 rounded-lg m-6"
   leaflet
   [leafletOptions]="options"
   (leafletMapReady)="onMapReady($event)"
@@ -7,7 +7,7 @@
 >
   <div *ngIf="layers$ | async as layers" [leafletLayers]="layers"></div>
   <div *ngIf="directions$ | async as directions" [leafletLayers]="directions"></div>
-  <div class="absolute bottom-4 left-3 h-9 w-9" style="z-index: 10000;">
+  <div class="absolute top-4 right-3 h-9 w-9" style="z-index: 10000;">
     <button
     type="button"
     id="findme"

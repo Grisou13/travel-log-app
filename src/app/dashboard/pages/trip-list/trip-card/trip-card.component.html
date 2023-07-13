@@ -1,20 +1,19 @@
 <a
   *ngIf="trip$ | async as trip"
-  class="block ml-4 rounded-md bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-60 h-60"
+  class="block ml-4 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-60 h-80"
   (click)="navigateToNewTrip(trip)"
 >
+  <!-- TODO: add dynamic background img to card picture -->
   <div 
-    class="flex rounded-t-md w-full h-1/2" 
-    style="background-image:url('https://images.unsplash.com/photo-1534540378968-85a7b8fde19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'); background-size:cover; background-position: center center;"
+    class="flex rounded-t-lg w-full h-1/2 border-solid border-2 border-white" 
+    style="background-image:url('https://images.unsplash.com/photo-1534540378968-85a7b8fde19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'); background-size:cover; background-position: center center; box-shadow: rgba(0, 0, 0, 0.45) 0px 15px 20px -25px;"
   >
-  <h6
-    class="flex mb-2 text-center leading-tight text-neutral-800 dark:text-neutral-50"
-  >
+<!--   <h6 class="flex mb-2 text-center leading-tight text-neutral-800 dark:text-neutral-50">
     {{ trip.title }}
-  </h6>
+  </h6> -->
   </div>
-  <div class="p-4">
-    <p class="mb-4 text-sm font-medium text-neutral-600 dark:text-neutral-200">
+  <div class="block px-6 pt-6 h-18">
+    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-200">
       {{ trip.description }}
     </p>
     <div *ngIf="tripStart$ | withLoadingStatus | async as obs" class="text-xs">
@@ -33,13 +32,16 @@
         <p>End: {{obs.value.name}}</p>
       </ng-template>
     </div>
-    <button
+  </div>
+    <div class="flex align-start px-6">
+      <button
       type="button"
-      class="inline-block align-bottom rounded bg-primary px-6 mt-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      class="h-10 w-10 align-center rounded-full bg-primary p-3 mt-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
       data-te-ripple-init
       data-te-ripple-color="light"
-    >
-      Edit
-    </button>
+      >
+        E
+        <!-- TODO: add edit icon svg -->
+      </button>
   </div>
 </a>
