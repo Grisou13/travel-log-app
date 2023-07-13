@@ -65,7 +65,7 @@ export class MapComponent implements AfterViewInit {
 
   public options = {
     layers: [
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         minZoom: 3,
         maxZoom: 18,
         // attribution: '',
