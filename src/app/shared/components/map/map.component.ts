@@ -21,7 +21,7 @@ import { Place } from 'src/app/dashboard/models/places';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
-export const iconDefault = L.icon({
+/* export const iconDefault = L.icon({
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
@@ -30,6 +30,14 @@ export const iconDefault = L.icon({
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
   shadowSize: [41, 41],
+}); */
+export const iconDefault = L.divIcon({
+  className: 'place-icon',
+  html: '01',
+  iconSize: [36, 36],
+  iconAnchor: [18, 18],
+  popupAnchor: [18, 0],
+  tooltipAnchor: [18, 0],
 });
 L.Marker.prototype.options.icon = iconDefault;
 
@@ -51,11 +59,13 @@ export class MapComponent implements AfterViewInit {
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
   private map: L.Map | null = null;
-  public geoStatus: any | null = null;
+  geoStatus: any | null = null;
+  geoDenied: boolean | null = null;
+  geoGranted: boolean | null = null;
 
   public options = {
     layers: [
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         minZoom: 3,
         maxZoom: 18,
         // attribution: '',
@@ -98,8 +108,10 @@ export class MapComponent implements AfterViewInit {
   }
   async onMapReady(map: L.Map) {
     this.map = map;
+    this.map.addControl(L.control.zoom({ position: 'bottomright' }));
+    this.map.addControl(L.control.scale({metric: true, imperial: false}).addTo(map));
     setTimeout(() => map.invalidateSize(), 0);
-    await this.initGeolocation();
+    // await this.initGeolocation();
 
     this.map.on('click', (event) => {
       this.zone.run(() => {
@@ -113,16 +125,17 @@ export class MapComponent implements AfterViewInit {
         });
       });
     });
-    //this.showUserLocation(map);
   }
 
   async initGeolocation() {
-    const geoStatus = await this.geoService.checkNavigatorGeolocation();
-    this.geoStatus = geoStatus;
+    const geoStatusResponse = await this.geoService.checkNavigatorGeolocation();
+    this.geoStatus = geoStatusResponse;
 
-    if (geoStatus === 'denied') {
+    if (geoStatusResponse === 'denied') {
+      this.geoDenied = true;
       return;
     }
+    this.geoGranted = true;
     await this.showUserLocation(this.map);
   }
 
@@ -139,6 +152,7 @@ export class MapComponent implements AfterViewInit {
       iconSize: [48, 48],
       iconAnchor: [24, 42],
       popupAnchor: [0, -32],
+      tooltipAnchor: [0, -28],
     });
 
     const marker = L.marker(
@@ -146,7 +160,7 @@ export class MapComponent implements AfterViewInit {
       {
         icon,
       }
-    ).bindPopup('You are here!');
+    ).bindTooltip('You are here!');
     marker.addTo(map);
   }
 }

@@ -1,16 +1,16 @@
 .map
   height: 100%
 
-.geoDead svg
+.geoDenied svg
   fill: red!important
 
-.geoLive svg
+.geoGranted svg
   fill: green!important
 
 .geoInit svg
   fill: grey
 
-.geoDead:before, .geoLive:before, .geoInit:before
+.geoDenied:before, .geoGranted:before, .geoInit:before
   display: flex
   position: absolute
   right: -.25em
@@ -22,15 +22,16 @@
   color: white
   border-radius: 50%
   transition: all .3s ease-in-out
+  font-weight: 700
 
 .geoInit:before
   content: '?'
   background: grey
 
-.geoDead:before
+.geoDenied:before
   content: '!'
   background: red
 
-.geoLive:before
+.geoGranted:before
   content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width=".5em" height=".5em"%3E%3Cpath fill="white" d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"%3E%3C/path%3E%3C/svg%3E')
   background: green

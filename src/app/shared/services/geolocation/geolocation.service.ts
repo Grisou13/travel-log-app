@@ -14,12 +14,16 @@ export class GeolocationService {
   async checkNavigatorGeolocation() {
     !browserHasGeoApi
       ? this.toastr.error(`No geolocation available on this browser!`)
-      : this.toastr.info(`Geolocation is available on this browser!`);
+      : null; //this.toastr.info(`Geolocation is available on this browser!`);
+      
     const geoStatus = await navigator.permissions.query({
       name: 'geolocation',
     });
 
     // console.log(geoStatus)
+    // toastr display depending from response
+    if (geoStatus.state === 'granted'){ this.toastr.success(`User has accepted location request`) }
+    if (geoStatus.state === 'denied'){ this.toastr.error(`User has refused location request`) }
     return geoStatus.state;
   }
 

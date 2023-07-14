@@ -62,6 +62,7 @@ export class TripMapComponent {
         L.marker([y.location.coordinates[1], y.location.coordinates[0]], {
           icon: iconDefault,
           title: y.name,
+          draggable: true,
         })
           .bindTooltip(y.name)
           .addEventListener('click', () => {
