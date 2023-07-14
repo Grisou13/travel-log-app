@@ -90,6 +90,7 @@ export abstract class CacheableService<
   protected fetchItem(id: K): Observable<T | boolean> {
     return this.fetchSingleRemote(id).pipe(
       catchError((err) => {
+        console.error(err);
         return of(false);
       })
     );

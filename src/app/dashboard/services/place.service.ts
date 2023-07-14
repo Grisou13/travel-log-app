@@ -16,11 +16,13 @@ import {
   throwError,
   filter,
   distinctUntilChanged,
+  startWith,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddPlace, Place } from '../models/places';
 import { Trip } from '../models/trips';
 import { CacheableService } from './cachable.service';
+import * as _ from 'lodash';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,15 +34,41 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
   ) {
     super(-1); //every second refresh data
   }
+  getPlacesWithRelated(id: string) {
+    return this.get(id).pipe(
+      switchMap((current) => {
+        if (typeof current === 'undefined' || typeof current === 'boolean')
+          return of(null);
+        const currentOrder = current.order - 1;
 
-  fetchForTrip(trip: Trip) {
+        return this.fetchForTripId(current.tripId).pipe(
+          map((places) => {
+            const pois = places.filter((x) => x.infos?.relatedToPlace === id);
+            const stops = _.sortBy(
+              places.filter((x) => x.type === 'TripStop'),
+              'order'
+            );
+            return {
+              current,
+              pois,
+              previousPlace:
+                currentOrder >= 1 ? stops.at(currentOrder - 1) : undefined,
+              nextPlace: stops.at(currentOrder + 1),
+            };
+          })
+        );
+      })
+    );
+  }
+  fetchForTripId(tripId: string) {
     const localItems = this.getAll();
-    const filterFn = (x: Place) => x.tripId === trip.id;
+    const filterFn = (x: Place) => x.tripId === tripId;
     //TODO maybe update this somehow every couple of times so things keep in sync?
     const placesForTrip = localItems.filter(filterFn);
-    if (placesForTrip.length > 0) return of(placesForTrip);
+    // if (placesForTrip.length > 0) return of(placesForTrip);
 
-    return this.fetch({ trip: trip.id }).pipe(
+    return this.fetch({ trip: tripId }).pipe(
+      startWith(placesForTrip),
       switchMap((places) => {
         console.log('Got places from api');
         console.log(places);
@@ -49,7 +77,6 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
         // what we need here is an operator that allows us to add/update stuff and has an internal cache of it's own.
         // this allows us to keep the fetch for trip to be
         if (places.length <= 0) return of([]);
-        const tripId = trip.id;
         if (tripId === undefined) return of([]);
         console.log('Filtering for tripId: ', tripId);
         return this.items$.pipe(
@@ -64,6 +91,9 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     ); /*.pipe(
       switchMap(() => this.items$.pipe(map((i) => i.filter(filterFn))))
     );*/
+  }
+  fetchForTrip(trip: Trip) {
+    return this.fetchForTripId(trip.id);
   }
 
   override fetchRemote(

@@ -57,10 +57,5 @@ export class TripCardComponent {
     })
   );
 
-  navigateToNewTrip($event: Trip) {
-    const id = $event.id || null;
-    this.router.navigate(['/dashboard/trips/', id]);
-  }
-
-  constructor(private placeService: PlaceService, private router: Router) {}
+  constructor(private placeService: PlaceService) {}
 }

@@ -41,14 +41,18 @@ export class LocationSearchComponent {
           next: (res) => {
             if (res === null) return;
             const result = res[1].features[0];
+            const marker = res[0];
+
             if (result === null) return;
+            if (typeof result.properties === 'undefined') return;
+            if (marker === null) return;
 
             this.locationSelected.emit({
               name: result.properties.label,
               pictureUrl: '',
               location: {
                 type: 'Point',
-                coordinates: result.geometry.coordinates,
+                coordinates: [marker.getLatLng().lng, marker.getLatLng().lat],
               },
             });
           },
