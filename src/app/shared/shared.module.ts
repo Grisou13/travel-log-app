@@ -11,6 +11,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { GeolocationService } from './services/geolocation/geolocation.service';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { LocationSearchComponent } from './components/location-search/location-search.component';
+import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { LocationSearchComponent } from './components/location-search/location-s
     MapComponent,
     HighlightPipe,
     LocationSearchComponent,
+    OffCanvasComponent,
   ],
   providers: [GeolocationService],
   imports: [CommonModule, ReactiveFormsModule, LeafletModule],
@@ -36,6 +38,7 @@ import { LocationSearchComponent } from './components/location-search/location-s
     WithLoadingStatusPipe,
     MapComponent,
     LocationSearchComponent,
+    OffCanvasComponent,
   ],
 })
 export class SharedModule {

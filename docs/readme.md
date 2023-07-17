@@ -14,3 +14,10 @@ It also allows you to manage your budget
 # Work distribution
 
 (here is a document on how the work is seen and distributed amongs team members)[./team.md]
+
+# What has changed compared to the initial app
+
+The api has changed a bit, not func
+
+# What would've been done differently
+
