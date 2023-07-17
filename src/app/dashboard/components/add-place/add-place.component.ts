@@ -36,7 +36,6 @@ import { FormArray, FormControl } from '@angular/forms';
 import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 import { getPlaceClosest } from '../../helpers';
 import { DirectionRequest } from '@httpClients/open-route-service/directions/schema';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-add-place',
@@ -132,8 +131,7 @@ export class AddPlaceComponent {
             location: $event.location,
           };
           return this.placeService.add(payload);
-        }),
-        takeUntilDestroyed()
+        })
       )
       .subscribe({
         next: console.log,

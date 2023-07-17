@@ -5,14 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { indicate } from 'src/app/helpers';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.sass'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   protected loading$ = new BehaviorSubject(false);
   returnUrl: string = '/app';
 
@@ -20,6 +19,7 @@ export class SignupComponent implements OnInit {
     username: '', //['', Validators.required],
     password: '', //['', Validators.required],
   });
+  sub: Subscription | null = null;
 
   constructor(
     private loginService: AuthService,
@@ -27,6 +27,9 @@ export class SignupComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {}
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
   ngOnInit() {
     initTE({ Input });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -38,22 +41,22 @@ export class SignupComponent implements OnInit {
     }
     const username = this.signupForm.get('username')?.value || '';
     const password = this.signupForm.get('password')?.value || '';
-    this.loginService
+    this.sub = this.loginService
       .signup({
         name: username,
         password,
       })
-      .pipe(indicate(this.loading$), takeUntilDestroyed())
-      .subscribe({
-        next: (user) => {
+      .pipe(indicate(this.loading$))
+      .subscribe(
+        (user) => {
           this.signupForm.reset();
 
           console.log('Logged in as user:', user);
           this.router.navigate([this.returnUrl]);
         },
-        error: (err) => {
+        (err) => {
           console.log(err);
-        },
-      });
+        }
+      );
   }
 }

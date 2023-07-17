@@ -10,20 +10,20 @@ import {
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { BehaviorSubject, delay, Subscription, takeLast, tap } from 'rxjs';
 import { indicate } from 'src/app/helpers';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string = '/app';
   loading$ = new BehaviorSubject(false);
   loginForm = this.fb.group({
     username: '',
     password: '',
   });
+  sub$: Subscription | null = null;
 
   constructor(
     private loginService: AuthService,
@@ -44,13 +44,13 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.get('username')?.value || '';
     const password = this.loginForm.get('password')?.value || '';
 
-    this.loginService
+    this.sub$ = this.loginService
       .authenticate({
         authMethod: 'default',
         credential: username,
         password,
       })
-      .pipe(delay(100), indicate(this.loading$), takeLast(1), takeUntilDestroyed())
+      .pipe(delay(100), indicate(this.loading$), takeLast(1))
       .subscribe({
         next: (user) => {
           console.log('Logged in as user:', user);
@@ -59,5 +59,8 @@ export class LoginComponent implements OnInit {
         error: console.error,
         complete: () => {},
       });
+  }
+  ngOnDestroy() {
+    this.sub$?.unsubscribe();
   }
 }
