@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { OpenRouteHttp } from '../open-route.http';
 import { ErrorHandlerService } from '@shared/error-handler.service';
 import { PoiTypes } from './types';
-import { of, switchMap, tap } from 'rxjs';
+import { catchError, delay, of, retry, switchMap, tap, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,8 @@ export class PoisService {
             request: 'list',
           })
           .pipe(
+            catchError(err => of(null)),
+            retry({delay: () => timer(1500)}),
             tap({
               next: (val) =>
                 localStorage.setItem(this.KEY_POI_LIST, JSON.stringify(val)),
