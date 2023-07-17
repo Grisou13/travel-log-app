@@ -8,6 +8,7 @@ import {
   Result,
 } from '@shared/components/cities-search/cities-search.component';
 import { Trip } from './../../models/trips';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-new-trip',
@@ -50,7 +51,8 @@ export class NewTripComponent implements OnInit {
               location: startCity.location,
             }),
           ]);
-        })
+        }),
+        takeUntilDestroyed()
       )
       .subscribe(([trip, place]) => {
         console.log(trip);
