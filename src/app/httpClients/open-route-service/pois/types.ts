@@ -461,3 +461,85 @@ export const poiTypesSchema = z.object({
   }),
 });
 export type PoiTypes = z.infer<typeof poiTypesSchema>;
+
+export const geometry = z.object({
+  bbox: z.array(z.array(z.number())).optional(),
+  geojson: z.object({
+    type: z.literal('Point'),
+    coordinates: z.array(z.number()),
+  }),
+  buffer: z.number().min(1).max(2000).optional(),
+});
+
+export const filters = z.object({
+  category_group_ids: z.array(z.number()).optional(),
+  category_ids: z.array(z.number()).optional(),
+  name: z.array(z.string()).optional(),
+  wheelchair: z
+    .union([z.boolean(), z.literal('limited'), z.literal('designated')])
+    .optional(),
+  smoking: z
+    .union([
+      z.boolean(),
+      z.literal('dedicated'),
+      z.literal('separated'),
+      z.literal('isolated'),
+      z.literal('outside'),
+    ])
+    .optional(),
+  fee: z.boolean().optional(),
+});
+export type PoiFilter = z.infer<typeof filters>;
+export const requestSchema = z.object({
+  request: z.union([z.literal('pois'), z.literal('stats'), z.literal('list')]),
+  geometry: geometry.optional(),
+  filters: filters.optional(),
+  limit: z.number().min(1).optional(),
+  sortby: z.union([z.literal('category'), z.literal('distance')]).optional(),
+});
+
+export type PoiSearchRequest = z.infer<typeof requestSchema>;
+export const responseSchema = z.object({
+  type: z.union([z.literal('FeatureCollection'), z.literal('Feature')]),
+  bbox: z.array(z.number()),
+  features: z.array(
+    z.object({
+      type: z.string(),
+      geometry: z.object({
+        type: z.string(),
+        coordinates: z.array(z.number()),
+      }),
+      properties: z.object({
+        osm_id: z.number(),
+        osm_type: z.number(),
+        distance: z.number(),
+        category_ids: z.map(
+          z.number(),
+          z.object({
+            category_name: z.string(),
+            category_group: z.string(),
+          })
+        ),
+      }),
+      osm_tags: z.map(z.string(), z.string()),
+    })
+  ),
+  information: z.object({
+    attribution: z.string(),
+    version: z.string(),
+    timestamp: z.number(),
+    query: z.object({
+      request: z.string(),
+      geometry: z.object({
+        bbox: z.array(z.number()).length(4).length(6),
+        geojson: z.object({
+          type: z.string(),
+          coordinates: z.array(z.number()),
+        }),
+        buffer: z.number(),
+      }),
+    }),
+  }),
+});
+
+export type PoiSearchResponse = z.infer<typeof responseSchema>;

@@ -53,8 +53,8 @@ export class NewTripComponent implements OnInit {
         })
       )
       .subscribe(([trip, place]) => {
-        console.log(trip);
-        
+        console.debug(trip);
+
         this.tripCreated.emit({ ...trip });
       });
   }

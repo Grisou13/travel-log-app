@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   public boot() {
-    console.log('Booting auth service');
+    console.debug('Booting auth service');
     return this.resolveUser().pipe(
       tap((user) => {
         if (!user) return;
@@ -112,13 +112,13 @@ export class AuthService {
 
   private resolveUser(): Observable<null | User> {
     //resolve user on startup, this is usefull so we don't keep the whole user object
-    console.log('resolving user');
+    console.debug('resolving user');
     const userId = fetchUserId();
     if (!userId) {
-      console.log('no user nor token found');
+      console.debug('no user nor token found');
       return of(null);
     }
-    console.log('fetching him remotly');
+    console.debug('fetching him remotly');
     return this.travelLogService.users.fetchOne(userId);
   }
 }

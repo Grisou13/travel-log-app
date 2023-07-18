@@ -66,7 +66,7 @@ export class TripMapComponent {
         })
           .bindTooltip(y.name)
           .addEventListener('click', () => {
-            console.log('CLicking on:', y);
+            console.debug('CLicking on:', y);
             this.zone.run(() => {
               const currentlySelected = this.selectedPlaceState.getValue();
 
@@ -148,8 +148,8 @@ export class TripMapComponent {
             previous.location.coordinates,
             s.location.coordinates,
           ];
-          console.log('Stops for the trip: ', s);
-          console.log('Getting waypoints for directions: ', waypoints);
+          console.debug('Stops for the trip: ', s);
+          console.debug('Getting waypoints for directions: ', waypoints);
           return this.directionService
             .fetchDirectionsGeoJson(
               DirectionRequest.parse({
@@ -170,7 +170,7 @@ export class TripMapComponent {
                   .pipe(
                     tap({
                       next: (val) => {
-                        console.log('Updated place in api ', val);
+                        console.debug('Updated place in api ', val);
                       },
                     })
                   )
@@ -192,22 +192,26 @@ export class TripMapComponent {
             onEachFeature: (feature, layer) => {
               const popup = L.popup({
                 content: `<b>Stop to stop informations:</b><br>
-                Distance: ${distConverter(feature.properties.summary.distance)}<br>
-                Duration: ${timeConverter(feature.properties.summary.duration)}`,
+                Distance: ${distConverter(
+                  feature.properties.summary.distance
+                )}<br>
+                Duration: ${timeConverter(
+                  feature.properties.summary.duration
+                )}`,
               });
               layer.bindPopup(popup);
 
               layer.on('mouseover', function (e) {
-                console.log('Moused over geo json layer: ');
+                console.debug('Moused over geo json layer: ');
                 e.target.setStyle({ weight: 7, color: 'red' });
                 layer.openPopup();
-                console.log(e);
-                console.log(feature);
-                console.log(layer);
-                console.log('===============');
+                console.debug(e);
+                console.debug(feature);
+                console.debug(layer);
+                console.debug('===============');
               });
               layer.on('click', (e) => {
-                console.log('CLicked feature');
+                console.debug('CLicked feature');
                 if (layer.isPopupOpen()) {
                   geojsonLayer.resetStyle(e.target);
                 } else {

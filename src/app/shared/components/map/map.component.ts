@@ -65,11 +65,14 @@ export class MapComponent implements AfterViewInit {
 
   public options = {
     layers: [
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        minZoom: 3,
-        maxZoom: 18,
-        // attribution: '',
-      }),
+      L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        {
+          minZoom: 3,
+          maxZoom: 18,
+          // attribution: '',
+        }
+      ),
     ],
     zoom: 5,
     zoomControl: false,
@@ -95,8 +98,8 @@ export class MapComponent implements AfterViewInit {
           })
         );
         this.map.fitBounds(bounds);
-        console.log('New value for markers');
-        console.log(val);
+        console.debug('New value for markers');
+        console.debug(val);
       },
     })
   );
@@ -109,7 +112,9 @@ export class MapComponent implements AfterViewInit {
   async onMapReady(map: L.Map) {
     this.map = map;
     this.map.addControl(L.control.zoom({ position: 'bottomright' }));
-    this.map.addControl(L.control.scale({metric: true, imperial: false}).addTo(map));
+    this.map.addControl(
+      L.control.scale({ metric: true, imperial: false }).addTo(map)
+    );
     setTimeout(() => map.invalidateSize(), 0);
     // await this.initGeolocation();
 

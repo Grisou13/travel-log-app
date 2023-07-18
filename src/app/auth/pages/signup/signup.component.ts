@@ -51,11 +51,11 @@ export class SignupComponent implements OnInit, OnDestroy {
         (user) => {
           this.signupForm.reset();
 
-          console.log('Logged in as user:', user);
+          console.debug('Logged in as user:', user);
           this.router.navigate([this.returnUrl]);
         },
         (err) => {
-          console.log(err);
+          console.debug(err);
         }
       );
   }

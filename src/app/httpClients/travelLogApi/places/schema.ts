@@ -24,7 +24,8 @@ export const validator = z
     }),
     infos: z
       .object({
-        relatedToPlace: z.string().nullable(),
+        relatedToPlace: z.string().optional(),
+        misc_id: z.string().optional(), //allows us to add another id than the one in the database. This is usefull for pois where they can contain an osm_id
       })
       .optional(),
     pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",

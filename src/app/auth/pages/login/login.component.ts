@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(delay(100), indicate(this.loading$), takeLast(1))
       .subscribe({
         next: (user) => {
-          console.log('Logged in as user:', user);
+          console.debug('Logged in as user:', user);
           this.router.navigate([this.returnUrl]);
         },
         error: console.error,

@@ -63,7 +63,7 @@ export class CitiesSearchComponent {
     tap({
       next: (v) => {
         this.searchValue = v;
-        console.log('New input status: ', v);
+        console.debug('New input status: ', v);
       },
     }),
     filter((x) => this.inputValid(x)),

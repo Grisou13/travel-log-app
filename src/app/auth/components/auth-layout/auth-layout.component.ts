@@ -18,14 +18,14 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
     // this.title = this.route.title;
     // this.title.pipe(
     //   tap((x) => {
-    //     console.log(x);
+    //     console.debug(x);
     //   })
     // );
   }
 
   ngOnInit() {
     this.title = this.route.firstChild?.snapshot.title || '';
-    // this.sub = this.route.title.subscribe((v) => console.log(v));
+    // this.sub = this.route.title.subscribe((v) => console.debug(v));
   }
   ngOnDestroy() {
     // this.sub?.unsubscribe();

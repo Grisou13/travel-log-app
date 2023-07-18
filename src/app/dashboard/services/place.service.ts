@@ -70,18 +70,18 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     return this.fetch({ trip: tripId }).pipe(
       startWith(placesForTrip),
       switchMap((places) => {
-        console.log('Got places from api');
-        console.log(places);
+        console.debug('Got places from api');
+        console.debug(places);
         //doing this is pretty stupid, but for now it will work.
         // the idea is that fetchFor trip does not bring us from the cacheed items and will never emit a new value.
         // what we need here is an operator that allows us to add/update stuff and has an internal cache of it's own.
         // this allows us to keep the fetch for trip to be
         if (places.length <= 0) return of([]);
         if (tripId === undefined) return of([]);
-        console.log('Filtering for tripId: ', tripId);
+        console.debug('Filtering for tripId: ', tripId);
         return this.items$.pipe(
           map((items) => {
-            console.log('Items in cache: ', items);
+            console.debug('Items in cache: ', items);
             return items.filter((i) => i.tripId === tripId);
           })
         );

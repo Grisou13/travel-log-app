@@ -68,8 +68,8 @@ export class AddPlaceComponent {
 
     tap({
       next: (p) => {
-        console.log('Places new items');
-        console.log(p);
+        console.debug('Places new items');
+        console.debug(p);
       },
     })
   );
@@ -126,7 +126,7 @@ export class AddPlaceComponent {
               relatedToPlace:
                 type === 'PlaceOfInterest'
                   ? getPlaceClosest(places, $event)
-                  : null,
+                  : undefined,
             },
             location: $event.location,
           };
@@ -134,8 +134,8 @@ export class AddPlaceComponent {
         })
       )
       .subscribe({
-        next: console.log,
-        complete: console.log,
+        next: console.debug,
+        complete: console.debug,
         error: console.error,
       });
   }
