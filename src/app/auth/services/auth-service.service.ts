@@ -50,7 +50,7 @@ export class AuthService {
   //.pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
   constructor(private travelLogService: TravelLogService) {
-    console.info('Creating auth service');
+    console.debug('Creating auth service');
     this.isAuthenticatedEvent.next(this.isTokenValid());
   }
 
