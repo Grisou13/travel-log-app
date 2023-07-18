@@ -23,15 +23,15 @@
   - *[ ] Add Input/Output for map bounding box
   - *[ ] Output onMapReady with map ref
 - *[X] Search for cities
-  - *[ ] Button to trigger Geolocation on autocomplete field - Eric
+  - *[X] Button to trigger Geolocation on autocomplete field - Eric
     - *[X] Service for geolocation of navigator - Eric
     - *[X] Ability to center map - Eric
-  - *[ ] Map for cities search - Eric
-    - *[ ] Requires abaility to get events from map (Modify `app-map`) - Eric
-  - *[ ] On click of map reverse geocode to address - Eric
-    - *[ ] Update geocode service to be able to reverse geocode from lat/lng httpClient/open-route-service
-      - *[ ] map api models in typescript
-      - *[ ] add function in service to call api
+  - *[X] Map for cities search - Eric
+    - *[X] Requires abaility to get events from map (Modify `app-map`) - Eric
+  - *[X] On click of map reverse geocode to address - Eric
+    - *[X] Update geocode service to be able to reverse geocode from lat/lng httpClient/open-route-service
+      - *[X] map api models in typescript
+      - *[X] add function in service to call api
       - *[ ] Handle api errors
 - *[X] Search for related poi on a trip
   - *[ ] Use open route service to find pois

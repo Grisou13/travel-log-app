@@ -24,6 +24,12 @@ npm i
 cd ..
 ```
 
+# Accessing the app
+
+The app is already available and you don't have to build it yourself if you don't want.
+
+https://travel-log-app-grisou13-b98de78dd78835c46dbbfad4b4aca23a8584b05.gitlab.io/
+
 # Running the app
 
 Before running the app you will need an api.
