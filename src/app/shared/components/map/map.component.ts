@@ -55,6 +55,8 @@ export class MapComponent implements AfterViewInit {
   @Input() set directions(t: L.GeoJSON<any>[] | null) {
     this.directionsState.next(t);
   }
+  @Output() center = new EventEmitter<L.LatLng>();
+  @Output() bbox = new EventEmitter<L.LatLngBounds>();
   private directionsState = new BehaviorSubject<L.GeoJSON<any>[] | null>(null);
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
@@ -111,6 +113,12 @@ export class MapComponent implements AfterViewInit {
   }
   async onMapReady(map: L.Map) {
     this.map = map;
+    this.map.on('dragend', () =>
+      this.zone.run(() => {
+        this.center.emit(this.map?.getCenter());
+        this.bbox.emit(this.map?.getBounds());
+      })
+    );
     this.map.addControl(L.control.zoom({ position: 'bottomright' }));
     this.map.addControl(
       L.control.scale({ metric: true, imperial: false }).addTo(map)
