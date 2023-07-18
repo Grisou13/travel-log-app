@@ -16,9 +16,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorHandlerService } from '@shared/error-handler.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SettingsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -12,7 +12,7 @@ import { GeolocationService } from './services/geolocation/geolocation.service';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { LocationSearchComponent } from './components/location-search/location-search.component';
 import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
-
+import { SettingsPoiComponent } from './components/settings-poi/settings-poi.component';
 @NgModule({
   declarations: [
     WithLoadingPipe,
@@ -24,6 +24,7 @@ import { OffCanvasComponent } from './components/off-canvas/off-canvas.component
     HighlightPipe,
     LocationSearchComponent,
     OffCanvasComponent,
+    SettingsPoiComponent,
   ],
   providers: [GeolocationService],
   imports: [CommonModule, ReactiveFormsModule, LeafletModule],
@@ -39,6 +40,7 @@ import { OffCanvasComponent } from './components/off-canvas/off-canvas.component
     MapComponent,
     LocationSearchComponent,
     OffCanvasComponent,
+    SettingsPoiComponent,
   ],
 })
 export class SharedModule {

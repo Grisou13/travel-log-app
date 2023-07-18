@@ -19,6 +19,7 @@ import { iconDefault } from '@shared/components/map/map.component';
 import { Place } from '../../models/places';
 import { PoisService } from '@httpClients/open-route-service/pois/pois.service';
 import { catchError, tap } from 'rxjs';
+import { SettingsService } from '@shared/services/settings.service';
 
 type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
 @Component({
@@ -68,21 +69,15 @@ export class PlaceDetailComponent {
     }),
     startWith([])
   );
-  mainPoiCategorySelection = new BehaviorSubject<number[]>([220, 100, 260]);
-  subCategoryPoiSelection = new BehaviorSubject<number[]>([]);
 
-  poi$ = combineLatest([
-    this.place$,
-    this.mainPoiCategorySelection.asObservable().pipe(distinctUntilChanged()),
-    this.subCategoryPoiSelection.asObservable().pipe(distinctUntilChanged()),
-  ]).pipe(
-    switchMap(([place, selectedCategories, subCategories]) => {
+  poi$ = combineLatest([this.place$, this.settingsService.settings$]).pipe(
+    switchMap(([place, settings]) => {
       if (typeof place?.current.location === 'undefined') return of(null);
       const location = place.current.location;
 
       return this.poiService.fetchPois(location, {
-        category_group_ids: selectedCategories,
-        category_ids: subCategories,
+        category_group_ids: settings?.pois.categories,
+        category_ids: settings?.pois.sub_categories,
       });
     }),
     startWith(null),
@@ -106,68 +101,10 @@ export class PlaceDetailComponent {
     }))
   );
 
-  poiCategories$ = this.poiService.fetchPoiCategories().pipe(
-    distinctUntilChanged(),
-    map((result) => {
-      return Object.entries(result).map(([key, value]) => {
-        return {
-          name: key,
-          ...value,
-          children: Object.entries(value.children)
-            .map(([childKey, childValue]) =>
-              Object.entries(childValue).map(
-                ([cName, cId]) =>
-                  ({
-                    name: childKey + '-' + cName,
-                    id: cId,
-                  } as { name: string; id: number })
-              )
-            )
-            .flat(),
-        };
-      });
-    }),
-    tap({ next: console.log })
-  );
-
   constructor(
     private route: ActivatedRoute,
     private placeService: PlaceService,
-    private poiService: PoisService
+    private poiService: PoisService,
+    private settingsService: SettingsService
   ) {}
-
-  toggleMainCategory(category: { name: string; id: number }) {
-    const current = this.mainPoiCategorySelection.getValue();
-    const idx = current.indexOf(category.id);
-
-    if (idx >= 0) {
-      current.splice(idx, 1);
-      this.mainPoiCategorySelection.next(current);
-    } else {
-      this.mainPoiCategorySelection.next([...current, category.id]);
-    }
-  }
-
-  toggleSubCategory(category: { name: string; id: number }) {
-    const current = this.subCategoryPoiSelection.getValue();
-    const idx = current.indexOf(category.id);
-
-    if (idx >= 0) {
-      current.splice(idx, 1);
-      this.subCategoryPoiSelection.next(current);
-    } else {
-      this.subCategoryPoiSelection.next([...current, category.id]);
-    }
-  }
-  isSubCatSelected(category: { name: string; id: number }) {
-    const current = this.subCategoryPoiSelection.getValue();
-
-    return current.indexOf(category.id) >= 0;
-  }
-
-  isSelected(category: { name: string; id: number }) {
-    const current = this.mainPoiCategorySelection.getValue();
-
-    return current.indexOf(category.id) >= 0;
-  }
 }
