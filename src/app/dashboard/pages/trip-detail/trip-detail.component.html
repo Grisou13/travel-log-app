@@ -7,7 +7,7 @@
       <p formControlName="description" contenteditable></p>
     </ng-container>
 
-    <div class="overflow-auto h-80">
+    <div class="overflow-auto">
       <app-trip-map [trip]="obs.value.trip"></app-trip-map>
     </div>
     <div *ngIf="tripChange$ | async" class="grid w-full self-center m-10 justify-items-stretch items-center">

@@ -20,6 +20,8 @@ import { Place } from '../../models/places';
 import { PoisService } from '@httpClients/open-route-service/pois/pois.service';
 import { catchError, tap } from 'rxjs';
 import { SettingsService } from '@shared/services/settings.service';
+import * as _ from 'lodash';
+import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
 
 type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
 @Component({
@@ -76,25 +78,28 @@ export class PlaceDetailComponent {
       const location = place.current.location;
 
       return this.poiService.fetchPois(location, {
-        category_group_ids: settings?.pois.categories,
-        category_ids: settings?.pois.sub_categories,
+        category_group_ids: settings?.pois.categories ?? [],
+        category_ids: settings?.pois.sub_categories ?? [],
       });
+      //.pipe(tap({ next: console.log }));
     }),
     startWith(null),
-    catchError((err) => of(null))
+    catchError((err) => of(null)),
+    distinctUntilChanged(),
+    shareReplay(1)
   );
 
-  geoJson$ = combineLatest([this.directions$, this.poi$]).pipe(
-    map(([directions, pois]) => {
-      if (pois !== null) {
-        return [...directions, new L.GeoJSON(pois as any)];
-      }
-      return directions;
-    }),
-    startWith([])
-  );
+  // geoJson$ = combineLatest([this.directions$, this.poi$]).pipe(
+  //   map(([directions, pois]) => {
+  //     if (pois !== null) {
+  //       return [...directions, new L.GeoJSON(pois as any)];
+  //     }
+  //     return directions;
+  //   }),
+  //   startWith([])
+  // );
 
-  mapData$ = combineLatest([this.markers$, this.geoJson$]).pipe(
+  mapData$ = combineLatest([this.markers$, this.directions$]).pipe(
     map(([markers, direction]) => ({
       markers,
       direction,
@@ -107,4 +112,20 @@ export class PlaceDetailComponent {
     private poiService: PoisService,
     private settingsService: SettingsService
   ) {}
+
+  tripHasPoi = (pois: Array<Partial<Place>>, osm_id: number) =>
+    _.findIndex(pois, (x) => parseInt(x.infos?.misc_id ?? '-1') === osm_id) >=
+    0;
+
+  togglePoi(place: Place, poi: PoiSearchResponse['features'][0]) {
+    //this.placeService.togglePoi(place.id, poi)
+  }
+  poiName(poi: PoiSearchResponse['features'][0]) {
+    if (typeof poi.properties.osm_tags?.name !== 'undefined')
+      return poi.properties.osm_tags?.name;
+
+    const categoryId = Object.keys(poi.properties.category_ids)[0];
+
+    return poi.properties.category_ids[categoryId].category_name;
+  }
 }

@@ -88,7 +88,7 @@ export class PoisService {
         buffer: 2000,
       },
       filters,
-      limit: 3000,
+      limit: 2000,
     });
     return this.request<PoiSearchResponse>(request);
   }

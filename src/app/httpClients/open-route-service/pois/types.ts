@@ -513,15 +513,22 @@ export const responseSchema = z.object({
         osm_id: z.number(),
         osm_type: z.number(),
         distance: z.number(),
-        category_ids: z.map(
-          z.number(),
+        category_ids: z.record(
+          z.string(),
           z.object({
             category_name: z.string(),
             category_group: z.string(),
           })
         ),
+        osm_tags: z.object({
+          name: z.string().optional(),
+          wheelchair: z.string().optional(),
+          fee: z.string().optional(),
+          phone: z.string().optional(),
+          opening_hours: z.string().optional(),
+          website: z.string().optional(),
+        }),
       }),
-      osm_tags: z.map(z.string(), z.string()),
     })
   ),
   information: z.object({
