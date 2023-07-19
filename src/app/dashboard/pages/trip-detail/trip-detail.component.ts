@@ -1,9 +1,10 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
   EMPTY,
   Observable,
+  Subscription,
   combineLatest,
   concatMap,
   delay,
@@ -31,7 +32,7 @@ import { iconDefault } from '@shared/components/map/map.component';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import { Place } from '../../models/places';
-import { FormArray, FormControl } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 
 @Component({
@@ -39,18 +40,35 @@ import { PlaceType } from '@httpClients/travelLogApi/places/schema';
   templateUrl: './trip-detail.component.html',
   styleUrls: ['./trip-detail.component.sass'],
 })
-export class TripDetailComponent {
+export class TripDetailComponent implements OnDestroy {
+  initialValue: Partial<{
+    title: string | null;
+    description: string | null;
+  }> | null = null;
+  sub: Subscription | null = null;
   constructor(
     private route: ActivatedRoute,
     private tripService: TripService,
     private placeService: PlaceService
   ) {}
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
 
   trip$: Observable<Trip | null> = this.route.paramMap.pipe(
     switchMap((params) => {
       const id = params.get('tripId') || null;
       if (id === null) return of(null);
       return this.tripService.get(id);
+    }),
+    tap({
+      next: (val) => {
+        this.formGroup.patchValue({
+          title: val?.title ?? '',
+          description: val?.description ?? '',
+        });
+        this.initialValue = this.formGroup.value;
+      },
     })
   );
   loadable$ = this.trip$.pipe(
@@ -66,4 +84,32 @@ export class TripDetailComponent {
       );
     })
   );
+
+  formGroup = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl(''),
+  });
+  tripChange$ = this.formGroup.valueChanges.pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
+  onTitleChange(txt: string) {
+    this.formGroup.controls.title.setValue(txt);
+    console.log(txt);
+  }
+  onDescriptionChange(txt: string) {
+    this.formGroup.controls.description.setValue(txt);
+  }
+  updateTrip(trip: Trip) {
+    this.sub = this.tripService
+      .update(trip.id, {
+        ...trip,
+        title: this.formGroup.value?.title ?? trip.title,
+        description: this.formGroup.value?.description ?? trip.description,
+      })
+      .subscribe();
+  }
+  cancel() {
+    this.formGroup.reset(this?.initialValue ?? {});
+  }
 }

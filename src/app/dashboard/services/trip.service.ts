@@ -94,6 +94,7 @@ export class TripService {
         }
       }), // when success result, update the item in the local service
       catchError((err) => {
+        console.error(err);
         return of(false);
       })
     );

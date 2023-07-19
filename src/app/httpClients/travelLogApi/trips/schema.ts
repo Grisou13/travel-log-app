@@ -10,13 +10,21 @@ export const validator = z
   .merge(common);
 export const schema = z
   .object({
-    createdAt: z.date().optional(),
     href: z.string(), //"/api/places/0860ab21-98e8-4cdd-a407-06d2a50989eb",
     id: z.string(), // "0860ab21-98e8-4cdd-a407-06d2a50989eb",
-    placesCount: z.number(),
-    updatedAt: z.date(), //"2018-12-09T11:58:18.265Z",
+    placesCount: z.number().optional(),
     userHref: z.string().optional(), //"/api/users/d68cf4e9-1349-4d45-b356-c1294e49ef23",
     userId: z.string(), //"d68cf4e9-1349-4d45-b356-c1294e49ef23"
+    updatedAt: z
+      .string()
+      .datetime({ offset: true })
+      .pipe(z.coerce.date())
+      .optional(),
+    createdAt: z
+      .string()
+      .datetime({ offset: true })
+      .pipe(z.coerce.date())
+      .optional(),
   })
   .merge(validator);
 

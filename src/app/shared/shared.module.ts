@@ -13,6 +13,8 @@ import { HighlightPipe } from './pipes/highlight.pipe';
 import { LocationSearchComponent } from './components/location-search/location-search.component';
 import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
 import { SettingsPoiComponent } from './components/settings-poi/settings-poi.component';
+import { EditableParagrapheComponent } from './components/editable-paragraphe/editable-paragraphe.component';
+import { ContenteditableValueAccessor } from './directives/content-editable.directive';
 @NgModule({
   declarations: [
     WithLoadingPipe,
@@ -25,10 +27,13 @@ import { SettingsPoiComponent } from './components/settings-poi/settings-poi.com
     LocationSearchComponent,
     OffCanvasComponent,
     SettingsPoiComponent,
+    EditableParagrapheComponent,
+    ContenteditableValueAccessor,
   ],
   providers: [GeolocationService],
   imports: [CommonModule, ReactiveFormsModule, LeafletModule],
   exports: [
+    ContenteditableValueAccessor,
     CommonModule,
     ReactiveFormsModule,
     LeafletModule,
@@ -41,6 +46,7 @@ import { SettingsPoiComponent } from './components/settings-poi/settings-poi.com
     LocationSearchComponent,
     OffCanvasComponent,
     SettingsPoiComponent,
+    EditableParagrapheComponent,
   ],
 })
 export class SharedModule {
