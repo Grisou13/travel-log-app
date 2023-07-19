@@ -1,5 +1,15 @@
 .map
   height: 100%
+.map:after
+  display: flex
+  position: absolute
+  top: 0
+  bottom: 0
+  right: 0
+  left: 0
+  box-shadow: inset 0px 0px 25px 20px rgba(255,255,255,1)
+  z-index: 400
+  content: ''
 
 .geoDenied svg
   fill: red!important

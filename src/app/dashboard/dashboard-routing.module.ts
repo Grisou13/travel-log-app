@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import TripListComponent from './pages/trip-list/trip-list.component';
 import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
 import { PlaceDetailComponent } from './pages/place-detail/place-detail.component';
+import { AddTripComponent } from './pages/add-trip/add-trip.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,10 @@ export const routes: Routes = [
       {
         path: 'places/:id',
         component: PlaceDetailComponent,
+      },
+      {
+        path: 'add-trip',
+        component: AddTripComponent,
       },
     ],
   },

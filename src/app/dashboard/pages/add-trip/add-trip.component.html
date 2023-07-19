@@ -1,0 +1,88 @@
+<div>
+    <h3 class="my-2 text-3xl text-center font-medium leading-tight text-primary">
+      Where to next?
+    </h3>
+    <ul
+    data-te-stepper-init
+    class="relative m-0 flex list-none justify-between overflow-hidden p-0 transition-[height] duration-200 ease-in-out">
+    <!--First item-->
+    <li
+      data-te-stepper-step-ref
+      data-te-stepper-step-active
+      class="w-[4.5rem] flex-auto">
+      <div
+        data-te-stepper-head-ref
+        class="flex cursor-pointer items-center pl-2 leading-[1.3rem] no-underline after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]">
+        <h3
+          data-te-stepper-head-icon-ref
+          class="my-6 mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-xl font-medium text-[#40464f]">
+          01
+        </h3>
+        <span
+          data-te-stepper-head-text-ref
+          class="font-medium text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
+          From
+        </span>
+      </div>
+      <p
+        data-te-stepper-content-ref
+        class="absolute left-0 w-full p-4 transition-all duration-500 ease-in-out">
+        Select the starting place of your trip
+      </p>
+    </li>
+  
+    <!--Second item-->
+    <li data-te-stepper-step-ref class="w-[4.5rem] flex-auto">
+      <div
+        data-te-stepper-head-ref
+        class="flex cursor-pointer items-center leading-[1.3rem] no-underline before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:before:bg-neutral-600 dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]">
+        <h3
+          data-te-stepper-head-icon-ref
+          class="my-6 mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-xl font-medium text-[#40464f]">
+          02
+        </h3>
+        <span
+          data-te-stepper-head-text-ref
+          class="text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
+          Via
+        </span>
+      </div>
+      <p
+        data-te-stepper-content-ref
+        class="absolute left-0 w-full translate-x-[150%] p-4 transition-all duration-500 ease-in-out">
+        Select an intermediate stop in your trip
+      </p>
+    </li>
+  
+    <!--Third item-->
+    <li data-te-stepper-step-ref class="w-[4.5rem] flex-auto">
+      <div
+        data-te-stepper-head-ref
+        class="flex cursor-pointer items-center pr-2 leading-[1.3rem] no-underline before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:before:bg-neutral-600 dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]">
+        <h3
+          data-te-stepper-head-icon-ref
+          class="my-6 mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-xl font-medium text-[#40464f]">
+          03
+        </h3>
+        <span
+          data-te-stepper-head-text-ref
+          class="text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
+          To
+        </span>
+      </div>
+      <p
+        data-te-stepper-content-ref
+        class="absolute left-0 w-full translate-x-[150%] p-4 transition-all duration-500 ease-in-out">
+        Select the ending place of your trip
+      </p>
+    </li>
+  </ul>
+</div>
+
+<div>
+<!--   <ng-container *ngIf="markers$ | async as markers">
+    <div class="mapSearch">
+      <app-map [markers]="markers" (onClicked)="mapSelected($event)"></app-map>
+    </div>
+  </ng-container> -->
+</div>
