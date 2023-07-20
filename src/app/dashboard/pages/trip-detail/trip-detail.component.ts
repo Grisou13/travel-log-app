@@ -82,7 +82,9 @@ export class TripDetailComponent implements OnDestroy {
           return { trip, places };
         })
       );
-    })
+    }),
+    distinctUntilChanged(),
+    shareReplay(1)
   );
 
   formGroup = new FormGroup({

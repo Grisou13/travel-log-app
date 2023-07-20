@@ -11,6 +11,8 @@ import {
   shareReplay,
   startWith,
   switchMap,
+  takeLast,
+  zip,
 } from 'rxjs';
 import { PlaceService } from '../../services/place.service';
 import * as L from 'leaflet';
@@ -31,11 +33,15 @@ type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
 })
 export class PlaceDetailComponent {
   place$ = this.route.paramMap.pipe(
-    switchMap((params) => {
+    map((params) => {
       const id = params.get('placeId');
+      if (id === null) return null;
+      if (id.length <= 0) return null;
+      return id;
+    }),
+    distinctUntilChanged(),
+    switchMap((id) => {
       if (id === null) return of(null);
-      if (id.length <= 0) return of(null);
-
       return this.placeService.getPlacesWithRelated(id).pipe(
         catchError((err) => of(null)),
         map((x) => {
@@ -72,7 +78,7 @@ export class PlaceDetailComponent {
     startWith([])
   );
 
-  poi$ = combineLatest([this.place$, this.settingsService.settings$]).pipe(
+  poi$ = zip([this.place$, this.settingsService.settings$]).pipe(
     switchMap(([place, settings]) => {
       if (typeof place?.current.location === 'undefined') return of(null);
       const location = place.current.location;

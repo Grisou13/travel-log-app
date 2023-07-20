@@ -47,7 +47,7 @@ export class TripMapComponent {
   places$ = this.tripState.asObservable().pipe(
     switchMap((trip) => {
       if (trip === null) return EMPTY;
-      return this.placeService.fetchForTrip(trip);
+      return of([] as Place[]); // this.placeService.fetchForTrip(trip);
     }),
     distinctUntilChanged(),
     shareReplay({ refCount: true, bufferSize: 1 })

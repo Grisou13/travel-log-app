@@ -57,7 +57,9 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
             };
           })
         );
-      })
+      }),
+      distinctUntilChanged(),
+      shareReplay({ refCount: true, bufferSize: 1 })
     );
   }
   fetchForTripId(tripId: string) {
@@ -68,6 +70,7 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     // if (placesForTrip.length > 0) return of(placesForTrip);
 
     return this.fetch({ trip: tripId }).pipe(
+      tap({ subscribe: () => console.debug('Subscribing to place fetch') }),
       startWith(placesForTrip),
       switchMap((places) => {
         console.debug('Got places from api');

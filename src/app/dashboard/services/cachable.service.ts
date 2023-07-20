@@ -15,6 +15,7 @@ import {
   timer,
   Subject,
   takeUntil,
+  distinctUntilChanged,
 } from 'rxjs';
 
 export type EntityWithId<K> = {
@@ -89,10 +90,20 @@ export abstract class CacheableService<
 
   protected fetchItem(id: K): Observable<T | boolean> {
     return this.fetchSingleRemote(id).pipe(
+      tap({
+        next: (val) => {
+          const all = this.getAll();
+          const next = all.filter((x) => x.id === id);
+
+          this.cacheSubject.next([...next, val]);
+        },
+      }),
       catchError((err) => {
         console.error(err);
         return of(false);
-      })
+      }),
+      distinctUntilChanged(),
+      shareReplay({ refCount: true, bufferSize: 1 })
     );
   }
 
