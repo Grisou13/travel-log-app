@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TravelLogApiModule } from './httpClients/travelLogApi/travelLogApi.module';
 import { AuthModule } from './auth/auth.module';
-import { Configuration, TeleportApiModule } from './httpClients/teleport';
 import { SharedModule } from '@shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { OpenRouteServiceModule } from '@httpClients/open-route-service/open-route-service.module';
@@ -26,7 +25,6 @@ import { SettingsComponent } from './pages/settings/settings.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot({}),
     OpenRouteServiceModule,
-    TeleportApiModule.forRoot(() => new Configuration({})),
     TravelLogApiModule,
     SharedModule,
     AuthModule.forRoot(),
@@ -44,7 +42,6 @@ import { SettingsComponent } from './pages/settings/settings.component';
       useClass: AppErrorHandler,
     },
     TravelLogApiModule,
-    TeleportApiModule,
     AuthModule,
     DashboardModule,
   ],

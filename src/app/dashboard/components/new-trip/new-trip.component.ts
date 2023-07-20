@@ -1,12 +1,8 @@
 import { initTE, Modal, Ripple } from 'tw-elements';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { City } from 'src/app/httpClients/teleport';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
 import { concatMap, forkJoin, mergeMap, of, switchMap } from 'rxjs';
-import {
-  CitySearchResult,
-  Result,
-} from '@shared/components/cities-search/cities-search.component';
+import { Result } from '@shared/components/cities-search/cities-search.component';
 import { Trip } from './../../models/trips';
 
 @Component({

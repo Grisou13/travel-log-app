@@ -1,4 +1,3 @@
-import { CitiesService } from '@httpClients/teleport/api/cities.service';
 import { Component, EventEmitter, Output } from '@angular/core';
 import {
   BehaviorSubject,
@@ -19,23 +18,12 @@ import {
   throwError,
 } from 'rxjs';
 import { indicate } from 'src/app/helpers';
-import {
-  City,
-  CitySearchResults,
-  Photo,
-  UrbanArea,
-  UrbanAreasService,
-} from '@httpClients/teleport';
 import { CommonModule } from '@angular/common';
 import { Point } from 'geojson';
 import { SearchService } from '@httpClients/open-route-service/search/search.service';
 import { GeocodeResponse } from '@httpClients/open-route-service/search/types';
 import { FormControl, Validators } from '@angular/forms';
 import { GeolocationService } from '@shared/services/geolocation/geolocation.service';
-
-export type CitySearchResult = City & {
-  pictures?: Array<Photo>;
-};
 
 export type Result = {
   name: string;
