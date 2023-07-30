@@ -2,14 +2,15 @@
 <div *ngIf="loadable$ | withLoadingStatus | async as obs" class="h-full overflow-hidden">
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
-    <ng-container [formGroup]="formGroup">
-      <h2 class="text-lg " formControlName="title" contenteditable></h2>
-      <p formControlName="description" contenteditable></p>
-    </ng-container>
+
 
     <div class="overflow-auto">
       <app-trip-map [trip]="obs.value.trip"></app-trip-map>
     </div>
+    <ng-container [formGroup]="formGroup">
+      <h2 class="text-2xl sm:text-4xl text-center sm:text-left mx-6 sm:mt-6" formControlName="title" contenteditable></h2>
+      <p class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6" formControlName="description" contenteditable></p>
+    </ng-container>
     <div *ngIf="tripChange$ | async" class="grid w-full self-center m-10 justify-items-stretch items-center">
       <button type="button"
       class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"

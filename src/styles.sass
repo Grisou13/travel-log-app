@@ -7,6 +7,49 @@
 $baseCeolor: rgba(253, 116, 7, 1)
 $themeColor: #F2D1B3
 
+@font-face
+  font-family: 'Kanit-Regular'
+  src: url('/assets/fonts/Kanit/Kanit-Regular.ttf')
+@font-face
+  font-family: 'Kanit-Medium'
+  src: url('/assets/fonts/Kanit/Kanit-Medium.ttf')
+@font-face
+  font-family: 'Muli-Regular'
+  src: url('/assets/fonts/Muli/Muli-Regular.ttf')
+@font-face
+  font-family: 'Muli-Light'
+  src: url('/assets/fonts/Muli/Muli-Light.ttf')
+
+*
+  transition: all .3s ease-in-out .3s
+
+html
+  height: 100%
+  width: 100%
+  margin: 0
+  padding: 0
+  font-kerning: normal
+  text-rendering: optimizeLegibility
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004)
+  -moz-osx-font-smoothing: grayscale
+
+body
+  height: 100%
+  width: 100%
+  margin: 0
+  padding: 0
+
+  background-color: rgba(200,200,200,0.2)
+
+  font-family: Muli-Light, Futura, Helvetica, Arial, sans-serif
+
+
+h1, h2, h3, h4, h5, h6
+  font-family: 'Kanit-Medium'
+
+.leaflet-control-attribution
+  display: none
+
 .place-icon
   display: flex
   justify-content: center

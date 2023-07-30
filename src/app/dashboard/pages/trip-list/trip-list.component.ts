@@ -8,12 +8,29 @@ import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
 import { Place } from '../../models/places';
 import { ToastrService } from 'ngx-toastr';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-trip-list',
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.sass'],
+  animations: [
+    trigger('fadeInOut', [
+      transition('void => *', [ 
+        style({ opacity: 0 }),
+        animate('300ms',
+          style({ opacity: 1 })
+        )
+      ]),
+      transition('* => void', [
+        animate('300ms', 
+          style({ opacity: 0 })
+        ) 
+      ])
+    ]) 
+  ]
 })
+
 export default class TripListComponent {
   loading$ = new BehaviorSubject(false);
 
