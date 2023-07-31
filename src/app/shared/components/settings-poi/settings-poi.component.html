@@ -17,10 +17,11 @@
           [ngClass]="{'bg-[rgba(var(--ui-button-color),1) text-white]': isSubCatSelected(settings, subcat), 'bg-white text-black': !isSubCatSelected(settings, subcat)}"
           *ngFor="let subcat of category.children"
         > 
-          <span class="rounded-full w-[16px] h-[16px] p-0.5 mr-2 bg-[rgba(var(--ui-button-color),1)] transition duration-150 ease-in-out"
-            [ngClass]="{'inline-flex': isSubCatSelected(settings, subcat), 'hidden': !isSubCatSelected(settings, subcat)}"
+          <span class="rounded-full w-[16px] h-[16px] p-0.5 mr-2 transition duration-150 ease-in-out"
+            [ngClass]="{'bg-[rgba(var(--ui-button-color),1)]': isSubCatSelected(settings, subcat), 'bg-white border-[1px] border-neutral-300': !isSubCatSelected(settings, subcat)}"
           >
             <svg 
+              [ngClass]="{'flex ': isSubCatSelected(settings, subcat), 'hidden': !isSubCatSelected(settings, subcat)}"
               viewBox="0 0 36 36"
               fill="white"
               xmlns="http://www.w3.org/2000/svg"
