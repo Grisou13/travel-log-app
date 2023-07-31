@@ -1,6 +1,6 @@
 <a
   *ngIf="trip$ | async as trip"
-  class="block snap-start mr-4 sm:ml-4 sm:mr-0 mb-2 rounded-lg bg-white dark:bg-neutral-700 h-60 sm:h-80 w-[65vw] sm:w-[35vw] shadow-md"
+  class="block snap-start mr-4 sm:ml-4 sm:mr-0 mb-2 rounded-lg bg-white dark:bg-neutral-700 h-60 sm:h-80 w-[65vw] sm:w-[35vw] shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
   [routerLink]="['trips/', trip.id]"
 >
   <div 
@@ -33,7 +33,7 @@
     <div class="flex w-full mt-auto">
       <button
       type="button"
-      class="flex py-2 px-6 rounded-lg self-end align-center ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      class="flex py-2 px-6 rounded-full self-end align-center ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
       data-te-ripple-init
       data-te-ripple-color="light"
       >
