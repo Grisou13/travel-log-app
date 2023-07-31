@@ -1,126 +1,5 @@
 <nav
-  class="flex-no-wrap fixed flex w-full items-center justify-between bg-transparent px-3 sm:px-6 py-2 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
-  data-te-navbar-ref
->
-  <div class="flex w-full flex-wrap items-center justify-between px-3">
-    <!-- Hamburger button for mobile view -->
-    <button
-      class="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
-      type="button"
-      data-te-collapse-init
-      data-te-target="#navbarSupportedContent1"
-      aria-controls="navbarSupportedContent1"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <!-- Hamburger icon -->
-      <span class="[&>svg]:w-7">
-        <svg
-          width="50px"
-          height="50px"
-          viewBox="0 0 28 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M4 7C4 6.44771 4.44772 6 5 6H24C24.5523 6 25 6.44771 25 7C25 7.55229 24.5523 8 24 8H5C4.44772 8 4 7.55229 4 7Z" fill="#000000"/>
-          <path d="M4 13.9998C4 13.4475 4.44772 12.9997 5 12.9997L16 13C16.5523 13 17 13.4477 17 14C17 14.5523 16.5523 15 16 15L5 14.9998C4.44772 14.9998 4 14.552 4 13.9998Z" fill="#000000"/>
-          <path d="M5 19.9998C4.44772 19.9998 4 20.4475 4 20.9998C4 21.552 4.44772 21.9997 5 21.9997H22C22.5523 21.9997 23 21.552 23 20.9998C23 20.4475 22.5523 19.9998 22 19.9998H5Z" fill="#000000"/>
-        </svg>
-      </span>
-    </button>
-
-    <!-- Collapsible navigation container -->
-    <div
-      class="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
-      id="navbarSupportedContent1"
-      data-te-collapse-item
-    >
-      <!-- Logo -->
-      <a
-        class="mb-4 mr-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-        href="#"
-      >
-        <div class="w-10 h-10">
-          <app-logo [displaySlogan]="false"></app-logo>
-        </div>
-
-      </a>
-      <!-- Left navigation links -->
-      <ul
-        class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row"
-        data-te-navbar-nav-ref
-      >
-        <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-          <!-- Dashboard link -->
-          <a
-            class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-            routerLink="/app"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-            data-te-nav-link-ref
-            >Trips</a
-          >
-        </li>
-      </ul>
-    </div>
-    <!-- Right elements -->
-    <div class="relative flex items-center">
-
-      <!-- Second dropdown container -->
-      <div class="relative" data-te-dropdown-ref>
-        <!-- Second dropdown trigger -->
-        <a
-          class="hidden-arrow flex h-[4.5vh] w-[4.5vh] items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none border-2 border-white rounded-full shadow-sm"
-          href="#"
-          id="dropdownMenuButton2"
-          role="button"
-          data-te-dropdown-toggle-ref
-          aria-expanded="false"
-        >
-          <!-- User avatar -->
-          <img
-            src="https://placehold.it/60x60"
-            class="rounded-full"
-            style=""
-            alt=""
-            loading="lazy"
-          />
-        </a>
-        <!-- Second dropdown menu -->
-        <ul
-          class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-          aria-labelledby="dropdownMenuButton2"
-          data-te-dropdown-menu-ref
-        >
-        <li>
-          <button
-            type="button"
-            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-left text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-            routerLink="/settings"
-            data-te-dropdown-item-ref
-          >
-            Settings
-          </button>
-        </li>
-          <!-- Second dropdown menu items -->
-          <li>
-            <button
-              type="button"
-              class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-left text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-              (click)="logout()"
-              data-te-dropdown-item-ref
-            >
-              Logout
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<nav
-  class="relative flex w-full flex-wrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4"
+  class="relative flex w-full flex-wrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4 z-[1000]"
 >
   <div class="flex w-full flex-wrap items-center justify-between px-3">
     <!-- Left elements -->
@@ -133,33 +12,18 @@
     aria-expanded="false"
     aria-label="Toggle navigation"
   >
-  <!-- Hamburger icon -->
+    <!-- Hamburger icon -->
     <span class="[&>svg]:w-7">
       <svg
         width="50px"
         height="50px"
-        viewBox="0 0 24 24"
+        viewBox="0 0 28 28"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          d="M4 18L20 18"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M4 12L20 12"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M4 6L20 6"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
+        <path d="M4 7C4 6.44771 4.44772 6 5 6H24C24.5523 6 25 6.44771 25 7C25 7.55229 24.5523 8 24 8H5C4.44772 8 4 7.55229 4 7Z" fill="#000000"/>
+        <path d="M4 13.9998C4 13.4475 4.44772 12.9997 5 12.9997L16 13C16.5523 13 17 13.4477 17 14C17 14.5523 16.5523 15 16 15L5 14.9998C4.44772 14.9998 4 14.552 4 13.9998Z" fill="#000000"/>
+        <path d="M5 19.9998C4.44772 19.9998 4 20.4475 4 20.9998C4 21.552 4.44772 21.9997 5 21.9997H22C22.5523 21.9997 23 21.552 23 20.9998C23 20.4475 22.5523 19.9998 22 19.9998H5Z" fill="#000000"/>
       </svg>
     </span>
   </button>
@@ -194,17 +58,19 @@
       <img
         src="https://placehold.it/60x60"
         class="rounded-full"
-        style=""
-        alt=""
+        alt="User avatar"
         loading="lazy"
       />
     </a>
     <!-- Second dropdown menu -->
     <ul
-      class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+      class="absolute px-2 left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
       aria-labelledby="dropdownMenuButton2"
       data-te-dropdown-menu-ref
-  >
+    >
+    <li class="border-b-[1px]">
+      <span class="block w-full px-4 py-2 text-sm font-medium text-left">Username</span>
+    </li>
     <li>
       <button
         type="button"
