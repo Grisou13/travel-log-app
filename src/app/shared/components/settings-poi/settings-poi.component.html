@@ -1,15 +1,32 @@
 <div class="p-6 w-full" *ngIf="settings$ | async as settings">
   <div class="" *ngIf="poiCategories$ | async as categories">
     <ng-container class="flex w-full" *ngFor="let category of categories">
-      <button
+      <div class="flex border-b-[1px] items-center pb-1 mb-2">
+        <button
         type="button"
-        class="poi-cat-button my-1 w-full inline-flex pb-1 text-left text-md font-bold capitalize leading-normal text-black border-b-[1px] shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px, rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out"
-        [ngClass]="{'bg-primary-100': isSelected(settings, category), 'bg-transparent': !isSelected(settings, category)}"
+        class="w-full inline-flex text-left text-sm capitalize leading-normal text-black shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px, rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out"    
         (click)="toggleMainCategory(category)"
       >
-        <span class="flex w-full">{{ category.name.replaceAll('_', ' ') }}</span>
+        <span class="flex w-full font-bold ">{{ category.name.replaceAll('_', ' ') }}</span>
       </button>
-      <div class="flex flex-wrap flex-row mt-1" *ngIf="isSelected(settings, category)">
+        <input
+          class="flex items-center mr-2 h-4 w-8 appearance-none rounded-[0.4375rem] bg-neutral-200 border-neutral-300 shadow-inner
+            before:pointer-events-none before:absolute before:rounded-full before:bg-neutral-200 before:content-[''] 
+            after:absolute after:z-[2] after:h-3.5 after:w-3.5 after:rounded-full after:border-none after:bg-white after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] 
+            checked:bg-neutral-200 
+            checked:after:absolute checked:after:z-[2] checked:after:ml-[0.825em] checked:after:h-3.5 checked:after:w-3.5 checked:after:rounded-full checked:after:border-none checked:after:bg-[rgba(var(--ui-button-color),1)] checked:after:shadow-[-2px_0px_3px_0_rgb(0_0_0_/_7%),_-2px_2px_2px_0_rgb(0_0_0_/_4%)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] 
+            hover:cursor-pointer focus:outline-none focus:ring-0 
+            focus:before:bg-neutral-200 focus:before:scale-100 focus:before:opacity-1 focus:before:transition-[box-shadow_0.2s,transform_0.2s] 
+            focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-3.5 focus:after:w-3.5 focus:after:rounded-full focus:after:content-[''] 
+            checked:focus:bg-neutral-200 checked:focus:border-neutral-300 
+            checked:focus:before:ml-[1rem] checked:focus:before:scale-100"
+          type="checkbox"
+          role="switch"
+          checked
+        />
+      </div>
+
+      <div class="flex flex-wrap flex-row mt-1 mb-3" *ngIf="isSelected(settings, category)">
         <button
           type="button"
           class="inline-flex items-center rounded-full px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
