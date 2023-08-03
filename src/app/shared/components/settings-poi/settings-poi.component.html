@@ -1,26 +1,37 @@
-<div class="flex flex-row" *ngIf="settings$ | async as settings">
-  <div class="mb-2" *ngIf="poiCategories$ | async as categories">
-    <ng-container *ngFor="let category of categories">
+<div class="p-6 w-full" *ngIf="settings$ | async as settings">
+  <div class="" *ngIf="poiCategories$ | async as categories">
+    <ng-container class="flex w-full" *ngFor="let category of categories">
       <button
         type="button"
-        class="my-1 inline-block rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-        [ngClass]="{'bg-primary-900': isSelected(settings, category), 'bg-primary': !isSelected(settings, category)}"
+        class="poi-cat-button my-1 w-full inline-flex pb-1 text-left text-md font-bold capitalize leading-normal text-black border-b-[1px] shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px, rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out"
+        [ngClass]="{'bg-primary-100': isSelected(settings, category), 'bg-transparent': !isSelected(settings, category)}"
         (click)="toggleMainCategory(category)"
       >
-        {{ category.name }}
+        <span class="flex w-full">{{ category.name.replaceAll('_', ' ') }}</span>
       </button>
-      <div class="flex flex-row ml-1" *ngIf="isSelected(settings, category)">
+      <div class="flex flex-wrap flex-row mt-1" *ngIf="isSelected(settings, category)">
         <button
           type="button"
-          class="inline-block rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+          class="inline-flex items-center rounded-full px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
           (click)="toggleSubCategory(subcat)"
-          [ngClass]="{'bg-primary-900': isSubCatSelected(settings, subcat), 'bg-primary': !isSubCatSelected(settings, subcat)}"
+          [ngClass]="{'bg-[rgba(var(--ui-button-color),1) text-white]': isSubCatSelected(settings, subcat), 'bg-white text-black': !isSubCatSelected(settings, subcat)}"
           *ngFor="let subcat of category.children"
-        >
-          {{ subcat.name }}
+        > 
+          <span class="rounded-full w-[16px] h-[16px] p-0.5 mr-2 transition duration-150 ease-in-out"
+            [ngClass]="{'bg-[rgba(var(--ui-button-color),1)]': isSubCatSelected(settings, subcat), 'bg-white border-[1px] border-neutral-300': !isSubCatSelected(settings, subcat)}"
+          >
+            <svg 
+              [ngClass]="{'flex ': isSubCatSelected(settings, subcat), 'hidden': !isSubCatSelected(settings, subcat)}"
+              viewBox="0 0 36 36"
+              fill="white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z" />
+            </svg>
+          </span>
+          <span class="capitalize">{{ subcat.name.replaceAll('_', ' ').split("-").pop() }}</span>
         </button>
       </div>
-      <br />
     </ng-container>
   </div>
 </div>

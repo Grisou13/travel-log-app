@@ -1,4 +1,4 @@
-<div style="height: 500px;" *ngIf="layers$ | async as layers" >
+<div style="height: 60vh;" *ngIf="layers$ | async as layers" >
     <app-map [markers]="layers.markers" [directions]="layers.directions"></app-map>
 
 </div>
