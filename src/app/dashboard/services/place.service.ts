@@ -43,7 +43,8 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
 
         return this.fetchForTripId(current.tripId).pipe(
           map((places) => {
-            const pois = places.filter((x) => x.infos?.relatedToPlace === id);
+            const pois = places.filter((x) => x.infos?.relatedToPlace === id && x.type === 'PlaceOfInterest');
+            console.debug("Pois for place: ", pois)
             const stops = _.sortBy(
               places.filter((x) => x.type === 'TripStop'),
               'order'
@@ -98,7 +99,14 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
   fetchForTrip(trip: Trip) {
     return this.fetchForTripId(trip.id);
   }
-
+  togglePoi(tripId: string, osmId: string, newPlace: AddPlace){
+    const currentPlaces = this.cacheSubject.getValue();
+    const exists = currentPlaces.find((v) => v.infos?.misc_id === osmId);
+    if(!exists){
+      return this.add(newPlace);
+    }
+    return this.delete(exists.id);
+  }
   override fetchRemote(
     params: ArgumentTypes<typeof this.travelLogService.places.fetchAll>[0]
   ): Observable<Place[]> {

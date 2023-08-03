@@ -47,7 +47,7 @@ export class TripMapComponent {
   places$ = this.tripState.asObservable().pipe(
     switchMap((trip) => {
       if (trip === null) return EMPTY;
-      return of([] as Place[]); // this.placeService.fetchForTrip(trip);
+      return this.placeService.fetchForTrip(trip);
     }),
     distinctUntilChanged(),
     shareReplay({ refCount: true, bufferSize: 1 })
@@ -62,7 +62,7 @@ export class TripMapComponent {
         L.marker([y.location.coordinates[1], y.location.coordinates[0]], {
           icon: iconDefault,
           title: y.name,
-          draggable: true,
+          // draggable: true,
         })
           .bindTooltip(y.name)
           .addEventListener('click', () => {

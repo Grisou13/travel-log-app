@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
   Observable,
+  Subscription,
   combineLatest,
   distinctUntilChanged,
   filter,
@@ -18,7 +19,7 @@ import { PlaceService } from '../../services/place.service';
 import * as L from 'leaflet';
 import { placeToMarker } from '../../helpers';
 import { iconDefault } from '@shared/components/map/map.component';
-import { Place } from '../../models/places';
+import { AddPlace, Place } from '../../models/places';
 import { PoisService } from '@httpClients/open-route-service/pois/pois.service';
 import { catchError, tap } from 'rxjs';
 import { SettingsService } from '@shared/services/settings.service';
@@ -31,7 +32,7 @@ type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
   templateUrl: './place-detail.component.html',
   styleUrls: ['./place-detail.component.sass'],
 })
-export class PlaceDetailComponent {
+export class PlaceDetailComponent implements OnDestroy{
   place$ = this.route.paramMap.pipe(
     map((params) => {
       const id = params.get('placeId');
@@ -82,7 +83,7 @@ export class PlaceDetailComponent {
     switchMap(([place, settings]) => {
       if (typeof place?.current.location === 'undefined') return of(null);
       const location = place.current.location;
-
+      //TODO: concat with pois already in the trip
       return this.poiService.fetchPois(location, {
         category_group_ids: settings?.pois.categories ?? [],
         category_ids: settings?.pois.sub_categories ?? [],
@@ -118,13 +119,41 @@ export class PlaceDetailComponent {
     private poiService: PoisService,
     private settingsService: SettingsService
   ) {}
+  ngOnDestroy(): void {
+    this._subs.forEach(x => x.unsubscribe());
+  }
 
-  tripHasPoi = (pois: Array<Partial<Place>>, osm_id: number) =>
-    _.findIndex(pois, (x) => parseInt(x.infos?.misc_id ?? '-1') === osm_id) >=
+  tripHasPoi (pois: Array<Partial<Place>>, osm_id: number) {
+    //console.debug("Trying to find poi: ", osm_id)
+    //console.debug("In pois: ",pois)
+    return _.findIndex(pois, (x) => parseInt(x.infos?.misc_id ?? '-1') === osm_id) >=
     0;
-
+  }
+    _subs: Subscription[] = [];
   togglePoi(place: Place, poi: PoiSearchResponse['features'][0]) {
-    //this.placeService.togglePoi(place.id, poi)
+    const poiName = `POI ${poi.geometry.coordinates.join(", ")} for place ${place.name}`;
+    const s = this.placeService.togglePoi(place.tripId, `${poi.properties.osm_id}`, {
+      type: "PlaceOfInterest",
+      description: poiName,
+      name: poiName,
+      order: -1,
+      tripId: place.tripId,
+      infos: {
+        misc_id: `${poi.properties.osm_id}`,
+        relatedToPlace: place.id,
+      },
+      directions: {
+
+      },
+      location: {
+        ...poi.geometry
+      }
+    } as AddPlace).subscribe({
+      next: (val) => console.debug("Poi next value ", val),
+      error: (err) => console.error("Could not toggle poi"),
+      complete: () => console.debug("Toggled poi")
+    })
+    this._subs.push(s);
   }
   poiName(poi: PoiSearchResponse['features'][0]) {
     if (typeof poi.properties.osm_tags?.name !== 'undefined')
