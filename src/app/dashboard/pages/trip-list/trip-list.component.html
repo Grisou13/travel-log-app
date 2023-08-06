@@ -1,29 +1,48 @@
-<header class="flex h-[45vh] bg-transparent bg-[url(/assets/background-hero3.jpg)] bg-cover bg-center bg-blend-lighten"></header>
-<h1 class="text-3xl sm:text-5xl text-left sm:mt-6 px-6 leading-loose">Planned Trips</h1>
+<header class="relative flex h-[45vh] mt-[5rem]
+bg-transparent bg-[url(/assets/background-hero3.jpg)] bg-fixed bg-cover bg-center bg-no-repeat bg-blend-lighten"></header>
 
-<div class="sm:flex sm:flex-row sm:mt-6 ml-6 pb-3 overflow-x-auto bg-transparent">
-  <app-new-trip (tripCreated)="navigateToNewTrip($event)" class="hidden sm:block"></app-new-trip>
-  <div class="flex snap-mandatory snap-x" *ngIf="trips$ | withLoadingStatus | async as obs">
-<!--     <div class="flex w-full grow justify-center items-center p-6">
-      <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-black inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="rgb(var(--ui-button-color))" stroke-width="4"></circle>
-        <path class="opacity-75" fill="rgb(var(--ui-button-color))" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      Loading...
-    </div> -->
-    <ng-template [ngIf]="obs.loading">
-      <div class="flex w-full grow justify-center items-center p-6">
-        <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-black inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="rgb(var(--ui-button-color))" stroke-width="4"></circle>
-          <path class="opacity-75" fill="rgb(var(--ui-button-color))" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        Loading...
-      </div>
-    </ng-template>
-    <ng-template [ngIf]="obs.value">
-      <app-trip-card @fadeInOut *ngFor="let trip of obs.value" [trip]="trip"></app-trip-card>
-    </ng-template>
+<!-- Planned trips section-->
+<section>
+  <h1 class="text-xl sm:text-3xl text-left mx-6 my-3 sm:m-6 sm:mb-3">Planned Trips</h1>
+  <div class="flex sm:flex-row sm:mt-6 ml-6 pb-6 overflow-x-auto bg-transparent">
+    <app-new-trip (tripCreated)="navigateToNewTrip($event)" class="hidden sm:block"></app-new-trip>
+    <div class="flex snap-mandatory snap-x" *ngIf="trips$ | withLoadingStatus | async as obs">
+      <ng-template [ngIf]="obs.loading">
+        <div class="flex w-full grow justify-center items-center p-6">
+          <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-black inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="rgb(var(--ui-button-color))" stroke-width="4"></circle>
+            <path class="opacity-75" fill="rgb(var(--ui-button-color))" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Loading...
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="obs.value">
+        <app-trip-card @fadeInOut *ngFor="let trip of obs.value" [trip]="trip"></app-trip-card>
+      </ng-template>
+    </div>
   </div>
-</div>
+  <app-new-trip (tripCreated)="navigateToNewTrip($event)" class="sm:hidden"></app-new-trip>
+</section>
 
-<app-new-trip (tripCreated)="navigateToNewTrip($event)" class="sm:hidden"></app-new-trip>
+<!-- Simulated section: Past trips-->
+<section>
+  <h1 class="text-xl sm:text-3xl text-left mx-6 my-3 sm:m-6 sm:mb-3">Past Trips</h1>
+
+  <div class="flex sm:flex-row sm:mt-6 ml-6 pb-6 overflow-x-auto bg-transparent">
+    <app-new-trip (tripCreated)="navigateToNewTrip($event)" class="hidden sm:block"></app-new-trip>
+    <div class="flex snap-mandatory snap-x" *ngIf="trips$ | withLoadingStatus | async as obs">
+      <ng-template [ngIf]="obs.loading">
+        <div class="flex w-full grow justify-center items-center p-6">
+          <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-black inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="rgb(var(--ui-button-color))" stroke-width="4"></circle>
+            <path class="opacity-75" fill="rgb(var(--ui-button-color))" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Loading...
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="obs.value">
+        <app-trip-card @fadeInOut *ngFor="let trip of obs.value" [trip]="trip"></app-trip-card>
+      </ng-template>
+    </div>
+  </div>
+</section>

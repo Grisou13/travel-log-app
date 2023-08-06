@@ -1,14 +1,14 @@
 <div class="p-6 w-full" *ngIf="settings$ | async as settings">
-  <div class="" *ngIf="poiCategories$ | async as categories">
+  <div *ngIf="poiCategories$ | async as categories">
     <ng-container class="flex w-full" *ngFor="let category of categories">
       <div class="flex border-b-[1px] items-center pb-1 mb-2">
         <button
         type="button"
         class="w-full inline-flex text-left text-sm capitalize leading-normal text-black shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px, rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out"    
         (click)="toggleMainCategory(category)"
-      >
+        >
         <span class="flex w-full font-bold ">{{ category.name.replaceAll('_', ' ') }}</span>
-      </button>
+        </button>
         <input
           class="flex items-center mr-2 h-4 w-8 appearance-none rounded-[0.4375rem] bg-neutral-200 border-neutral-300 shadow-inner
             before:pointer-events-none before:absolute before:rounded-full before:bg-neutral-200 before:content-[''] 
@@ -23,7 +23,6 @@
           type="checkbox"
           role="switch"
           checked
-          [checked]="toggleMainCategory(category)"
         />
       </div>
 

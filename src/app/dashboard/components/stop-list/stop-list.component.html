@@ -1,4 +1,6 @@
-<h1 class="text-md sm:text-xl text-left mx-6 sm:mt-6">Stops of trip</h1>
-<div class="flex sm:flex-row sm:mt-6 ml-6 pb-3 overflow-y-auto sm:overflow-x-auto bg-transparent">
-  <app-stop-card [place]="place" *ngFor="let place of places"></app-stop-card>
-</div>
+<section>
+  <h1 class="text-xl sm:text-3xl text-left mx-6 my-3 sm:mt-6 sm:mb-3">Stops of trip</h1>
+  <div class="flex sm:flex-row ml-6 pb-6 overflow-y-auto sm:overflow-x-auto bg-transparent">
+    <app-stop-card [place]="place" *ngFor="let place of places"></app-stop-card>
+  </div>
+</section>

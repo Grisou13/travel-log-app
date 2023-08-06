@@ -1,32 +1,42 @@
-<a
+<div
   *ngIf="place"
-  class="block w-[25vw] sm:w-[35vw] h-40 sm:h-full
-  p-3 mr-4 rounded-lg bg-white 
-  shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] 
-  dark:bg-neutral-700 "
-  style="background-image:url('{{place.pictureUrl}}'); background-size:cover; background-position: center center; width: 300px;"
-  [routerLink]="['./places/', place.id]"
+  class="flex w-[55vw] sm:w-[35vw] h-40 sm:h-full
+    p-3 mr-4 rounded-lg bg-white 
+    shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
 >
-  <div
-    class="flex flex-wrap flex-row items-start rounded-md w-full"
-  >
-      <h6
-        class="flex w-full mb-2 text-left leading-tight text-neutral-800 dark:text-neutral-50"
-      >
+  <div class="flex flex-wrap flex-row sm:gap-4 rounded-md w-full">
+    <div class="hidden sm:flex w-3/12 rounded-lg h-full bg-[url( {{place.pictureUrl}} )] bg-cover bg-center bg-neutral-100"></div>
+
+    <div class="flex flex-col sm:grow sm:w-5/12">
+      <h6 class="flex grow sm:grow-0 mb-2 text-left leading-[1.1rem] sm:leading-tight text-neutral-800 dark:text-neutral-50">
         {{ place.name }}
       </h6>
-      <p class="flex w-full grow-0 mb-4 text-sm font-medium text-neutral-600 dark:text-neutral-200">
+      <p class="flex grow mb-4 text-sm font-medium text-neutral-600 dark:text-neutral-200">
         {{ place.description }}
       </p>
-    <div class="flex items-center">
+    </div>
+    <div class="flex items-center justify-end 
+      w-full sm:w-2/12"
+    >
       <button
         type="button"
-        class="flex py-2 px-6 rounded-full self-center align-center ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        class="flex py-2 px-6 
+        rounded-full align-center sm:ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+        active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+        dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] 
+        dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
+        dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
+        dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
         data-te-ripple-init
         data-te-ripple-color="light"
+        [routerLink]="['./places/', place.id]"
       >
         View
+        <!-- TODO: add view icon svg -->
       </button>
     </div>
   </div>
-</a>
+</div>
