@@ -19,7 +19,7 @@ export const validator = z
       .optional(),
     type: placeType.default('TripStop'),
     location: z.object({
-      type: z.enum(['Point']),
+      type: z.enum(["Point"]),
       coordinates: z.array(z.number()), // [ 120.5412, -48.1850159 ],
     }),
     infos: z

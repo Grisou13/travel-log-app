@@ -1,21 +1,50 @@
-import { initTE, Modal, Ripple } from 'tw-elements';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { initTE, Modal, Ripple, Stepper } from 'tw-elements';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
 import { concatMap, forkJoin, mergeMap, of, switchMap } from 'rxjs';
 import { Result } from '@shared/components/cities-search/cities-search.component';
 import { Trip } from './../../models/trips';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-new-trip',
   templateUrl: './new-trip.component.html',
   styleUrls: ['./new-trip.component.sass'],
 })
-export class NewTripComponent implements OnInit {
+export class NewTripComponent implements OnInit, AfterViewInit {
+  @ViewChild("stepper") stepper!: ElementRef;
+
   selectedStart: Result | null = null;
-  constructor(private travelLogService: TravelLogService) {}
+
+  private stepperInstance: any | null = null;
+  private form = this.fb.group({
+    start: this.fb.group({
+      location: this.fb.group({
+        lat: this.fb.control<number>(0,[]),
+        lng: this.fb.control<number>(0,[])
+      })
+    })
+  })
+
+  constructor(private travelLogService: TravelLogService, private fb: FormBuilder) {}
+  ngAfterViewInit(): void {
+    this.stepperInstance = Stepper.getOrCreateInstance(this.stepper.nativeElement);
+  }
   @Output() tripCreated = new EventEmitter<Trip>();
   ngOnInit(): void {
-    initTE({ Modal, Ripple });
+    initTE({ Modal, Ripple, Stepper });
+    
+  }
+  setStart($event: Result){
+    this.form.patchValue({
+      start: {
+        location: {
+          lat: $event.location.coordinates[1],
+          lng: $event.location.coordinates[0],
+        }
+      }
+    });
+    this.stepperInstance.nextStep();
   }
   public createTrip() {
     if (!this.selectedStart) return;

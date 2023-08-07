@@ -38,14 +38,20 @@ export class OffCanvasComponent implements AfterViewInit, OnDestroy {
     this.showChanged.emit(false);
   }
 
-  ngAfterViewInit(): void {
-    
+  open(){
     const off = Offcanvas.getOrCreateInstance(this.sidebar?.nativeElement);
+    off.show();
+  }
+
+  close(){
+    const off = Offcanvas.getOrCreateInstance(this.sidebar?.nativeElement);
+    off.close();
+  }
+
+  ngAfterViewInit(): void {
+    this.open();
     this.sidebar?.nativeElement.addEventListener('hide.te.offcanvas', (e) => {
       this.onCloseRequested()
     });
-    off.show();
-    // this.sidebar?.nativeElement.setAttribute('data-te-offcanvas-show', 'true');
-    // data-te-offcanvas-show
   }
 }
