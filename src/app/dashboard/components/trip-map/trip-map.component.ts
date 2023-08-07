@@ -60,7 +60,7 @@ export class TripMapComponent {
     map((x) => {
       return x.map((y) =>
         L.marker([y.location.coordinates[1], y.location.coordinates[0]], {
-          icon: iconDefault,
+          icon: iconDefault(`${y.order}`),
           title: y.name,
           // draggable: true,
         })

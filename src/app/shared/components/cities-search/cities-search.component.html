@@ -34,7 +34,7 @@
   </div>
 
   <div *ngIf="cities$ | withLoadingStatus | async as obs">
-    <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
+    <ng-template [ngIf]="obs.loading && inputValid(this.searchValue)"><p>Loading...</p></ng-template>
     <ng-template [ngIf]="obs.value  && inputValid(this.searchValue)">
       <ul>
         <li

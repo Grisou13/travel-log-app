@@ -1,9 +1,9 @@
 <a
   *ngIf="trip$ | async as trip"
   class="block snap-start mr-4 sm:ml-4 sm:mr-0 mb-2 rounded-lg bg-white dark:bg-neutral-700 h-60 sm:h-80 w-[65vw] sm:w-[35vw] shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
-  [routerLink]="['trips/', trip.id]"
+  [routerLink]="[trip.id]"
 >
-  <div 
+  <div
     class="flex rounded-lg w-full h-1/2 border-8 border-b-0 border-white bg-[url(https://images.unsplash.com/photo-1534540378968-85a7b8fde19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80)] bg-cover bg-center bg-blend-lighten"
   >
     <h6 class="flex text-sm text-white mt-auto mb-2 px-3 py-1 leading-tight tracking-wide text-neutral-800 dark:text-neutral-50 rounded-r-lg bg-gray-800 w-70">

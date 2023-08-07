@@ -72,7 +72,7 @@ export class LocationSearchComponent {
   mapSelected($event: Point) {
     this.markersState.next(
       L.marker([$event.coordinates[1], $event.coordinates[0]], {
-        icon: iconDefault,
+        icon: iconDefault(``),
         title: `You selected here!`,
       })
     );

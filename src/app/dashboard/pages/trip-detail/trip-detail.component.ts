@@ -1,44 +1,26 @@
-import { Component, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
-  BehaviorSubject,
   EMPTY,
   Observable,
   Subscription,
   combineLatest,
-  concatMap,
-  delay,
   distinctUntilChanged,
-  filter,
-  forkJoin,
   map,
   of,
-  pairwise,
-  share,
   shareReplay,
-  startWith,
   switchMap,
   tap,
-  withLatestFrom,
-  zip,
 } from 'rxjs';
-import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
-import { DirectionsService } from '@httpClients/open-route-service/directions/directions.service';
 import { PlaceService } from '../../services/place.service';
-import { Point } from 'geojson';
-import { Result } from '@shared/components/cities-search/cities-search.component';
-import { iconDefault } from '@shared/components/map/map.component';
-import * as L from 'leaflet';
-import * as _ from 'lodash';
-import { Place } from '../../models/places';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { PlaceType } from '@httpClients/travelLogApi/places/schema';
+import { TripService } from '../../services/trip.service';
 
 @Component({
   selector: 'app-trip-detail',
   templateUrl: './trip-detail.component.html',
-  styleUrls: ['./trip-detail.component.sass'],
+  styleUrls: [],
 })
 export class TripDetailComponent implements OnDestroy {
   initialValue: Partial<{
