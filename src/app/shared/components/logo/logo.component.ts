@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-logo',
   templateUrl: './logo.component.html',
-  styleUrls: ['./logo.component.sass'],
+  styleUrls: [],
 })
 export class LogoComponent {
   @Input() displaySlogan = true;

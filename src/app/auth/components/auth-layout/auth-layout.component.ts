@@ -8,7 +8,7 @@ import { Observable, Subscription, tap } from 'rxjs';
 @Component({
   selector: 'app-auth-layout',
   templateUrl: './auth-layout.component.html',
-  styleUrls: ['./auth-layout.component.sass'],
+  styleUrls: [],
   standalone: true,
   imports: [SharedModule, CommonModule, RouterModule],
 })

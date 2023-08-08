@@ -18,7 +18,7 @@ import { SearchService } from '@httpClients/open-route-service/search/search.ser
 @Component({
   selector: 'app-location-search',
   templateUrl: './location-search.component.html',
-  styleUrls: ['./location-search.component.sass'],
+  styleUrls: [],
 })
 export class LocationSearchComponent {
   constructor(private searchService: SearchService) {}

@@ -25,7 +25,7 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-new-trip',
   templateUrl: './new-trip.component.html',
-  styleUrls: ['./new-trip.component.sass'],
+  styleUrls: [],
 })
 export class NewTripComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('stepper') stepper!: ElementRef;

@@ -9,7 +9,7 @@ import { indicate } from 'src/app/helpers';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.sass'],
+  styleUrls: [],
 })
 export class SignupComponent implements OnInit, OnDestroy {
   protected loading$ = new BehaviorSubject(false);

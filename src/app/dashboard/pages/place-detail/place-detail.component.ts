@@ -30,7 +30,7 @@ type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
 @Component({
   selector: 'app-place-detail',
   templateUrl: './place-detail.component.html',
-  styleUrls: ['./place-detail.component.sass'],
+  styleUrls: [],
 })
 export class PlaceDetailComponent implements OnDestroy {
   place$ = this.route.paramMap.pipe(

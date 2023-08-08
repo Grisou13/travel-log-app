@@ -28,7 +28,7 @@ import { distConverter, timeConverter } from '../../helpers';
 @Component({
   selector: 'app-trip-map',
   templateUrl: './trip-map.component.html',
-  styleUrls: ['./trip-map.component.sass'],
+  styleUrls: [],
 })
 export class TripMapComponent {
   constructor(

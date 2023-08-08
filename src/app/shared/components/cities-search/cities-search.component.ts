@@ -34,7 +34,7 @@ export type Result = {
 @Component({
   selector: 'app-cities-search',
   templateUrl: './cities-search.component.html',
-  styleUrls: ['./cities-search.component.sass'],
+  styleUrls: [],
 })
 export class CitiesSearchComponent {
   search(term: string) {

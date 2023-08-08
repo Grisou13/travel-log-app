@@ -12,7 +12,7 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-place',
   templateUrl: './place.component.html',
-  styleUrls: ['./place.component.sass'],
+  styleUrls: [],
 })
 export class PlaceComponent implements AfterViewInit {
   // show = false;

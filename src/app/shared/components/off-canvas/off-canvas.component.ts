@@ -13,23 +13,25 @@ import { Offcanvas, Ripple, Dropdown, Animate, initTE } from 'tw-elements';
 @Component({
   selector: 'app-off-canvas',
   templateUrl: './off-canvas.component.html',
-  styleUrls: ['./off-canvas.component.sass'],
+  styleUrls: [],
 })
 export class OffCanvasComponent implements AfterViewInit, OnDestroy {
   @ViewChild('sidebar') sidebar!: ElementRef<HTMLDivElement>;
   @ViewChild('backdrop') backdrop!: ElementRef<HTMLDivElement>;
   @Output() showChanged = new EventEmitter<boolean>();
 
-  
   constructor() {
     initTE({ Offcanvas, Ripple, Dropdown, Animate });
   }
   ngOnDestroy(): void {
-    this.sidebar.nativeElement.removeEventListener('hide.te.offcanvas', this.onCloseRequested)
+    this.sidebar.nativeElement.removeEventListener(
+      'hide.te.offcanvas',
+      this.onCloseRequested
+    );
   }
 
   onCloseRequested() {
-    console.debug("hidding off canvas")
+    console.debug('hidding off canvas');
     // const off = Offcanvas.getOrCreateInstance(this.sidebar?.nativeElement);
     // off.hide();
 
@@ -38,12 +40,12 @@ export class OffCanvasComponent implements AfterViewInit, OnDestroy {
     this.showChanged.emit(false);
   }
 
-  open(){
+  open() {
     const off = Offcanvas.getOrCreateInstance(this.sidebar?.nativeElement);
     off.show();
   }
 
-  close(){
+  close() {
     const off = Offcanvas.getOrCreateInstance(this.sidebar?.nativeElement);
     off.close();
   }
@@ -51,7 +53,7 @@ export class OffCanvasComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.open();
     this.sidebar?.nativeElement.addEventListener('hide.te.offcanvas', (e) => {
-      this.onCloseRequested()
+      this.onCloseRequested();
     });
   }
 }
