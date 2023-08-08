@@ -1,6 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { TravelLogApiModule } from '../httpClients/travelLogApi/travelLogApi.module';
 import { routes } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
@@ -54,7 +56,7 @@ import { TripHomeComponent } from './pages/trip-detail/trip-home/trip-home.compo
     TripAddComponent,
     TripDetailMapComponent,
   ],
-  imports: [SharedModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, DragDropModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class DashboardModule {

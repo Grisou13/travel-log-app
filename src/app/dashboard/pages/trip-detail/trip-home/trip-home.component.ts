@@ -36,9 +36,11 @@ export class TripHomeComponent {
     switchMap((trip) =>
       trip === null
         ? of({ places: [], trip: null })
-        : this.placeService
-            .fetchForTrip(trip)
-            .pipe(map((places) => ({ places, trip })))
+        : this.placeService.fetchForTrip(trip).pipe(
+            map((places) => places.filter((x) => x.type === 'TripStop')),
+            map((places) => _.orderBy(places, 'order')),
+            map((places) => ({ places, trip }))
+          )
     ),
     distinctUntilChanged(),
     shareReplay(1)
