@@ -53,8 +53,8 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
               current,
               pois,
               previousPlace:
-                currentOrder >= 1 ? stops.at(currentOrder - 1) : undefined,
-              nextPlace: stops.at(currentOrder + 1),
+                currentOrder >= 1 ? stops[currentOrder - 1] : undefined,
+              nextPlace: currentOrder < stops.length ? stops[currentOrder + 1] : null,
             };
           })
         );
