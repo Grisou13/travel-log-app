@@ -10,7 +10,6 @@ import {
 import { tap } from 'rxjs';
 
 @Component({
-  selector: 'app-place',
   templateUrl: './place.component.html',
   styleUrls: [],
 })

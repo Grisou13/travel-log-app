@@ -7,7 +7,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { indicate } from 'src/app/helpers';
 
 @Component({
-  selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: [],
 })

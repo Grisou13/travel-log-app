@@ -14,7 +14,6 @@ import { Trip } from '../../../models/trips';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-trip-detail-map',
   templateUrl: './trip-detail-map.component.html',
   styleUrls: [],
 })

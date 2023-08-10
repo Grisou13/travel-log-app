@@ -20,7 +20,21 @@ import {
 } from 'rxjs';
 import { Result } from '@shared/components/cities-search/cities-search.component';
 import { Trip } from './../../models/trips';
-import { FormBuilder } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+} from '@angular/forms';
+import { placeForm } from '../add-place/add-place.component';
+
+export const addTrip = new FormGroup({
+  startDate: new FormControl(),
+  start: placeForm,
+  end: placeForm,
+});
+
+export type NewTripForm = typeof addTrip.value;
 
 @Component({
   selector: 'app-new-trip',
@@ -29,21 +43,11 @@ import { FormBuilder } from '@angular/forms';
 })
 export class NewTripComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('stepper') stepper!: ElementRef;
-  @Output() tripCreated = new EventEmitter<Trip>();
-
+  @Output() newTrip = new EventEmitter<NewTripForm>();
+  form = addTrip;
   private sub: Subscription | null = null;
 
   private stepperInstance: any | null = null;
-  private form = this.fb.group({
-    start: this.fb.group({
-      location: this.fb.group({
-        lat: this.fb.control<number>(0, []),
-        lng: this.fb.control<number>(0, []),
-      }),
-      title: this.fb.control('', []),
-      pictureUrl: this.fb.control('', []),
-    }),
-  });
 
   constructor(
     private travelLogService: TravelLogService,
@@ -76,45 +80,9 @@ export class NewTripComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   public createTrip() {
     if (this.form.invalid) return;
-    const form = this.form.value;
-    this.sub = this.travelLogService.trips
-      .create({
-        title: form?.start?.title + ' ' + new Date().toLocaleDateString(),
-        description: 'Trip to ' + form?.start?.title,
-        startDate: new Date(),
-      })
-      .pipe(
-        mergeMap((trip) => {
-          return forkJoin([
-            of(trip),
-            this.travelLogService.places.create({
-              tripId: trip.id,
-              order: 0,
-              type: 'TripStop',
-              startDate: new Date(),
-              directions: {
-                distance: 0,
-                next: {},
-                previous: {},
-              },
-              name: form?.start?.title || 'Place for trip' + trip.id,
-              pictureUrl: form?.start?.pictureUrl || undefined,
-              description: 'First stop',
-              location: {
-                type: 'Point',
-                coordinates: [
-                  form.start?.location?.lng || 0,
-                  form.start?.location?.lat || 0,
-                ],
-              },
-            }),
-          ]);
-        })
-      )
-      .subscribe(([trip, place]) => {
-        console.debug(trip);
 
-        this.tripCreated.emit({ ...trip });
-      });
+    this.newTrip.emit(this.form.value);
+
+    const form = this.form.value;
   }
 }

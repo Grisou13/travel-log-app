@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Point } from 'geojson';
 import { Result } from '../cities-search/cities-search.component';
 import {
@@ -22,6 +22,8 @@ import { SearchService } from '@httpClients/open-route-service/search/search.ser
 })
 export class LocationSearchComponent {
   constructor(private searchService: SearchService) {}
+  @Input() extraMarkers: L.Marker | null = null;
+
   private markersState = new BehaviorSubject<L.Marker | null>(null);
 
   markers$ = this.markersState.asObservable().pipe(

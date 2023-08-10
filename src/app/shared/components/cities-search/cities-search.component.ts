@@ -17,7 +17,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { indicate } from 'src/app/helpers';
+import { ArrayElement, indicate } from 'src/app/helpers';
 import { CommonModule } from '@angular/common';
 import { Point } from 'geojson';
 import { SearchService } from '@httpClients/open-route-service/search/search.service';
@@ -31,6 +31,8 @@ export type Result = {
   pictureUrl: string | undefined;
 };
 
+type x = ArrayElement<GeocodeResponse['features']>;
+
 @Component({
   selector: 'app-cities-search',
   templateUrl: './cities-search.component.html',
@@ -43,8 +45,10 @@ export class CitiesSearchComponent {
   @Output() selectedCity = new EventEmitter<Result>();
   // the only reason we use this
   public searchValue = '';
-  private selected: GeocodeResponse['features'][0] | null | undefined =
-    undefined;
+  private selected:
+    | ArrayElement<GeocodeResponse['features']>
+    | null
+    | undefined = undefined;
 
   searchSubject = new BehaviorSubject('');
 

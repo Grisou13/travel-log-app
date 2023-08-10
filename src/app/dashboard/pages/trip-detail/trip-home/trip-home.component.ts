@@ -14,7 +14,6 @@ import { Trip } from '../../../models/trips';
 import * as _ from 'lodash';
 import { PlaceService } from 'src/app/dashboard/services/place.service';
 @Component({
-  selector: 'app-trip-home',
   templateUrl: './trip-home.component.html',
   styleUrls: [],
 })

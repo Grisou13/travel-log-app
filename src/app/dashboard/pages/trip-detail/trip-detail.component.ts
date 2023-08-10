@@ -18,7 +18,6 @@ import { PlaceService } from '../../services/place.service';
 import { TripService } from '../../services/trip.service';
 
 @Component({
-  selector: 'app-trip-detail',
   templateUrl: './trip-detail.component.html',
   styleUrls: [],
 })

@@ -11,7 +11,6 @@ import { ToastrService } from 'ngx-toastr';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-trip-list',
   templateUrl: './trip-list.component.html',
   styleUrls: [],
   animations: [

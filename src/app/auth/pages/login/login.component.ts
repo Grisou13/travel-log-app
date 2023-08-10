@@ -12,7 +12,6 @@ import { BehaviorSubject, delay, Subscription, takeLast, tap } from 'rxjs';
 import { indicate } from 'src/app/helpers';
 
 @Component({
-  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: [],
 })

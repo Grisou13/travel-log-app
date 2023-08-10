@@ -25,6 +25,7 @@ import { catchError, tap } from 'rxjs';
 import { SettingsService } from '@shared/services/settings.service';
 import * as _ from 'lodash';
 import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
+import { ArrayElement } from '../../../helpers';
 
 type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
 @Component({
@@ -136,7 +137,7 @@ export class PlaceDetailComponent implements OnDestroy {
     );
   }
   _subs: Subscription[] = [];
-  togglePoi(place: Place, poi: PoiSearchResponse['features'][0]) {
+  togglePoi(place: Place, poi: ArrayElement<PoiSearchResponse['features']>) {
     const poiName = `POI ${
       poi.properties.osm_tags?.name
     } ${poi.geometry.coordinates.join(', ')} for place ${place.name}`;
