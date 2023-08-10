@@ -11,6 +11,7 @@ export class AppErrorHandler implements ErrorHandler {
       message: 'Error ' + error,
       status: 0,
       context: 'App error handler',
+      error: error,
     });
     //throw new Error('Method not implemented.');
   }

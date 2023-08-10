@@ -73,6 +73,7 @@ export class TripAddComponent implements OnDestroy {
       )
       .subscribe(([trip, place]) => {
         console.debug(trip);
+        this.router.navigate(['../' + trip.id], { relativeTo: this.route });
       });
   }
 }

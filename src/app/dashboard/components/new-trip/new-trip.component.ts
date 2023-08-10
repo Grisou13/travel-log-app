@@ -98,6 +98,6 @@ export class NewTripComponent implements OnInit {
     this.newTrip.emit(this.form.value);
   }
   tripIsValid() {
-    return !this.form.invalid;
+    return !this.form.controls.start.invalid;
   }
 }

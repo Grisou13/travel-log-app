@@ -19,6 +19,7 @@
     >
   </div>
     <app-location-search
+      [searchedText]="this.newPlaceForm.value.title || ''"
       [extraMarkers]="extraMarkers"
       (locationSelected)="updateLocation($event)"
     ></app-location-search>

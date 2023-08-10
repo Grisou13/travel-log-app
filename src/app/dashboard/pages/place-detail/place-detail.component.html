@@ -4,6 +4,104 @@
       Could not load your place, please refresh and try again later
     </p></ng-container
   >
+  <ng-container *ngIf="this.form.enabled">
+    <form [formGroup]="this.form">
+    <div class="flex flex-col" >
+      <div class="relative mb-3" data-te-input-wrapper-init>
+       <input
+        data-te-input-state-active
+         type="text"
+         class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+         id="name"
+         formControlName="name"
+         placeholder="name" />
+       <label
+         for="name"
+         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+         >name
+       </label>
+     </div>
+     <div class="relative mb-3" data-te-input-wrapper-init>
+       <input
+        data-te-input-state-active
+         type="text"
+         class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+         id="Description"
+         formControlName="description"
+         placeholder="Description" />
+       <label
+         for="Description"
+         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+         >Description
+       </label>
+     </div>
+     <div class="relative mb-3" data-te-input-wrapper-init>
+       <input
+        data-te-input-state-active
+         type="text"
+         class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+         id="StartDate"
+         formControlName="startDate"
+         placeholder="StartDate" />
+       <label
+         for="StartDate"
+         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+         >StartDate
+       </label>
+     </div>
+    </div>
+  </form>
+  </ng-container>
+  <ng-container *ngIf="this.form.disabled">
+    <div>
+      <h2
+        class="text-2xl sm:text-4xl text-center sm:text-left mx-6 sm:mt-6"
+      >{{this.form.controls.name.value}}</h2>
+      <p
+        class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
+      >{{this.form.controls.description.value}}</p>
+      <p
+        class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
+      >{{this.form.controls.startDate.value}}</p>
+    </div>
+  </ng-container>
+  <div class="mb-[0.125rem] block text-xs ml-2">
+    <input
+      [value]="this.form.enabled"
+      (change)="toggleForm($event)"
+      type="checkbox"
+      id="react-option"
+      value=""
+      class="hidden peer"
+    />
+    <label
+      for="react-option"
+      class="inline-flex items-center justify-between w-full px-6 pb-2 pt-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:bg-primary-600 peer-checked:text-primary-accent-100 hover:text-gray-600 dark:peer-checked:text-gray-300 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+    >
+      <div class="block">
+        <div class="w-full text-lg font-semibold">Editing Icon</div>
+      </div>
+    </label>
+  </div>
+  <div
+    *ngIf="this.form.enabled"
+    class="grid w-full self-center m-10 justify-items-stretch items-center"
+  >
+    <button
+      type="button"
+      class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      (click)="cancel()"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      (click)="updatePlace(vm.current)"
+    >
+      Save Changes
+    </button>
+  </div>
   <div class="flex flex-row gap-2">
     <div *ngIf="mapData$ | async as mapData" class="w-5/6">
       <div style="height: 500px">

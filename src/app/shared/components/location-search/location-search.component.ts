@@ -31,9 +31,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LocationSearchComponent {
   constructor(private searchService: SearchService) {}
   @Input() extraMarkers: L.Marker[] = [];
-
+  @Input() searchedText = '';
   private mapClickedState = new BehaviorSubject<L.Marker | null>(null);
-  searchedText = '';
 
   resolveOnMapClicked$ = this.mapClickedState
     .pipe(
