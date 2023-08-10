@@ -29,7 +29,9 @@ export class PlaceListComponent {
   sub$: Subscription | null = null;
   state = new BehaviorSubject<Place[]>([]);
 
-  updateState = new BehaviorSubject<[Place | null, Place, Place] | null>(null);
+  updateState = new BehaviorSubject<[Place, Place, Place | undefined] | null>(
+    null
+  );
   places$ = this.state
     .asObservable()
     .pipe(distinctUntilChanged(), shareReplay(1));
@@ -39,60 +41,48 @@ export class PlaceListComponent {
     .pipe(
       switchMap((data) => {
         if (data === null) return EMPTY;
-        //place 1 is the start, can be null
-        //place2 is from
-        //place3 is to
 
-        const [place1, place2, place3] = data;
-        //place3 becomes place2
-        //and place2 becomes place3
-        // place3prime.previous = place3.previous
-        let place2Prime = Object.assign({}, place3); //temp becoms the new "to"
-        let place3Prime = Object.assign({}, place2);
+        const [place1, place2, maybe] = data;
 
-        if (typeof place2Prime.directions === 'undefined') {
-          place2Prime.directions = {};
+        const tmp = place1.order;
+        if (typeof place1.directions === 'undefined') {
+          place1.directions = {
+            distance: 0,
+            previous: null,
+            next: null,
+          };
         }
-        if (typeof place3Prime.directions === 'undefined') {
-          place3Prime.directions = {};
-        }
-        // place3Prime.order = place2.order;
-        place3Prime.order = place3.order;
-        //TODO we can only do this if we change only a single position at a time, but if the user decides to skip multiple then we are out of luck?
-        place3Prime.directions.previous = place3.directions?.previous;
+        place1.directions.previous = null;
 
-        place2Prime.order = place2.order;
+        if (typeof place2.directions === 'undefined') {
+          place2.directions = {
+            distance: 0,
+            previous: null,
+            next: null,
+          };
+        }
+        place2.directions.previous = null;
+        if (typeof maybe !== 'undefined') {
+          if (typeof maybe.directions === 'undefined') {
+            maybe.directions = {
+              distance: 0,
+              previous: null,
+              next: null,
+            };
+          }
+          maybe.directions.previous = null;
+        }
+
+        place1.order = place2.order;
+        place2.order = tmp;
+        let payload = [place1, place2];
+        if (typeof maybe !== 'undefined') payload = [maybe].concat(payload);
         // return of(null);
-        return forkJoin([
-          this.placeService.update(place3Prime.id, place3Prime),
-          of(place1).pipe(
-            switchMap((previousStop) => {
-              if (previousStop === null) {
-                return of(place2Prime);
-              }
-
-              const request = DirectionRequest.parse({
-                coordinates: [
-                  previousStop.location.coordinates,
-                  place2Prime.location.coordinates,
-                ],
-                extra_info: ['tollways', 'roadaccessrestrictions'],
-              });
-              return this.directionsService
-                .fetchDirectionsGeoJson(request)
-                .pipe(
-                  map((d) => {
-                    if (typeof place2Prime.directions === 'undefined') {
-                      place2Prime.directions = {};
-                    }
-                    place2Prime.directions.previous = d;
-                    return place2Prime;
-                  })
-                );
-            }),
-            switchMap((x) => this.placeService.update(x.id, x))
-          ),
-        ]);
+        return forkJoin(
+          payload
+            .filter((x) => typeof x !== 'undefined')
+            .map((x) => this.placeService.update(x.id, x))
+        );
       }),
       takeUntilDestroyed()
     )
@@ -106,10 +96,10 @@ export class PlaceListComponent {
     if ($event.previousIndex === $event.currentIndex) return;
     console.log($event);
     const currentState = _.orderBy(this.state.getValue(), 'order');
-    const payload: [Place | null, Place, Place] = [
-      currentState[$event.previousIndex - 1] || null,
+    const payload: [Place, Place, Place | undefined] = [
       currentState[$event.previousIndex],
       currentState[$event.currentIndex],
+      currentState[$event.currentIndex + 1] || undefined,
     ];
     moveItemInArray(currentState, $event.previousIndex, $event.currentIndex);
     this.updateState.next(payload);

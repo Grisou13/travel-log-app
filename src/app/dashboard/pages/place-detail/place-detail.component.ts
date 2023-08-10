@@ -98,10 +98,11 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         }),
         tap({
           next: (val) => {
+            console.debug(val);
             this.form.patchValue({
               name: val?.current.name ?? '',
               description: val?.current.description ?? '',
-              startDate: val?.current.startDate?.toISOString() ?? '',
+              startDate: val?.current.startDate?.toISOString() || '',
               pictureUrl: val?.current.pictureUrl ?? '',
             });
             this.initialValue = this.form.value;

@@ -3,6 +3,9 @@ import { Place } from './models/places';
 import { distance } from '../helpers';
 import * as _ from 'lodash';
 import * as L from 'leaflet';
+import { PlaceType } from '@httpClients/travelLogApi/places/schema';
+import { NewPlaceForm } from './components/add-place/add-place.component';
+import { NewTripForm } from './components/new-trip/new-trip.component';
 
 export function getPlaceClosest(places: Place[], $event: Result): string {
   const distances = places.reduce((acc, cur) => {
@@ -44,3 +47,108 @@ export const placeToMarker = (
     [place.location.coordinates[1], place.location.coordinates[0]],
     options
   );
+
+export const formToTrip = (payload: { form: NewTripForm }) => {
+  const { form } = payload;
+
+  let x: string | Date = form?.start?.dateOfVisit || new Date();
+  let startDate = new Date();
+
+  if (typeof x === 'string') {
+    const y = x.split('-').map((z) => parseInt(z));
+    startDate = new Date(y[2], y[1], y[0]);
+  }
+
+  x = form?.end?.dateOfVisit || new Date();
+  let endDate = new Date();
+
+  if (typeof x === 'string') {
+    const y = x.split('-').map((z) => parseInt(z));
+    endDate = new Date(y[2], y[1], y[0]);
+  }
+
+  let title =
+    'Trip from ' + form?.start?.title + ' ' + startDate.toLocaleDateString();
+  if (
+    typeof form.end !== 'undefined' &&
+    typeof form.end.title !== 'undefined'
+  ) {
+    title += ' ' + form.end.title + endDate.toLocaleDateString();
+  }
+  return {
+    title: title,
+    description: title,
+    startDate,
+    endDate,
+  };
+};
+
+export const formToPlace = (payload: {
+  tripId: string;
+  places: Place[];
+  form: NewPlaceForm;
+  geoJson: any | undefined;
+}) => {
+  const { places, tripId, form } = payload;
+  if (tripId === null) return null;
+  if (form.location == null) return null;
+  if (
+    form.location.lat === null ||
+    form.location.lng === null ||
+    typeof form.location.lat === 'undefined' ||
+    typeof form.location.lng === 'undefined'
+  )
+    return null;
+
+  const stops = places.filter((x) => x.type === 'TripStop');
+  let previousStop: Place | null = null;
+  if (stops.length > 0)
+    previousStop =
+      _.orderBy(stops, 'order')[form?.order || stops.length - 1] || null;
+
+  let x: string | Date = form.dateOfVisit || new Date();
+  let startDate = new Date();
+
+  if (typeof x === 'string') {
+    const y = x.split('-').map((z) => parseInt(z));
+    startDate = new Date(y[2], y[1], y[0]);
+  }
+  let title = form.title;
+  if (title === null || typeof title === 'undefined') {
+    title = 'Place for trip #' + places.length + 1;
+  }
+  let description = form.description;
+  if (
+    description === null ||
+    typeof description === 'undefined' ||
+    description.length <= 0
+  ) {
+    description = 'Place for trip #' + places.length + 1;
+  }
+  let order = form.order;
+  if (order === null || typeof order === 'undefined') {
+    order = places.filter((x) => x.type === 'TripStop').length + 1;
+  }
+  const type: PlaceType = form.placeType || 'TripStop';
+  return {
+    name: title,
+    tripId,
+    description,
+    type,
+    startDate,
+    endDate: undefined,
+    order,
+    directions: {
+      distance: 0,
+      previous: null, //geoJson || null
+      next: {},
+    },
+    infos: {
+      relatedToPlace: previousStop?.id,
+    },
+    location: {
+      type: 'Point' as 'Point',
+      coordinates: [form.location.lng, form.location.lat],
+    },
+  };
+};

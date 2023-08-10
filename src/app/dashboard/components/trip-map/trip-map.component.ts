@@ -137,8 +137,12 @@ export class TripMapComponent {
       return forkJoin(
         stops.map((s, index) => {
           //if we have directions we good
-          if (s.directions?.previous !== undefined) {
-            return of(s.directions?.previous as GeoJSON.FeatureCollection);
+          if (
+            typeof s.directions !== 'undefined' &&
+            typeof s.directions.previous !== 'undefined' &&
+            s.directions.previous !== null
+          ) {
+            return of(s.directions.previous as GeoJSON.FeatureCollection);
           }
           // we can't get previous if this is index 0
           if (index <= 0) return of(null);
@@ -204,7 +208,10 @@ export class TripMapComponent {
 
               layer.on('mouseover', function (e) {
                 console.debug('Moused over geo json layer: ');
-                e.target.setStyle({ weight: 7, color: 'rgba(var(--ui-button-color),1)' });
+                e.target.setStyle({
+                  weight: 7,
+                  color: 'rgba(var(--ui-button-color),1)',
+                });
                 layer.openPopup();
                 console.debug(e);
                 console.debug(feature);
@@ -216,7 +223,10 @@ export class TripMapComponent {
                 if (layer.isPopupOpen()) {
                   geojsonLayer.resetStyle(e.target);
                 } else {
-                  e.target.setStyle({ weight: 7, color: 'rgba(var(--ui-button-color),1)' });
+                  e.target.setStyle({
+                    weight: 7,
+                    color: 'rgba(var(--ui-button-color),1)',
+                  });
                 }
                 layer.togglePopup();
               });

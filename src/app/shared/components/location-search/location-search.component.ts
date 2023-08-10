@@ -102,7 +102,6 @@ export class LocationSearchComponent {
     this.mapClickedState.next(
       L.marker([$event.coordinates[1], $event.coordinates[0]], {
         icon: iconDefault(``),
-        title: `You selected here!`,
       })
     );
   }
