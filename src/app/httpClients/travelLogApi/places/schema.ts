@@ -24,11 +24,12 @@ export const validator = z
     }),
     infos: z
       .object({
-        category_ids: z.any().optional(),
-        relatedToPlace: z.string().optional(),
-        misc_id: z.string().optional(), //allows us to add another id than the one in the database. This is usefull for pois where they can contain an osm_id
+        category_ids: z.any().optional().nullable(),
+        relatedToPlace: z.string().optional().nullable(),
+        misc_id: z.string().optional().nullable(), //allows us to add another id than the one in the database. This is usefull for pois where they can contain an osm_id
       })
-      .optional(),
+      .optional()
+      .nullable(),
 
     pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
     tripId: z.string(), //"7f063c6e-7717-401a-aa47-34a52f6a45cf",

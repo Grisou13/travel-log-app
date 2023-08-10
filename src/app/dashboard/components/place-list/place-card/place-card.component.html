@@ -1,9 +1,8 @@
 <a
   *ngIf="place"
-  class="inline-flex w-full border-b-2 border-neutral-500 border-opacity-100 py-4 dark:border-opacity-50"
+  class="inline-flex w-full border-b-2 border-neutral-500 border-opacity-100 py-4 dark:border-opacity-50 hover:cursor-grab"
   style="background-image:url('{{place.pictureUrl}}'); background-size:cover; background-position: center center;"
-
-  (click)="navigateTo(place)"
+  [routerLink]="['./places/', place.id]"
 >
   <div
     class="flex  rounded-t-md w-full h-full"

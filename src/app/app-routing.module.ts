@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    redirectTo: '/dashboard',
+    redirectTo: '/dashboard/trips',
   },
   {
     path: 'auth',

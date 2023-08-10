@@ -18,7 +18,7 @@ import { Offcanvas, Ripple, Dropdown, Animate, initTE } from 'tw-elements';
 export class OffCanvasComponent implements AfterViewInit, OnDestroy {
   @ViewChild('sidebar') sidebar!: ElementRef<HTMLDivElement>;
   @ViewChild('backdrop') backdrop!: ElementRef<HTMLDivElement>;
-  @Output() showChanged = new EventEmitter<boolean>();
+  @Output() onClose = new EventEmitter<boolean>();
 
   constructor() {
     initTE({ Offcanvas, Ripple, Dropdown, Animate });
@@ -37,7 +37,7 @@ export class OffCanvasComponent implements AfterViewInit, OnDestroy {
 
     // // this.sidebar?.nativeElement.removeAttribute('data-te-offcanvas-show');
     // this.backdrop?.nativeElement.classList.add('opacity-0');
-    this.showChanged.emit(false);
+    this.onClose.emit(false);
   }
 
   open() {

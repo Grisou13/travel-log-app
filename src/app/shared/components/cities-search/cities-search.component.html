@@ -34,15 +34,15 @@
   </div>
 
   <div *ngIf="cities$ | withLoadingStatus | async as obs">
-    <ng-template [ngIf]="obs.loading && inputValid(this.searchValue)"><p>Loading...</p></ng-template>
-    <ng-template [ngIf]="obs.value  && inputValid(this.searchValue)">
+    <ng-template [ngIf]="obs.loading && shouldShowLoading()"><p>Loading...</p></ng-template>
+    <ng-template [ngIf]="obs.value  && showList()">
       <ul>
         <li
           *ngFor="let item of obs.value"
           class="hover:bg-blue-400 hover:cursor-pointer"
           (click)="resolveCity(item)"
         >
-          <p [outerHTML]="item.properties.label | highlight:this.searchValue "></p>
+          <p [innerHTML]="item.properties.label | highlight:this.searchValue "></p>
         </li>
       </ul>
     </ng-template>

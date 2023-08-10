@@ -31,6 +31,7 @@ import { PlaceComponent } from './pages/trip-detail/place/place.component';
 import { TripDetailMapComponent } from './pages/trip-detail/trip-detail-map/trip-detail-map.component';
 import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
 import { TripHomeComponent } from './pages/trip-detail/trip-home/trip-home.component';
+import { TripAddPlaceComponent } from './pages/trip-detail/trip-add-place/trip-add-place.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TripHomeComponent } from './pages/trip-detail/trip-home/trip-home.compo
     TripOverviewComponent,
     TripAddComponent,
     TripDetailMapComponent,
+    TripAddPlaceComponent,
   ],
   imports: [SharedModule, DragDropModule, RouterModule.forChild(routes)],
   exports: [RouterModule],

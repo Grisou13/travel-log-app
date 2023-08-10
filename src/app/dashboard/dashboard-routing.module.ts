@@ -10,6 +10,7 @@ import { TripDetailMapComponent } from './pages/trip-detail/trip-detail-map/trip
 import { TripOverviewComponent } from './pages/trip-detail/trip-overview/trip-overview.component';
 import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
 import { TripHomeComponent } from './pages/trip-detail/trip-home/trip-home.component';
+import { TripAddPlaceComponent } from './pages/trip-detail/trip-add-place/trip-add-place.component';
 
 export const routes: Routes = [
   {
@@ -19,7 +20,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        pathMatch: 'full',
+        pathMatch: 'prefix',
         redirectTo: 'trips',
       },
       {
@@ -42,7 +43,22 @@ export const routes: Routes = [
             children: [
               {
                 path: '',
+                pathMatch: 'full',
+                redirectTo: 'list',
+              },
+              {
+                path: 'list',
                 component: TripHomeComponent,
+                children: [
+                  {
+                    path: 'places/:placeId',
+                    component: PlaceComponent,
+                  },
+                  {
+                    path: 'places/new',
+                    component: TripAddPlaceComponent,
+                  },
+                ],
               },
               {
                 path: 'map',
@@ -51,6 +67,10 @@ export const routes: Routes = [
                   {
                     path: 'places/:placeId',
                     component: PlaceComponent,
+                  },
+                  {
+                    path: 'places/new',
+                    component: TripAddPlaceComponent,
                   },
                 ],
               },
@@ -62,11 +82,16 @@ export const routes: Routes = [
                     path: 'places/:placeId',
                     component: PlaceComponent,
                   },
+                  {
+                    path: 'places/new',
+                    component: TripAddPlaceComponent,
+                  },
                 ],
               },
+
               {
-                path: 'places/:placeId',
-                component: PlaceComponent,
+                path: 'places/new',
+                component: TripAddPlaceComponent,
               },
               /*{
                 matcher: (segments, group, route) => {

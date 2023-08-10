@@ -43,6 +43,9 @@ export class CitiesSearchComponent {
   @Output() selectedCity = new EventEmitter<Result>();
   // the only reason we use this
   public searchValue = '';
+  private selected: GeocodeResponse['features'][0] | null | undefined =
+    undefined;
+
   searchSubject = new BehaviorSubject('');
 
   cities$ = this.searchSubject.asObservable().pipe(
@@ -51,6 +54,7 @@ export class CitiesSearchComponent {
     tap({
       next: (v) => {
         this.searchValue = v;
+        this.selected = null;
         console.debug('New input status: ', v);
       },
     }),
@@ -83,10 +87,17 @@ export class CitiesSearchComponent {
   }
   resolveCity(city: GeocodeResponse['features'][0]) {
     this.searchValue = city.properties.label;
+    this.selected = city;
     this.selectedCity.emit({
       name: city.properties.label,
       location: city.geometry,
       pictureUrl: '', // pictures.photos?.at(0)?.image.web,
     });
+  }
+  showList() {
+    return this.inputValid(this.searchValue) && this.selected === null;
+  }
+  shouldShowLoading() {
+    return this.inputValid(this.searchValue);
   }
 }

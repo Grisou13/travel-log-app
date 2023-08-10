@@ -35,7 +35,7 @@ import { PlaceService } from '../../services/place.service';
 export class AddPlaceComponent implements OnDestroy, OnInit {
   selectedLocation: Result | null = null;
   sub$: Subscription | null = null;
-  @Input({ required: true }) set trip(t: Trip) {
+  @Input({ required: true }) set trip(t: Trip | null) {
     this.tripState.next(t);
   }
   private tripState = new BehaviorSubject<Trip | null>(null);
@@ -60,7 +60,7 @@ export class AddPlaceComponent implements OnDestroy, OnInit {
     private fb: FormBuilder
   ) {}
   ngOnInit(): void {
-    initTE({ Modal, Ripple });
+    initTE({ Ripple });
   }
   ngOnDestroy(): void {
     this.sub$?.unsubscribe();
@@ -91,6 +91,7 @@ export class AddPlaceComponent implements OnDestroy, OnInit {
       title: $event.name,
     });
   }
+
   addPlace() {
     if (this.newPlaceForm.invalid) {
       return;

@@ -1,0 +1,5 @@
+<app-off-canvas (onClose)="navigateToTrip()">
+  <div *ngIf="trip$ | async as trip">
+    <app-add-place [trip]="trip"></app-add-place>
+  </div>
+</app-off-canvas>
