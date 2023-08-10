@@ -1,17 +1,24 @@
 import {
   Component,
   EventEmitter,
+  Input as OgInput,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { Datepicker, Ripple, Input, initTE } from 'tw-elements';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  ControlContainer,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 import { PlaceType } from '@httpClients/travelLogApi/places/schema';
 import { Result } from '@shared/components/cities-search/cities-search.component';
-import { Subscription, tap } from 'rxjs';
+import { Subscription, distinctUntilChanged, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const placeForm = new FormGroup({
   location: new FormGroup({
@@ -20,9 +27,9 @@ export const placeForm = new FormGroup({
   }),
   title: new FormControl('', []),
   description: new FormControl('', []),
-  dateOfVisit: new FormControl('', [Validators.pattern(/\d\d-\d\d-\d\d\d\d/)]),
+  dateOfVisit: new FormControl('', [Validators.pattern(/\d\d\d\d-\d\d-\d\d/)]),
   placeType: new FormControl<PlaceType>('TripStop', [Validators.required]),
-  order: new FormControl<number>(-1, []),
+  order: new FormControl<number | undefined>(undefined, []),
   pictureUrl: new FormControl('', []),
 });
 
@@ -33,32 +40,30 @@ export type NewPlaceForm = typeof placeForm.value;
   templateUrl: './add-place.component.html',
   styleUrls: [],
 })
-export class AddPlaceComponent implements OnInit, OnDestroy {
-  sub$: Subscription | null = null;
-  @Output() formUpdated = new EventEmitter<Partial<NewPlaceForm>>();
+export class AddPlaceComponent implements OnInit {
+  public newPlaceForm!: typeof placeForm;
+  public control!: FormControl;
+  @OgInput() controlName!: string;
+  @OgInput() placeHolder!: string;
+  @OgInput() extraMarkers: L.Marker[] = [];
 
-  newPlaceForm = new FormGroup({ ...placeForm.controls });
-  formUpdate$ = this.newPlaceForm.valueChanges.pipe(
-    tap({
-      next: (val) => {
-        this.formUpdated.next(val);
-      },
-    })
-  );
+  constructor(private controlContainer: ControlContainer) {}
 
-  ngOnDestroy(): void {
-    this.sub$?.unsubscribe();
+  clearDate() {
+    this.control.reset();
   }
+
   ngOnInit(): void {
     initTE({ Ripple, Datepicker, Input });
+    this.newPlaceForm = <typeof placeForm>this.controlContainer.control;
+    this.control = <FormControl>this.newPlaceForm.get(this.controlName);
 
     const now = new Date(Date.now());
     const date = now.toISOString();
 
-    this.newPlaceForm.patchValue({
+    /*this.newPlaceForm.patchValue({
       dateOfVisit: date.split('T')[0],
-    });
-    this.sub$ = this.formUpdate$.subscribe();
+    });*/
   }
 
   updateLocation($event: Result) {

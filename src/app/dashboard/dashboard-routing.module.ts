@@ -20,7 +20,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        pathMatch: 'prefix',
+        pathMatch: 'full',
         redirectTo: 'trips',
       },
       {

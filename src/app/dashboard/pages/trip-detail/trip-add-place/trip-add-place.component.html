@@ -1,5 +1,4 @@
 <app-off-canvas (onClose)="navigateToTrip()">
-  <div *ngIf="trip$ | async as trip">
     <div
       class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
     >
@@ -12,7 +11,7 @@
       </h5>
     </div>
 
-    <app-add-place (formUpdated)="formUpdate($event)"></app-add-place>
+    <app-add-place *ngIf="lastPlaceAsMarker$ | async as marker" [extraMarkers]="[marker]" [formGroup]="this.form"></app-add-place>
     <!--Modal footer-->
     <div
       class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
@@ -37,5 +36,4 @@
         Save changes
       </button>
     </div>
-  </div>
 </app-off-canvas>

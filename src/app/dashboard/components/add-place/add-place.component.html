@@ -4,7 +4,7 @@
     <div
     class="relative mb-3"
     data-te-datepicker-init
-    data-te-format="yyyy-mmm-dd"
+    data-te-format="yyyy-mm-dd"
     data-te-input-wrapper-init>
     <input
       data-te-input-state-active
@@ -19,6 +19,7 @@
     >
   </div>
     <app-location-search
+      [extraMarkers]="extraMarkers"
       (locationSelected)="updateLocation($event)"
     ></app-location-search>
   </div>

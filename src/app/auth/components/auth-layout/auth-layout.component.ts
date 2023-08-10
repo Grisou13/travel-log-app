@@ -12,22 +12,11 @@ import { Observable, Subscription, tap } from 'rxjs';
   standalone: true,
   imports: [SharedModule, CommonModule, RouterModule],
 })
-export class AuthLayoutComponent implements OnInit, OnDestroy {
-  title: string | undefined = ''; //Observable<string | undefined>;
-  constructor(private route: ActivatedRoute) {
-    // this.title = this.route.title;
-    // this.title.pipe(
-    //   tap((x) => {
-    //     console.debug(x);
-    //   })
-    // );
-  }
+export class AuthLayoutComponent implements OnInit {
+  title: string | undefined = '';
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.title = this.route.firstChild?.snapshot.title || '';
-    // this.sub = this.route.title.subscribe((v) => console.debug(v));
-  }
-  ngOnDestroy() {
-    // this.sub?.unsubscribe();
   }
 }

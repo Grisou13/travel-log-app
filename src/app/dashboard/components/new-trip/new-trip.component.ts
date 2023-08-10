@@ -1,52 +1,51 @@
-import { initTE, Modal, Ripple, Stepper } from 'tw-elements';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { tap } from 'rxjs';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
-import {
-  concatMap,
-  forkJoin,
-  mergeMap,
-  of,
-  Subscription,
-  switchMap,
-} from 'rxjs';
-import { Result } from '@shared/components/cities-search/cities-search.component';
-import { Trip } from './../../models/trips';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-} from '@angular/forms';
-import { NewPlaceForm, placeForm } from '../add-place/add-place.component';
-
+import { initTE, Modal, Ripple, Stepper } from 'tw-elements';
+import { placeForm } from '../add-place/add-place.component';
+function addDays(date: Date, days: number) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
 export const addTrip = new FormGroup({
   startDate: new FormControl(),
+  defineStop: new FormControl<boolean>(false, []),
   start: new FormGroup({ ...placeForm.controls }),
   end: new FormGroup({ ...placeForm.controls }),
 });
 
 export type NewTripForm = typeof addTrip.value;
-
+export const NEW_TRIP_STORAGE_KEY = 'new-trip-form';
 @Component({
   selector: 'app-new-trip',
   templateUrl: './new-trip.component.html',
   styleUrls: ['./new-trip.component.sass'],
 })
-export class NewTripComponent implements OnInit, OnDestroy {
+export class NewTripComponent implements OnInit {
   @ViewChild('stepper') stepper!: ElementRef;
   @Output() newTrip = new EventEmitter<NewTripForm>();
   form = addTrip;
-  private sub: Subscription | null = null;
 
+  _ = this.form.valueChanges
+    .pipe(
+      tap({
+        next: (val) => {
+          localStorage.setItem(NEW_TRIP_STORAGE_KEY, JSON.stringify(val));
+        },
+      }),
+      takeUntilDestroyed()
+    )
+    .subscribe();
   private stepperInstance: any | null = () =>
     Stepper.getOrCreateInstance(this.stepper.nativeElement);
 
@@ -54,35 +53,43 @@ export class NewTripComponent implements OnInit, OnDestroy {
     private travelLogService: TravelLogService,
     private fb: FormBuilder
   ) {}
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-  }
 
   ngOnInit(): void {
     initTE({ Modal, Ripple, Stepper });
+    const restored = localStorage.getItem(NEW_TRIP_STORAGE_KEY);
+    if (!restored) return;
+
+    this.form.patchValue(JSON.parse(restored));
   }
 
-  setStart($event: NewPlaceForm) {
-    this.form.patchValue({
-      start: {
-        ...$event,
-      },
-    });
-  }
-  setStop($event: NewPlaceForm) {
-    this.form.patchValue({
-      end: {
-        ...$event,
-      },
-    });
-  }
   previousStep() {
     this.stepperInstance().previousStep();
   }
   validateStop() {
+    const wantsToStop = this.form.controls.defineStop.value;
+    if (!wantsToStop) {
+      this.stepperInstance().nextStep();
+      return;
+    }
+
+    if (!this.form.controls.end.invalid) return;
+
     this.stepperInstance().nextStep();
   }
   validateStart() {
+    if (!this.form.controls.end.get('dateOfVisit')?.invalid) {
+      let dateOfEnd = addDays(
+        new Date(this.form.get('start.dateOfVisit')?.value || ''),
+        1
+      )
+        .toISOString()
+        .split('T')[0];
+      this.form.patchValue({
+        end: {
+          dateOfVisit: dateOfEnd,
+        },
+      });
+    }
     this.stepperInstance().nextStep();
   }
   public createTrip() {
