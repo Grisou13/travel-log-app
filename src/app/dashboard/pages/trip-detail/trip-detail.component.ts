@@ -1,56 +1,53 @@
-import { Component, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
-  BehaviorSubject,
   EMPTY,
   Observable,
   Subscription,
   combineLatest,
-  concatMap,
-  delay,
   distinctUntilChanged,
-  filter,
-  forkJoin,
   map,
   of,
-  pairwise,
-  share,
   shareReplay,
-  startWith,
   switchMap,
   tap,
-  withLatestFrom,
-  zip,
 } from 'rxjs';
-import { TripService } from '../../services/trip.service';
 import { Trip } from '../../models/trips';
-import { DirectionsService } from '@httpClients/open-route-service/directions/directions.service';
 import { PlaceService } from '../../services/place.service';
-import { Point } from 'geojson';
-import { Result } from '@shared/components/cities-search/cities-search.component';
-import { iconDefault } from '@shared/components/map/map.component';
-import * as L from 'leaflet';
-import * as _ from 'lodash';
-import { Place } from '../../models/places';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { PlaceType } from '@httpClients/travelLogApi/places/schema';
+import { TripService } from '../../services/trip.service';
+import { Input, initTE } from 'tw-elements';
 
 @Component({
-  selector: 'app-trip-detail',
   templateUrl: './trip-detail.component.html',
-  styleUrls: ['./trip-detail.component.sass'],
+  styleUrls: [],
 })
-export class TripDetailComponent implements OnDestroy {
-  initialValue: Partial<{
-    title: string | null;
-    description: string | null;
-  }> | null = null;
-  sub: Subscription | null = null;
+export class TripDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private tripService: TripService,
     private placeService: PlaceService
   ) {}
+  toggleForm($event: any) {
+    if (this.formGroup.enabled) {
+      this.formGroup.disable();
+      return;
+    }
+    initTE({ Input });
+    this.formGroup.enable();
+  }
+  formGroup = new FormGroup({
+    editing: new FormControl(false),
+    title: new FormControl(''),
+    description: new FormControl(''),
+    startDate: new FormControl(''),
+    pictureUrl: new FormControl(''),
+  });
+  initialValue: typeof this.formGroup.value | null = null;
+  sub: Subscription | null = null;
+  ngOnInit(): void {
+    initTE({ Input });
+  }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
@@ -66,8 +63,10 @@ export class TripDetailComponent implements OnDestroy {
         this.formGroup.patchValue({
           title: val?.title ?? '',
           description: val?.description ?? '',
+          startDate: val?.startDate?.toISOString() ?? '',
         });
         this.initialValue = this.formGroup.value;
+        this.formGroup.disable();
       },
     })
   );
@@ -87,31 +86,25 @@ export class TripDetailComponent implements OnDestroy {
     shareReplay(1)
   );
 
-  formGroup = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-  });
-  tripChange$ = this.formGroup.valueChanges.pipe(
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
-  onTitleChange(txt: string) {
-    this.formGroup.controls.title.setValue(txt);
-    console.log(txt);
-  }
-  onDescriptionChange(txt: string) {
-    this.formGroup.controls.description.setValue(txt);
-  }
   updateTrip(trip: Trip) {
+    let startDate = trip.startDate || Date.now;
+    if (
+      this.formGroup.value?.startDate !== null &&
+      typeof this.formGroup.value?.startDate !== 'undefined'
+    )
+      startDate = new Date(this.formGroup.value.startDate);
+
     this.sub = this.tripService
       .update(trip.id, {
         ...trip,
         title: this.formGroup.value?.title ?? trip.title,
         description: this.formGroup.value?.description ?? trip.description,
+        startDate: new Date(startDate.toString()),
       })
       .subscribe();
   }
   cancel() {
     this.formGroup.reset(this?.initialValue ?? {});
+    this.formGroup.disable();
   }
 }

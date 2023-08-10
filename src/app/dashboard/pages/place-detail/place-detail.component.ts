@@ -1,7 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
+  EMPTY,
   Observable,
   Subscription,
   combineLatest,
@@ -25,14 +26,60 @@ import { catchError, tap } from 'rxjs';
 import { SettingsService } from '@shared/services/settings.service';
 import * as _ from 'lodash';
 import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
+import { ArrayElement } from '../../../helpers';
+import { Input, initTE } from 'tw-elements';
+import { FormControl, FormGroup } from '@angular/forms';
 
-type GetInsideObservable<X> = X extends Observable<infer I> ? I : never;
 @Component({
   selector: 'app-place-detail',
   templateUrl: './place-detail.component.html',
-  styleUrls: ['./place-detail.component.sass'],
+  styleUrls: [],
 })
-export class PlaceDetailComponent implements OnDestroy {
+export class PlaceDetailComponent implements OnDestroy, OnInit {
+  form = new FormGroup({
+    editing: new FormControl(false),
+    name: new FormControl(''),
+    description: new FormControl(''),
+    startDate: new FormControl(''),
+    pictureUrl: new FormControl(''),
+  });
+  toggle($event: any) {
+    if (this.form.enabled) {
+      this.form.disable();
+      return;
+    }
+    initTE({ Input });
+    this.form.enable();
+  }
+  initialValue: typeof this.form.value | null = null;
+  sub: Subscription | null = null;
+  ngOnInit(): void {
+    initTE({ Input });
+  }
+
+  updatePlace(place: Place) {
+    let startDate = place.startDate || Date.now;
+    if (
+      this.form.value?.startDate !== null &&
+      typeof this.form.value?.startDate !== 'undefined'
+    )
+      startDate = new Date(this.form.value.startDate);
+
+    this.sub = this.placeService
+      .update(place.id, {
+        ...place,
+        name: this.form.value?.name ?? place.name,
+        description: this.form.value?.description ?? place.description,
+        startDate: new Date(startDate.toString()),
+        pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
+      })
+      .subscribe();
+  }
+  cancel() {
+    this.form.reset(this?.initialValue ?? {});
+    this.form.disable();
+  }
+
   place$ = this.route.paramMap.pipe(
     map((params) => {
       const id = params.get('placeId');
@@ -48,6 +95,18 @@ export class PlaceDetailComponent implements OnDestroy {
         map((x) => {
           if (typeof x === 'undefined' || typeof x === 'boolean') return null;
           return x;
+        }),
+        tap({
+          next: (val) => {
+            this.form.patchValue({
+              name: val?.current.name ?? '',
+              description: val?.current.description ?? '',
+              startDate: val?.current.startDate?.toISOString() ?? '',
+              pictureUrl: val?.current.pictureUrl ?? '',
+            });
+            this.initialValue = this.form.value;
+            this.form.disable();
+          },
         })
       );
     }),
@@ -59,13 +118,17 @@ export class PlaceDetailComponent implements OnDestroy {
       if (p === null) return [];
       const ret = [
         placeToMarker(p.current, {
-          icon: iconDefault,
+          icon: iconDefault(`${p.current.order}`),
         }),
 
-        ...p.pois.map((x) => placeToMarker(x, { icon: iconDefault })),
+        ...p.pois.map((x) => placeToMarker(x, { icon: iconDefault(``) })),
       ];
       if (p.previousPlace !== undefined) {
-        ret.push(placeToMarker(p.previousPlace, { icon: iconDefault }));
+        ret.push(
+          placeToMarker(p.previousPlace, {
+            icon: iconDefault(`${p.previousPlace.order}`),
+          })
+        );
       }
       return ret;
     })
@@ -121,6 +184,7 @@ export class PlaceDetailComponent implements OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this._subs.forEach((x) => x.unsubscribe());
+    this.sub?.unsubscribe();
   }
 
   tripHasPoi(pois: Array<Partial<Place>>, osm_id: number) {
@@ -132,10 +196,10 @@ export class PlaceDetailComponent implements OnDestroy {
     );
   }
   _subs: Subscription[] = [];
-  togglePoi(place: Place, poi: PoiSearchResponse['features'][0]) {
-    const poiName = `POI ${poi.geometry.coordinates.join(', ')} for place ${
-      place.name
-    }`;
+  togglePoi(place: Place, poi: ArrayElement<PoiSearchResponse['features']>) {
+    const poiName = `POI ${
+      poi.properties.osm_tags?.name
+    } ${poi.geometry.coordinates.join(', ')} for place ${place.name}`;
     const s = this.placeService
       .togglePoi(place.tripId, `${poi.properties.osm_id}`, {
         type: 'PlaceOfInterest',
@@ -144,6 +208,7 @@ export class PlaceDetailComponent implements OnDestroy {
         order: -1,
         tripId: place.tripId,
         infos: {
+          category_ids: poi.properties.category_ids,
           misc_id: `${poi.properties.osm_id}`,
           relatedToPlace: place.id,
         },

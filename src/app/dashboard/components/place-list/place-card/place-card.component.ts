@@ -4,7 +4,7 @@ import { Place } from 'src/app/dashboard/models/places';
 @Component({
   selector: 'app-place-card',
   templateUrl: './place-card.component.html',
-  styleUrls: ['./place-card.component.sass'],
+  styleUrls: [],
 })
 export class PlaceCardComponent {
   @Input({ required: true }) place!: Place;

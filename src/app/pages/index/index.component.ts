@@ -3,9 +3,8 @@ import { LogoComponent } from '@shared/components/logo/logo.component';
 import { SharedModule } from '@shared/shared.module';
 
 @Component({
-  selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.sass'],
+  styleUrls: [],
   standalone: true,
   imports: [SharedModule],
 })

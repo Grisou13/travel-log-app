@@ -28,7 +28,7 @@ import { distConverter, timeConverter } from '../../helpers';
 @Component({
   selector: 'app-trip-map',
   templateUrl: './trip-map.component.html',
-  styleUrls: ['./trip-map.component.sass'],
+  styleUrls: [],
 })
 export class TripMapComponent {
   constructor(
@@ -60,7 +60,7 @@ export class TripMapComponent {
     map((x) => {
       return x.map((y) =>
         L.marker([y.location.coordinates[1], y.location.coordinates[0]], {
-          icon: iconDefault,
+          icon: iconDefault(`${y.order}`),
           title: y.name,
           // draggable: true,
         })

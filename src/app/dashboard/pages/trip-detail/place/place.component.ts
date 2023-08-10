@@ -10,9 +10,8 @@ import {
 import { tap } from 'rxjs';
 
 @Component({
-  selector: 'app-place',
   templateUrl: './place.component.html',
-  styleUrls: ['./place.component.sass'],
+  styleUrls: [],
 })
 export class PlaceComponent implements AfterViewInit {
   // show = false;
@@ -20,17 +19,7 @@ export class PlaceComponent implements AfterViewInit {
     private router: Router,
     private location: Location,
     private route: ActivatedRoute
-  ) {
-    // this.router.events.pipe(tap({
-    //   next: event => {
-    //     if(event instanceof NavigationStart){
-    //       console.debug(event)
-    //       console.debug("Changing url")
-    //       this.show = true;
-    //     }
-    //   }
-    // }), takeUntilDestroyed()).subscribe()
-  }
+  ) {}
   ngAfterViewInit(): void {}
 
   navigateToTrip() {

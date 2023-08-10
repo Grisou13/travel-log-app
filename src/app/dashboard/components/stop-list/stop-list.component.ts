@@ -4,7 +4,7 @@ import { Place } from '../../models/places';
 @Component({
   selector: 'app-stop-list',
   templateUrl: './stop-list.component.html',
-  styleUrls: ['./stop-list.component.sass'],
+  styleUrls: [],
 })
 export class StopListComponent {
   @Input({ required: true }) places: Place[] = [];

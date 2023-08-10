@@ -19,7 +19,7 @@ import { AsObservable, ObservableInput, Observe } from 'src/app/helpers';
 @Component({
   selector: 'app-trip-card',
   templateUrl: './trip-card.component.html',
-  styleUrls: ['./trip-card.component.sass'],
+  styleUrls: [],
 })
 export class TripCardComponent {
   // @Observe<Trip>('trip')

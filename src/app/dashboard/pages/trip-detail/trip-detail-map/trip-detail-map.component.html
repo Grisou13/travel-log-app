@@ -1,0 +1,13 @@
+
+<div *ngIf="loadable$ | withLoadingStatus | async as obs" class="h-full overflow-hidden">
+  <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
+  <ng-template [ngIf]="obs.value">
+    <div class="overflow-auto">
+      <app-trip-map [trip]="obs.value"></app-trip-map>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="obs.error">
+    <pre>{{obs.error | json}}</pre>
+  </ng-template>
+</div>
+<router-outlet></router-outlet>

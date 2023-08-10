@@ -8,7 +8,7 @@ import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 @Component({
   selector: 'app-trip-planner',
   templateUrl: './trip-planner.component.html',
-  styleUrls: ['./trip-planner.component.sass'],
+  styleUrls: [],
 })
 export class TripPlannerComponent {
   loading$ = new BehaviorSubject(false);

@@ -12,9 +12,8 @@ import { BehaviorSubject, delay, Subscription, takeLast, tap } from 'rxjs';
 import { indicate } from 'src/app/helpers';
 
 @Component({
-  selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass'],
+  styleUrls: [],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string = '/app';
