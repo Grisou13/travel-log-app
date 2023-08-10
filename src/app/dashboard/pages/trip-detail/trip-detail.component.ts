@@ -41,6 +41,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     title: new FormControl(''),
     description: new FormControl(''),
     startDate: new FormControl(''),
+    pictureUrl: new FormControl(''),
   });
   initialValue: typeof this.formGroup.value | null = null;
   sub: Subscription | null = null;

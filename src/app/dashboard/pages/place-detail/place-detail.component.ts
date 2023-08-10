@@ -41,6 +41,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     name: new FormControl(''),
     description: new FormControl(''),
     startDate: new FormControl(''),
+    pictureUrl: new FormControl(''),
   });
   toggle($event: any) {
     if (this.form.enabled) {
@@ -70,6 +71,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         name: this.form.value?.name ?? place.name,
         description: this.form.value?.description ?? place.description,
         startDate: new Date(startDate.toString()),
+        pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
       })
       .subscribe();
   }
@@ -100,6 +102,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
               name: val?.current.name ?? '',
               description: val?.current.description ?? '',
               startDate: val?.current.startDate?.toISOString() ?? '',
+              pictureUrl: val?.current.pictureUrl ?? '',
             });
             this.initialValue = this.form.value;
             this.form.disable();
