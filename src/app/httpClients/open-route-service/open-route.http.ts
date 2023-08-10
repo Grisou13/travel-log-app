@@ -28,9 +28,12 @@ export class BaseUrlInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const url =
+      request.url.charAt(0) === '/' ? request.url.substring(1) : request.url;
+
     return next.handle(
       request.clone({
-        url: `${this.baseUrl}/${request.url}`,
+        url: `${this.baseUrl}/${url}`,
       })
     );
   }

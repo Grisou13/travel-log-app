@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    redirectTo: '/dashboard',
+    redirectTo: '/dashboard/trips',
   },
   {
     path: 'auth',
@@ -41,7 +41,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

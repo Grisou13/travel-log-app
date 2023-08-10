@@ -1,4 +1,4 @@
-import { common, transportMethod } from './../common';
+import { common, commonSchema, transportMethod } from './../common';
 import { z } from 'zod';
 import { schema as placeSchema } from '../places/schema';
 export const validator = z
@@ -15,18 +15,9 @@ export const schema = z
     placesCount: z.number().optional(),
     userHref: z.string().optional(), //"/api/users/d68cf4e9-1349-4d45-b356-c1294e49ef23",
     userId: z.string(), //"d68cf4e9-1349-4d45-b356-c1294e49ef23"
-    updatedAt: z
-      .string()
-      .datetime({ offset: true })
-      .pipe(z.coerce.date())
-      .optional(),
-    createdAt: z
-      .string()
-      .datetime({ offset: true })
-      .pipe(z.coerce.date())
-      .optional(),
   })
-  .merge(validator);
+  .merge(validator)
+  .merge(commonSchema);
 
 export const searchParamValidator = z
   .object({

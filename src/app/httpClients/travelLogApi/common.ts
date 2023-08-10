@@ -13,6 +13,11 @@ export type TransportType = z.infer<typeof transportTypes>;
 export const common = z
   .object({
     transportMethod: transportMethod.optional(),
-    budget: z.number().min(0).optional(),
+    budget: z.number().min(0).optional().nullable(),
   })
   .merge(dates);
+
+export const commonSchema = z.object({
+  updatedAt: z.coerce.date().optional(),
+  createdAt: z.coerce.date().optional(),
+});

@@ -1,11 +1,11 @@
 <div
   *ngIf="trip$ | async as trip"
   class="flex w-[55vw] sm:w-[35vw] h-full min-h-[15rem]
-    p-3 mr-4 sm:ml-4 rounded-lg bg-white  
+    p-3 mr-4 sm:ml-4 rounded-lg bg-white
     shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
 >
   <div class="flex flex-wrap flex-row sm:gap-4 rounded-md w-full">
-    <div 
+    <div
       class="flex rounded-md w-full h-1/2 border-white bg-[url(https://images.unsplash.com/photo-1534540378968-85a7b8fde19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80)] bg-cover bg-center bg-neutral-100"
     >
       <h6 class="flex text-sm text-white mt-auto mb-2 px-3 py-1 leading-[1.1rem] sm:leading-tight tracking-wide text-neutral-800 dark:text-neutral-50 rounded-r-lg bg-gray-800 w-70">
@@ -33,23 +33,23 @@
         </ng-template>
       </div>
     </div>
-    <div class="flex items-center justify-start 
+    <div class="flex items-center justify-start
       w-full"
     >
       <button
       type="button"
       class="flex py-2 px-6
-      rounded-full align-center ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
-      shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-      hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-      focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-      active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-      dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
-      dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
+      rounded-full align-center ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+      shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+      hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+      focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
+      active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+      dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
+      dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
       dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
       data-te-ripple-init
       data-te-ripple-color="light"
-      [routerLink]="['trips/', trip.id]"
+      [routerLink]="[trip.id]"
       >
         Edit
         <!-- TODO: add edit icon svg -->

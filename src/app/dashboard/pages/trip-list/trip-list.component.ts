@@ -11,35 +11,33 @@ import { ToastrService } from 'ngx-toastr';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-trip-list',
   templateUrl: './trip-list.component.html',
-  styleUrls: ['./trip-list.component.sass'],
+  styleUrls: [],
   animations: [
     trigger('fadeInOut', [
-      transition('void => *', [ 
+      transition('void => *', [
         style({ opacity: 0 }),
-        animate('300ms',
-          style({ opacity: 1 })
-        )
+        animate('300ms', style({ opacity: 1 })),
       ]),
-      transition('* => void', [
-        animate('300ms', 
-          style({ opacity: 0 })
-        ) 
-      ])
-    ]) 
-  ]
+      transition('* => void', [animate('300ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
-
 export default class TripListComponent {
   loading$ = new BehaviorSubject(false);
 
   trips$ = this.tripService.items$;
 
-  constructor(private router: Router, private tripService: TripService, private toastr: ToastrService) {}
+  constructor(
+    private router: Router,
+    private tripService: TripService,
+    private toastr: ToastrService
+  ) {}
 
   navigateToNewTrip($event: Trip) {
-    this.toastr.success(`Your trip to ${$event.title} has been succesfully created`);
+    this.toastr.success(
+      `Your trip to ${$event.title} has been succesfully created`
+    );
 
     const id = $event.id || null;
     this.router.navigate(['/dashboard/trips/', id]);

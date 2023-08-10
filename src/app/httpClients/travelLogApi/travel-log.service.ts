@@ -23,6 +23,7 @@ export class TravelLogService {
           message: 'could not fetch data create your user profile, sorry',
           status: 0,
           context: 'user',
+          error: err,
         }))
       ),
     fetchAll: (data: SecondArgOfFunction<typeof usersFuncs.fetchAll>) =>
@@ -31,6 +32,7 @@ export class TravelLogService {
           message: 'could not fetch data all users, sorry',
           status: 0,
           context: 'user',
+          error: err,
         }))
       ),
     fetchOne: (data: SecondArgOfFunction<typeof usersFuncs.fetchOne>) =>
@@ -39,6 +41,7 @@ export class TravelLogService {
           message: 'could not fetch data your user, sorry',
           status: 0,
           context: 'user',
+          error: err,
         }))
       ),
     remove: (data: SecondArgOfFunction<typeof usersFuncs.remove>) =>
@@ -47,6 +50,7 @@ export class TravelLogService {
           message: 'could not delete your user, sorry',
           status: 0,
           context: 'user',
+          error: err,
         }))
       ),
     update: (data: SecondArgOfFunction<typeof usersFuncs.update>) =>
@@ -55,6 +59,7 @@ export class TravelLogService {
           message: 'could not update your user, sorry',
           status: 0,
           context: 'user',
+          error: err,
         }))
       ),
   };
@@ -65,6 +70,8 @@ export class TravelLogService {
           message: 'could not create your new trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     fetchAll: (data: SecondArgOfFunction<typeof tripFuncs.fetchAll>) =>
@@ -73,6 +80,8 @@ export class TravelLogService {
           message: 'could not fetch data your trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     fetchOne: (data: SecondArgOfFunction<typeof tripFuncs.fetchOne>) =>
@@ -81,6 +90,8 @@ export class TravelLogService {
           message: 'could not fetch data your trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     fetchById: (id: SecondArgOfFunction<typeof tripFuncs.fetchById>) =>
@@ -89,6 +100,8 @@ export class TravelLogService {
           message: 'could not fetch data your trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     remove: (data: SecondArgOfFunction<typeof tripFuncs.remove>) =>
@@ -97,6 +110,8 @@ export class TravelLogService {
           message: `could not delete your trip ${data.title}, sorry`,
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     removeById: (id: SecondArgOfFunction<typeof tripFuncs.removeById>) =>
@@ -105,6 +120,8 @@ export class TravelLogService {
           message: 'could not delete your trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     update: (data: SecondArgOfFunction<typeof tripFuncs.update>) =>
@@ -113,6 +130,8 @@ export class TravelLogService {
           message: `could not update your trip ${data.title}, sorry`,
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     fetchByUser: (
@@ -124,6 +143,8 @@ export class TravelLogService {
           message: `could not fetch data the trips for user${userId}, sorry`,
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
   };
@@ -136,6 +157,8 @@ export class TravelLogService {
           message: 'could not fetch data for the places for your trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     fetchOne: (data: SecondArgOfFunction<typeof placesFuncs.fetchOne>) =>
@@ -150,6 +173,8 @@ export class TravelLogService {
           message: 'could not remove your a place from your trip, sorry',
           status: 0,
           context: 'trip',
+
+          error: err,
         }))
       ),
     update: (data: SecondArgOfFunction<typeof placesFuncs.update>) =>
@@ -165,6 +190,7 @@ export class TravelLogService {
                 message: `Username or password incorrect`,
                 status: 401,
                 context: 'auth',
+                error: err,
               };
             }
           }
@@ -172,6 +198,7 @@ export class TravelLogService {
             message: `could not login, sorry`,
             status: 0,
             context: 'auth',
+            error: err,
           };
         })
       ),
@@ -181,6 +208,7 @@ export class TravelLogService {
           message: `could not signup, sorry`,
           status: 0,
           context: 'auth',
+          error: err,
         }))
       ),
   };

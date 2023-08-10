@@ -1,0 +1,4 @@
+<div *ngIf="loadable$ | async as vm">
+  <app-place-list [places]="vm.places"></app-place-list>
+</div>
+<router-outlet></router-outlet>

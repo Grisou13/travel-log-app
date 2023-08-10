@@ -21,7 +21,7 @@ import { Settings } from '../../services/settings.service';
 @Component({
   selector: 'app-settings-poi',
   templateUrl: './settings-poi.component.html',
-  styleUrls: ['./settings-poi.component.sass'],
+  styleUrls: [],
 })
 export class SettingsPoiComponent {
   settings$ = this.settingsService.settings$;

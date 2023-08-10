@@ -39,12 +39,15 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
       switchMap((current) => {
         if (typeof current === 'undefined' || typeof current === 'boolean')
           return of(null);
-        const currentOrder = current.order - 1;
+        const currentOrder = current.order;
 
         return this.fetchForTripId(current.tripId).pipe(
           map((places) => {
-            const pois = places.filter((x) => x.infos?.relatedToPlace === id && x.type === 'PlaceOfInterest');
-            console.debug("Pois for place: ", pois)
+            const pois = places.filter(
+              (x) =>
+                x.infos?.relatedToPlace === id && x.type === 'PlaceOfInterest'
+            );
+            console.debug('Pois for place: ', pois);
             const stops = _.sortBy(
               places.filter((x) => x.type === 'TripStop'),
               'order'
@@ -53,8 +56,9 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
               current,
               pois,
               previousPlace:
-                currentOrder >= 1 ? stops[currentOrder - 1] : undefined,
-              nextPlace: currentOrder < stops.length ? stops[currentOrder + 1] : null,
+                stops.length >= 2 ? stops[currentOrder - 1] : undefined,
+              nextPlace:
+                currentOrder < stops.length ? stops[currentOrder + 1] : null,
             };
           })
         );
@@ -99,10 +103,10 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
   fetchForTrip(trip: Trip) {
     return this.fetchForTripId(trip.id);
   }
-  togglePoi(tripId: string, osmId: string, newPlace: AddPlace){
+  togglePoi(tripId: string, osmId: string, newPlace: AddPlace) {
     const currentPlaces = this.cacheSubject.getValue();
     const exists = currentPlaces.find((v) => v.infos?.misc_id === osmId);
-    if(!exists){
+    if (!exists) {
       return this.add(newPlace);
     }
     return this.delete(exists.id);

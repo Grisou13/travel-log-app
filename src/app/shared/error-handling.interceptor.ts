@@ -28,12 +28,14 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
             message: `service not available, please try again later`,
             status: 0,
             context: 'global',
+            error: err,
           });
         else
           this.errorHandlerService.handleError({
             message,
             status: err.status,
             context: 'global',
+            error: err,
           });
         return throwError(
           () =>

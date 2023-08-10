@@ -1,29 +1,205 @@
+<div class="mt-[5rem] pt-4 grid grid-cols-4">
+  <a routerLink="places/new" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
 
-<div *ngIf="loadable$ | withLoadingStatus | async as obs" class="mt-[5rem] h-full overflow-hidden">
+    <div class="mb-2 flex justify-center">
+        <span class="text-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </span>
+
+        <h6 class="mb-0 font-normal dark:text-neutral-50">Add a new place</h6>
+      </div>
+  </a>
+  <a routerLink="list" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
+
+    <div class="mb-2 flex justify-center">
+        <span class="text-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+            />
+          </svg>
+        </span>
+
+        <h6 class="mb-0 font-normal dark:text-neutral-50">Places of your trip</h6>
+      </div>
+  </a>
+
+  <a routerLink="map" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
+    <div class="mb-2 flex justify-center">
+      <span class="text-primary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+          />
+        </svg>
+      </span>
+
+      <h6 class="mb-0 font-normal dark:text-neutral-50">Map</h6>
+    </div>
+  </a>
+
+  <a routerLink="overview" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
+    <div class="mb-2 flex justify-center">
+        <span class="text-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"
+            />
+          </svg>
+        </span>
+        <h6 class="mb-0 font-normal dark:text-neutral-50">Overview</h6>
+      </div>
+    </a>
+</div>
+
+<hr
+  class="my-2 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+
+<div
+  *ngIf="loadable$ | withLoadingStatus | async as obs"
+
+>
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
-    <div class="overflow-auto">
-      <app-trip-map [trip]="obs.value.trip"></app-trip-map>
-    </div>
-    <ng-container [formGroup]="formGroup">
-      <h2 class="text-2xl sm:text-4xl text-center sm:text-left mx-6 sm:mt-6" formControlName="title" contenteditable></h2>
-      <p class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6" formControlName="description" contenteditable></p>
-    </ng-container>
-    <div *ngIf="tripChange$ | async" class="grid w-full self-center m-10 justify-items-stretch items-center">
-      <button type="button"
-      class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-       (click)="cancel()">Cancel</button>
-      <button type="button"
-      class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-       (click)="updateTrip(obs.value.trip)">Save Changes</button>
-    </div>
-    <!-- <app-add-place [trip]="obs.value.trip"></app-add-place>
+    <ng-container *ngIf="this.formGroup.enabled">
+      <div class="flex flex-col" [formGroup]="this.formGroup">
+        <div class="relative mb-3" data-te-input-wrapper-init>
+         <input
+          data-te-input-state-active
+           type="text"
+           class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+           id="tripTitle"
+           formControlName="title"
+           placeholder="title" />
+         <label
+           for="tripTitle"
+           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+           >Title
+         </label>
+       </div>
+       <div class="relative mb-3" data-te-input-wrapper-init>
+         <input
+          data-te-input-state-active
+           type="text"
+           class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+           id="tripDescription"
+           formControlName="description"
+           placeholder="Description" />
+         <label
+           for="tripDescription"
+           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+           >Description
+         </label>
+       </div>
+       <div class="relative mb-3" data-te-input-wrapper-init>
+         <input
+          data-te-input-state-active
+           type="text"
+           class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+           id="tripStartDate"
+           formControlName="startDate"
+           placeholder="StartDate" />
+         <label
+           for="tripStartDate"
+           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+           >StartDate
+         </label>
+       </div>
+      </div>
 
-    <app-place-list [places]="obs.value.places"></app-place-list> -->
-    <!-- <pre>{{obs.value | json }}</pre> -->
+    </ng-container>
+    <ng-container *ngIf="this.formGroup.disabled">
+      <div>
+        <h2
+          class="text-2xl sm:text-4xl text-center sm:text-left mx-6 sm:mt-6"
+        >{{this.formGroup.controls.title.value}}</h2>
+        <p
+          class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
+        >{{this.formGroup.controls.description.value}}</p>
+        <p
+          class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
+        >{{this.formGroup.controls.startDate.value}}</p>
+      </div>
+    </ng-container>
+    <div class="mb-[0.125rem] block text-xs ml-2">
+      <input
+        [value]="this.formGroup.enabled"
+        (change)="toggleForm($event)"
+        type="checkbox"
+        id="toggle-trip-detail"
+        value=""
+        class="hidden peer"
+      />
+      <label
+        for="toggle-trip-detail"
+        class="inline-flex items-center justify-between w-full px-6 pb-2 pt-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:bg-primary-600 peer-checked:text-primary-accent-100 hover:text-gray-600 dark:peer-checked:text-gray-300 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+      >
+        <div class="block">
+          <div class="w-full text-lg font-semibold">Editing Icon</div>
+        </div>
+      </label>
+    </div>
+    <div
+      *ngIf="this.formGroup.enabled"
+      class="grid w-full self-center m-10 justify-items-stretch items-center"
+    >
+      <button
+        type="button"
+        class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        (click)="updateTrip(obs.value.trip)"
+      >
+        Save Changes
+      </button>
+    </div>
   </ng-template>
   <ng-template [ngIf]="obs.error">
-    <pre>{{obs.error | json}}</pre>
+    <pre>{{ obs.error | json }}</pre>
   </ng-template>
 </div>
-<router-outlet></router-outlet>
+
+<div class="mt-[5rem] h-full overflow-hidden">
+  <router-outlet></router-outlet>
+</div>

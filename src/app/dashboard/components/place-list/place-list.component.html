@@ -1,3 +1,9 @@
-<div class="h-5/6 p-2 flex flex-col justify-between items-stretch gap-2">
-  <app-place-card [place]="place" *ngFor="let place of places"></app-place-card>
+<div
+  *ngIf="places$ | async as places"
+  class="h-5/6 p-2 flex flex-col justify-between items-stretch gap-2"
+  cdkDropList
+  cdkDropListOrientation="vertical"
+  (cdkDropListDropped)="drop($event)"
+  >
+  <app-place-card cdkDrag [place]="place" *ngFor="let place of places"></app-place-card>
 </div>

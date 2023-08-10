@@ -26,7 +26,8 @@ export class SearchService {
         handleAppError(this.errorHandler, (err) => ({
           message: `could not find find location ${request.text}, sorry`,
           status: 0,
-          context: 'auth',
+          context: 'geocode-search',
+          error: err,
         }))
       );
   }
@@ -41,7 +42,8 @@ export class SearchService {
         handleAppError(this.errorHandler, (err) => ({
           message: `could not find find location ${request.text}, sorry`,
           status: 0,
-          context: 'auth',
+          context: 'geocode-search',
+          error: err,
         }))
       );
   }

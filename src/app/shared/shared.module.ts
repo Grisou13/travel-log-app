@@ -15,6 +15,8 @@ import { OffCanvasComponent } from './components/off-canvas/off-canvas.component
 import { SettingsPoiComponent } from './components/settings-poi/settings-poi.component';
 import { EditableParagrapheComponent } from './components/editable-paragraphe/editable-paragraphe.component';
 import { ContenteditableValueAccessor } from './directives/content-editable.directive';
+import { EmptyRouterOutletComponent } from './components/empty-router-outlet/empty-router-outlet.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     WithLoadingPipe,
@@ -29,9 +31,10 @@ import { ContenteditableValueAccessor } from './directives/content-editable.dire
     SettingsPoiComponent,
     EditableParagrapheComponent,
     ContenteditableValueAccessor,
+    EmptyRouterOutletComponent,
   ],
   providers: [GeolocationService],
-  imports: [CommonModule, ReactiveFormsModule, LeafletModule],
+  imports: [CommonModule, ReactiveFormsModule, LeafletModule, RouterModule],
   exports: [
     ContenteditableValueAccessor,
     CommonModule,

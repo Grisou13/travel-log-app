@@ -1,7 +1,7 @@
 import { Input } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, defer, finalize } from 'rxjs';
 import { __decorate } from 'tslib';
-
+export type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
 /** haversine distance */
 export function distance(
   first: GeoJSON.Point,
