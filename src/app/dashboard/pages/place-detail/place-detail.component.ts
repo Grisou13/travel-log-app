@@ -36,7 +36,13 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: [],
 })
 export class PlaceDetailComponent implements OnDestroy, OnInit {
-  toggleForm($event: any) {
+  form = new FormGroup({
+    editing: new FormControl(false),
+    name: new FormControl(''),
+    description: new FormControl(''),
+    startDate: new FormControl(''),
+  });
+  toggle($event: any) {
     if (this.form.enabled) {
       this.form.disable();
       return;
@@ -44,12 +50,6 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     initTE({ Input });
     this.form.enable();
   }
-  form = new FormGroup({
-    editing: new FormControl(false),
-    name: new FormControl(''),
-    description: new FormControl(''),
-    startDate: new FormControl(''),
-  });
   initialValue: typeof this.form.value | null = null;
   sub: Subscription | null = null;
   ngOnInit(): void {
