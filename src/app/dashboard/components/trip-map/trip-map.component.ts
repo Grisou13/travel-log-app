@@ -188,6 +188,7 @@ export class TripMapComponent {
           const geojsonLayer = new L.GeoJSON(geoJson!, {
             style: {
               weight: 3,
+              color: 'rgba(var(--ui-button-color),1)',
             },
             onEachFeature: (feature, layer) => {
               const popup = L.popup({
@@ -203,7 +204,7 @@ export class TripMapComponent {
 
               layer.on('mouseover', function (e) {
                 console.debug('Moused over geo json layer: ');
-                e.target.setStyle({ weight: 7, color: 'red' });
+                e.target.setStyle({ weight: 7, color: 'rgba(var(--ui-button-color),1)' });
                 layer.openPopup();
                 console.debug(e);
                 console.debug(feature);
@@ -215,7 +216,7 @@ export class TripMapComponent {
                 if (layer.isPopupOpen()) {
                   geojsonLayer.resetStyle(e.target);
                 } else {
-                  e.target.setStyle({ weight: 7, color: 'red' });
+                  e.target.setStyle({ weight: 7, color: 'rgba(var(--ui-button-color),1)' });
                 }
                 layer.togglePopup();
               });
