@@ -55,8 +55,10 @@ export class MapComponent implements AfterViewInit {
   @Input() set directions(t: L.GeoJSON<any>[] | null) {
     this.directionsState.next(t);
   }
-  @Output() center = new EventEmitter<L.LatLng>();
-  @Output() bbox = new EventEmitter<L.LatLngBounds>();
+  @Input() center: L.LatLng = L.latLng(46.879966, -121.726909);
+  @Input() bbox: L.LatLngBounds | null = null;
+  @Output() centerChanged = new EventEmitter<L.LatLng>();
+  @Output() bboxChanged = new EventEmitter<L.LatLngBounds>();
   private directionsState = new BehaviorSubject<L.GeoJSON<any>[] | null>(null);
   private markersState = new BehaviorSubject<L.Marker[]>([]);
 
@@ -65,7 +67,7 @@ export class MapComponent implements AfterViewInit {
   geoDenied: boolean | null = null;
   geoGranted: boolean | null = null;
 
-  public options = {
+  _options = {
     layers: [
       L.tileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -80,6 +82,10 @@ export class MapComponent implements AfterViewInit {
     zoomControl: false,
     center: L.latLng(46.879966, -121.726909),
   };
+
+  getOptions() {
+    return { ...this._options, center: this.center };
+  }
 
   directions$ = this.directionsState.pipe(
     map((x) => {
@@ -115,8 +121,8 @@ export class MapComponent implements AfterViewInit {
     this.map = map;
     this.map.on('dragend', () =>
       this.zone.run(() => {
-        this.center.emit(this.map?.getCenter());
-        this.bbox.emit(this.map?.getBounds());
+        this.centerChanged.emit(this.map?.getCenter());
+        this.bboxChanged.emit(this.map?.getBounds());
       })
     );
     this.map.addControl(L.control.zoom({ position: 'bottomright' }));
