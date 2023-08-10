@@ -44,6 +44,7 @@ export class CitiesSearchComponent {
   }
   @Input() set initialValue(val: string) {
     this.searchValue = val;
+    this.selected = undefined;
   }
   @Output() selectedCity = new EventEmitter<Result>();
   // the only reason we use this
@@ -56,7 +57,7 @@ export class CitiesSearchComponent {
   searchSubject = new BehaviorSubject('');
 
   cities$ = this.searchSubject.asObservable().pipe(
-    debounceTime(100),
+    debounceTime(150),
     distinctUntilChanged(),
     tap({
       next: (v) => {
@@ -75,8 +76,8 @@ export class CitiesSearchComponent {
     ),
     catchError((err) =>
       concat(
-        of([]),
-        throwError(() => new Error(err))
+        of([])
+        //throwError(() => new Error(err))
       )
     ),
     retry({ delay: () => this.searchSubject.asObservable() }),
@@ -102,9 +103,12 @@ export class CitiesSearchComponent {
     });
   }
   showList() {
-    return this.inputValid(this.searchValue) && this.selected === null;
+    return (
+      this.inputValid(this.searchValue) &&
+      (this.selected === null || this.selected === undefined)
+    );
   }
   shouldShowLoading() {
-    return this.inputValid(this.searchValue);
+    return this.inputValid(this.searchValue) && this.selected !== undefined;
   }
 }

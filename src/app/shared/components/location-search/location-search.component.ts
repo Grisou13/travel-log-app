@@ -43,10 +43,11 @@ export class LocationSearchComponent {
           of(marker),
           this.searchService
             .reverseGeocode({
-              layers: ['locality', 'localadmin'],
+              layers: ['locality', 'localadmin', 'coarse'],
               'point.lat': marker.getLatLng().lat,
               'point.lon': marker.getLatLng().lng,
-              'boundary.circle.radius': 100,
+              'boundary.circle.radius': 1000,
+              size: 1,
             })
             .pipe(
               tap({
@@ -55,10 +56,15 @@ export class LocationSearchComponent {
                   const result = res.features[0];
                   if (result === null) return;
                   if (typeof result.properties === 'undefined') return;
-                  this.searchedText = result.properties.label;
+                  const locality =
+                    typeof result.properties.locality === 'undefined'
+                      ? result.properties.label
+                      : result.properties.locality;
+                  const name = `${locality} ${result.properties.country}`;
+                  this.searchedText = name;
 
                   this.locationSelected.emit({
-                    name: result.properties.label,
+                    name: name,
                     pictureUrl: '',
                     location: {
                       type: 'Point',

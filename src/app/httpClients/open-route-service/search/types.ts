@@ -87,6 +87,8 @@ export const GeocodeResponse = z
           confidence: z.number(),
           match_type: z.string(),
           accuracy: z.string(),
+          locality: z.string(),
+          locality_gid: z.string(),
           country: z.string(),
           country_gid: z.string(),
           country_a: z.string(),
