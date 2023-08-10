@@ -6,6 +6,7 @@ export class AppErrorHandler implements ErrorHandler {
   constructor(private injector: Injector) {}
   handleError(error: any): void {
     const handler = this.injector.get(ErrorHandlerService);
+    console.error(error);
     handler.handleError({
       message: 'Error ' + error,
       status: 0,

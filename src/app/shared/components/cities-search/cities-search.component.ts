@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
@@ -41,6 +41,9 @@ type x = ArrayElement<GeocodeResponse['features']>;
 export class CitiesSearchComponent {
   search(term: string) {
     this.searchValue = term;
+  }
+  @Input() set initialValue(val: string) {
+    this.searchValue = val;
   }
   @Output() selectedCity = new EventEmitter<Result>();
   // the only reason we use this

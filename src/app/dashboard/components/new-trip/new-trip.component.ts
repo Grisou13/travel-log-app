@@ -26,12 +26,12 @@ import {
   FormGroup,
   NonNullableFormBuilder,
 } from '@angular/forms';
-import { placeForm } from '../add-place/add-place.component';
+import { NewPlaceForm, placeForm } from '../add-place/add-place.component';
 
 export const addTrip = new FormGroup({
   startDate: new FormControl(),
-  start: placeForm,
-  end: placeForm,
+  start: new FormGroup({ ...placeForm.controls }),
+  end: new FormGroup({ ...placeForm.controls }),
 });
 
 export type NewTripForm = typeof addTrip.value;
@@ -41,13 +41,14 @@ export type NewTripForm = typeof addTrip.value;
   templateUrl: './new-trip.component.html',
   styleUrls: ['./new-trip.component.sass'],
 })
-export class NewTripComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NewTripComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') stepper!: ElementRef;
   @Output() newTrip = new EventEmitter<NewTripForm>();
   form = addTrip;
   private sub: Subscription | null = null;
 
-  private stepperInstance: any | null = null;
+  private stepperInstance: any | null = () =>
+    Stepper.getOrCreateInstance(this.stepper.nativeElement);
 
   constructor(
     private travelLogService: TravelLogService,
@@ -57,32 +58,39 @@ export class NewTripComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  ngAfterViewInit(): void {
-    this.stepperInstance = Stepper.getOrCreateInstance(
-      this.stepper.nativeElement
-    );
-  }
   ngOnInit(): void {
     initTE({ Modal, Ripple, Stepper });
   }
 
-  setStart($event: Result) {
+  setStart($event: NewPlaceForm) {
     this.form.patchValue({
       start: {
-        location: {
-          lat: $event.location.coordinates[1],
-          lng: $event.location.coordinates[0],
-        },
-        title: $event.name,
+        ...$event,
       },
     });
-    this.stepperInstance.nextStep();
+  }
+  setStop($event: NewPlaceForm) {
+    this.form.patchValue({
+      end: {
+        ...$event,
+      },
+    });
+  }
+  previousStep() {
+    this.stepperInstance().previousStep();
+  }
+  validateStop() {
+    this.stepperInstance().nextStep();
+  }
+  validateStart() {
+    this.stepperInstance().nextStep();
   }
   public createTrip() {
-    if (this.form.invalid) return;
+    if (!this.tripIsValid()) return;
 
     this.newTrip.emit(this.form.value);
-
-    const form = this.form.value;
+  }
+  tripIsValid() {
+    return !this.form.invalid;
   }
 }

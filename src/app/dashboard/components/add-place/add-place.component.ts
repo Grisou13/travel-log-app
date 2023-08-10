@@ -37,7 +37,7 @@ export class AddPlaceComponent implements OnInit, OnDestroy {
   sub$: Subscription | null = null;
   @Output() formUpdated = new EventEmitter<Partial<NewPlaceForm>>();
 
-  newPlaceForm = placeForm;
+  newPlaceForm = new FormGroup({ ...placeForm.controls });
   formUpdate$ = this.newPlaceForm.valueChanges.pipe(
     tap({
       next: (val) => {
