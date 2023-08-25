@@ -1,6 +1,6 @@
 <app-cities-search [initialValue]="searchedText" (selectedCity)="placeSelected($event)"></app-cities-search>
 <ng-container *ngIf="markers$ | async as markers">
-  <div style="height: 250px;">
+  <div style="height: 40vh">
     <app-map [markers]="markers" (onClicked)="mapSelected($event)"></app-map>
   </div>
 </ng-container>

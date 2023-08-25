@@ -1,33 +1,33 @@
-<div class="mt-[5rem] pt-4 grid grid-cols-4">
-  <a routerLink="places/new" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
+<div class="grid grid-cols-4 px-3">
+  <a routerLink="places/new" class="relative pt-1.5 pb-2 px-3 text-neutral-500 stroke-[rgba(var(--ui-button-color),1)] transition ease-in-out" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-[rgba(var(--ui-button-color),1)] text-white rounded-b-lg transition ease-in-out">
 
-    <div class="mb-2 flex justify-center">
+    <div class="flex flex-wrap justify-center align-center">
         <span class="text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
+            routerLinkActive="stroke-white scale-110"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="currentColor"
             class="w-6 h-6"
           >
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
         </span>
 
-        <h6 class="mb-0 font-normal dark:text-neutral-50">Add a new place</h6>
+        <h6 class="flex text-sm font-normal text-center justify-center leading-[1rem] mt-0.5 sm:mt-1 sm:ml-2">Add new place</h6>
       </div>
   </a>
-  <a routerLink="list" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
+  <a routerLink="list" class="relative pt-1.5 pb-2 px-3 text-neutral-500 stroke-[rgba(var(--ui-button-color),1)] transition ease-in-out" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-[rgba(var(--ui-button-color),1)] text-white rounded-b-lg transition ease-in-out">
 
-    <div class="mb-2 flex justify-center">
+    <div class="flex flex-wrap text-center justify-center align-center">
         <span class="text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
+            routerLinkActive="stroke-white scale-110"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="currentColor"
             class="w-6 h-6"
           >
             <path
@@ -38,19 +38,19 @@
           </svg>
         </span>
 
-        <h6 class="mb-0 font-normal dark:text-neutral-50">Places of your trip</h6>
+        <h6 class="flex text-sm font-normal leading-[1rem] mt-0.5 sm:mt-1 sm:ml-2">View places</h6>
       </div>
   </a>
 
-  <a routerLink="map" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
-    <div class="mb-2 flex justify-center">
+  <a routerLink="map" class="relative pt-1.5 pb-2 px-3 text-neutral-500 stroke-[rgba(var(--ui-button-color),1)] transition ease-in-out" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-[rgba(var(--ui-button-color),1)] text-white rounded-b-lg transition ease-in-out">
+    <div class="flex flex-wrap text-center justify-center align-center">
       <span class="text-primary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
+          routerLinkActive="stroke-white scale-110"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
-          stroke="currentColor"
           class="w-6 h-6"
         >
           <path
@@ -61,19 +61,19 @@
         </svg>
       </span>
 
-      <h6 class="mb-0 font-normal dark:text-neutral-50">Map</h6>
+      <h6 class="flex text-sm font-normal leading-[1rem] mt-0.5 sm:mt-1 sm:ml-2">View Trip map</h6>
     </div>
   </a>
 
-  <a routerLink="overview" class="relative mb-12 px-3 lg:mb-0" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-white/30">
-    <div class="mb-2 flex justify-center">
+  <a routerLink="overview" class="relative pt-1.5 pb-2 px-3 text-neutral-500 stroke-[rgba(var(--ui-button-color),1)] transition ease-in-out" routerLinkActive="backdrop-opacity-10 backdrop-invert bg-[rgba(var(--ui-button-color),1)] text-white rounded-b-lg transition ease-in-out">
+    <div class="flex flex-wrap text-center justify-center align-center">
         <span class="text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
+            routerLinkActive="stroke-white scale-110"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="currentColor"
             class="w-6 h-6"
           >
             <path
@@ -83,112 +83,167 @@
             />
           </svg>
         </span>
-        <h6 class="mb-0 font-normal dark:text-neutral-50">Overview</h6>
+        <h6 class="flex text-sm font-normal leading-[1rem] mt-0.5 sm:mt-1 sm:ml-2">Trip overview</h6>
       </div>
     </a>
 </div>
 
 <hr
-  class="my-2 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+  class="my-2 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
 
 <div
   *ngIf="loadable$ | withLoadingStatus | async as obs"
-
+  class="p-3"
 >
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
-    <ng-container *ngIf="this.formGroup.enabled">
-      <div class="flex flex-col" [formGroup]="this.formGroup">
-        <div class="relative mb-3" data-te-input-wrapper-init>
-         <input
-          data-te-input-state-active
-           type="text"
-           class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-           id="tripTitle"
-           formControlName="title"
-           placeholder="title" />
-         <label
-           for="tripTitle"
-           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-           >Title
-         </label>
-       </div>
-       <div class="relative mb-3" data-te-input-wrapper-init>
-         <input
-          data-te-input-state-active
-           type="text"
-           class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-           id="tripDescription"
-           formControlName="description"
-           placeholder="Description" />
-         <label
-           for="tripDescription"
-           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-           >Description
-         </label>
-       </div>
-       <div class="relative mb-3" data-te-input-wrapper-init>
-         <input
-          data-te-input-state-active
-           type="text"
-           class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-           id="tripStartDate"
-           formControlName="startDate"
-           placeholder="StartDate" />
-         <label
-           for="tripStartDate"
-           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-           >StartDate
-         </label>
-       </div>
-      </div>
+    <ng-container *ngIf="this.formGroup.enabled" [formGroup]="this.formGroup">
+
+        <div class="flex flex-col w-full">
+          <div class="relative mb-6" data-te-input-wrapper-init>
+            <input
+              data-te-input-state-active
+              type="text"
+              class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px] 
+                transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+                [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+              id="tripTitle"
+              formControlName="title"
+              placeholder="Trip title" />
+            <label
+              for="tripTitle"
+              class="pointer-events-none absolute 
+              left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 
+              transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+              >Trip title
+            </label>
+          </div>
+          <div class="relative mb-6" data-te-input-wrapper-init>
+            <input
+              data-te-input-state-active
+              type="text"
+              class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px] 
+              transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+              [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+              id="tripDescription"
+              formControlName="description"
+              placeholder="Trip description" />
+            <label
+              for="tripDescription"
+              class="pointer-events-none absolute 
+              left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 
+              transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+              >Description
+            </label>
+          </div>
+          <div class="relative" data-te-input-wrapper-init>
+            <input
+              data-te-input-state-active
+              type="text"
+              class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+              transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+              [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+              id="tripStartDate"
+              formControlName="startDate"
+              placeholder="StartDate" />
+            <label
+              for="tripStartDate"
+              class="pointer-events-none absolute 
+              left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+              >StartDate
+            </label>
+          </div>
+        </div>
 
     </ng-container>
-    <ng-container *ngIf="this.formGroup.disabled">
-      <div>
-        <h2
-          class="text-2xl sm:text-4xl text-center sm:text-left mx-6 sm:mt-6"
-        >{{this.formGroup.controls.title.value}}</h2>
-        <p
-          class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
-        >{{this.formGroup.controls.description.value}}</p>
-        <p
-          class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
-        >{{this.formGroup.controls.startDate.value}}</p>
-      </div>
-    </ng-container>
-    <div class="mb-[0.125rem] block text-xs ml-2">
-      <input
-        [value]="this.formGroup.enabled"
-        (change)="toggleForm($event)"
-        type="checkbox"
-        id="toggle-trip-detail"
-        value=""
-        class="hidden peer"
-      />
-      <label
-        for="toggle-trip-detail"
-        class="inline-flex items-center justify-between w-full px-6 pb-2 pt-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:bg-primary-600 peer-checked:text-primary-accent-100 hover:text-gray-600 dark:peer-checked:text-gray-300 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
-      >
-        <div class="block">
-          <div class="w-full text-lg font-semibold">Editing Icon</div>
+    <div class="flex">
+      <ng-container *ngIf="this.formGroup.disabled">
+        <div class="w-10/12 sm:text-left">
+          <h2 class="text-xl sm:text-3xl mb-3 leading-tight">
+            {{this.formGroup.controls.title.value}}
+          </h2>
+          <p class="text-md sm:text-lg mb-3 sm:mt-3 leading-tight">
+            {{this.formGroup.controls.description.value}}
+          </p>
+          <p class="text-sm sm:text-lg sm:mt-3 leading-tight">
+            {{this.formGroup.controls.startDate.value}}
+          </p>
         </div>
-      </label>
+      </ng-container>
+      <div class="flex w-2/12 mr-2 items-center">
+        <input
+          [value]="this.formGroup.enabled"
+          (change)="toggleForm($event)"
+          type="checkbox"
+          id="toggle-trip-detail"
+          value=""
+          class="hidden peer"
+        />
+        <label
+          *ngIf="this.formGroup.disabled"
+          for="toggle-trip-detail"
+          class="flex py-2 px-6 
+          rounded-full align-center text-center sm:mx-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
+          shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+          hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+          focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+          active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+        >
+          <div class="flex flex-wrap flex-col sm:flex-row justify-center items-center">
+            <span class="flex">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+              <path 
+                d="M3 21L12 21H21" 
+                stroke="currentColor" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+              />
+              <path 
+                d="M12.2218 5.82839L15.0503 2.99996L20 7.94971L17.1716 10.7781M12.2218 5.82839L6.61522 11.435C6.42769 11.6225 6.32233 11.8769 6.32233 12.1421L6.32233 16.6776L10.8579 16.6776C11.1231 16.6776 11.3774 16.5723 11.565 16.3847L17.1716 10.7781M12.2218 5.82839L17.1716 10.7781" 
+                stroke="currentColor" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+              />
+              </svg>
+            </span>
+            <span class="hidden sm:flex ml-2">
+              Edit trip infos
+            </span>
+          </div>
+        </label>
+      </div>
     </div>
     <div
       *ngIf="this.formGroup.enabled"
-      class="grid w-full self-center m-10 justify-items-stretch items-center"
+      class="flex sm:flex-row w-full self-center items-center mt-3 justify-end"
     >
       <button
         type="button"
-        class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-        (click)="cancel()"
-      >
+        class="flex py-2 px-6
+          rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
+          shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+          hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+          focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+          active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+          (click)="cancel()"
+        >
         Cancel
       </button>
       <button
         type="button"
-        class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        class="flex py-2 px-6 ml-2
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+        active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
         (click)="updateTrip(obs.value.trip)"
       >
         Save Changes
@@ -200,6 +255,6 @@
   </ng-template>
 </div>
 
-<div class="mt-[5rem] h-full overflow-hidden">
+<div class="h-full overflow-hidden">
   <router-outlet></router-outlet>
 </div>

@@ -1,4 +1,4 @@
-<div class="h-[60vh]" *ngIf="layers$ | async as layers" >
+<div class="h-[40vh] sm:h-[50vh]" *ngIf="layers$ | async as layers" >
     <app-map [markers]="layers.markers" [directions]="layers.directions"></app-map>
 </div>
 <div *ngIf="tripStops$ | async as places">
