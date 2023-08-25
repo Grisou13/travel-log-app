@@ -1,35 +1,33 @@
 <!--Modal body-->
 <div class="relative">
-  <div class="">
-    <div
-      class="relative mb-6"
-      data-te-datepicker-init
-      data-te-format="yyyy-mm-dd"
-      data-te-input-wrapper-init
-    >
-      <input
-        data-te-input-state-active
-        type="text"
-        class="peer block min-h-[auto] w-full border-0 rounded text-sm sm:text-base p-3 py-2 sm:py-3 leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]  
-          transition-all duration-200 ease-linear focus:placeholder:opacity-100 
-          peer-focus:text-[rgba(var(--ui-button-color),1)] data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
-          [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-        placeholder="When will you be there?"
-        id="placeDate"
-        [formControl]="newPlaceForm.controls.dateOfVisit"/>
-      <label
-        for="placeDate"
-        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 
-          transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] 
-          peer-focus:scale-[0.8] peer-focus:text-[rgba(var(--ui-button-color),1)] peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
-        >
-        When will you be there?
-      </label>
-    </div>
-    <app-location-search
-      [searchedText]="this.newPlaceForm.value.title || ''"
-      [extraMarkers]="extraMarkers"
-      (locationSelected)="updateLocation($event)"
-    ></app-location-search>
+  <div
+    class="relative mb-6"
+    data-te-datepicker-init
+    data-te-format="yyyy-mm-dd"
+    data-te-input-wrapper-init
+  >
+    <input
+      data-te-input-state-active
+      type="text"
+      class="peer block min-h-[auto] w-full border-0 rounded text-sm sm:text-base p-3 py-2 sm:py-3 leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]  
+        transition-all duration-200 ease-linear focus:placeholder:opacity-100 
+        peer-focus:text-[rgba(var(--ui-button-color),1)] data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+        [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+      placeholder="When will you be there?"
+      id="placeDate"
+      [formControl]="newPlaceForm.controls.dateOfVisit"/>
+    <label
+      for="placeDate"
+      class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 
+        transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] 
+        peer-focus:scale-[0.8] peer-focus:text-[rgba(var(--ui-button-color),1)] peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+      >
+      When will you be there?
+    </label>
   </div>
+  <app-location-search
+    [searchedText]="this.newPlaceForm.value.title || ''"
+    [extraMarkers]="extraMarkers"
+    (locationSelected)="updateLocation($event)"
+  ></app-location-search>
 </div>

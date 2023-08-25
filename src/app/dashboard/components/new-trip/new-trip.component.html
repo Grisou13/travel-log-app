@@ -12,26 +12,26 @@
   >
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row cursor-pointer text-center items-center pl-2 leading-[1.3rem] no-underline 
+      class="flex flex-col sm:flex-row bg-white rounded-l-lg cursor-pointer text-center items-center pl-2 leading-[1.3rem] no-underline 
         after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-[''] 
         hover:bg-[#f9f9f9] focus:outline-none"
     >
       <span
         data-te-stepper-head-icon-ref
-        class="mb-2 sm:my-6 sm:mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
+        class="my-2 sm:my-6 sm:mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
       >
         1
       </span>
       <span
         data-te-stepper-head-text-ref
-        class="font-medium text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
+        class="mb-2 sm:mb-0 text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
       >
-        Where do we start?
+        Start
       </span>
     </div>
     <div
       data-te-stepper-content-ref
-      class="absolute w-full p-2 transition-all duration-500 ease-in-out"
+      class="absolute w-full p-2 transition-all mt-6 duration-500 ease-in-out"
     >
       <h5 class="text-xl sm:text-3xl text-left mb-6">Let's set up the first leg of your new trip</h5>
 
@@ -62,31 +62,31 @@
   <li data-te-stepper-step-ref class="w-[4.5rem] flex-col flex-auto sm:flex-row">
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row cursor-pointer text-center items-center leading-[1.3rem] no-underline 
+      class="flex flex-col sm:flex-row bg-white cursor-pointer text-center items-center leading-[1.3rem] no-underline 
         before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] 
         after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-[''] 
         hover:bg-[#f9f9f9] focus:outline-none"
     >
       <span
         data-te-stepper-head-icon-ref
-        class="mb-2 sm:my-6 sm:mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
+        class="my-2 sm:my-6 sm:mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
       >
         2
       </span>
       <span
         data-te-stepper-head-text-ref
-        class="text-neutral-500 
+        class="mb-2 sm:mb-0 text-neutral-500
           after:flex after:text-[0.8rem] after:content-[data-content]"
       >
-        Where to?
+        Destination
       </span>
     </div>
     <div
       data-te-stepper-content-ref
-      class="absolute left-0 w-full translate-x-[150%] p-2 transition-all duration-500 ease-in-out"
+      class="absolute left-0 w-full translate-x-[150%] p-2 mt-6 transition-all duration-500 ease-in-out"
     >
       <div
-        class="flex flex-col rounded-b-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
+        class="flex flex-col rounded-b-md border-b-2 border-neutral-100 border-opacity-100 dark:border-opacity-50"
       >
         <p>Do you know where you want to stop your trip?</p>
         <div class="flex flex-shrink-0 flex-wrap items-center justify-end">
@@ -121,16 +121,15 @@
               shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
               hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
               focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"            >
-              <div class="block">
-                <div class="w-full">yes</div>
-              </div>
+              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              >
+              yes
             </label>
           </div>
         </div>
       </div>
       <div *ngIf="this.form.controls.defineStop.value">
-        <h5 class="text-xl sm:text-3xl text-left mb-6">Okey then, let's fill this up together shall we</h5>
+        <p class="mb-6">Okey then, let's fill this up together shall we</p>
         <app-add-place [formGroup]="this.form.controls.end"></app-add-place>
 
         <div
@@ -173,26 +172,26 @@
   <li data-te-stepper-step-ref class="w-[4.5rem] flex-auto">
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row cursor-pointer text-center items-center pr-2 leading-[1.3rem] no-underline 
+      class="flex flex-col sm:flex-row bg-white rounded-r-lg cursor-pointer text-center items-center pr-2 leading-[1.3rem] no-underline 
         before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] 
         hover:bg-[#f9f9f9] focus:outline-none"
     >
       <span
         data-te-stepper-head-icon-ref
-        class="mb-2 sm:my-6 sm:mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
+        class="my-2 sm:my-6 sm:mr-2 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
       >
         3
       </span>
       <span
         data-te-stepper-head-text-ref
-        class="text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
+        class="mb-2 sm:mb-0 text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
       >
         Overview
       </span>
     </div>
     <div
       data-te-stepper-content-ref
-      class="absolute left-0 w-full translate-x-[150%] p-2 transition-all duration-500 ease-in-out"
+      class="absolute left-0 w-full translate-x-[150%] p-2 mt-6 transition-all duration-500 ease-in-out"
     >
       <p>Let's recap</p>
       <p></p>
