@@ -74,6 +74,8 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
       })
       .subscribe();
+      
+    this.form.disable();
   }
   cancel() {
     this.form.reset(this?.initialValue ?? {});

@@ -102,6 +102,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
         startDate: new Date(startDate.toString()),
       })
       .subscribe();
+    this.formGroup.disable();
   }
   cancel() {
     this.formGroup.reset(this?.initialValue ?? {});
