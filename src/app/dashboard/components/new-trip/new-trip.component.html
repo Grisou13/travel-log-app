@@ -1,3 +1,4 @@
+<h5 class="text-xl sm:text-3xl text-left mb-6">Define your new trip</h5>
 <ul
   #stepper
   data-te-stepper-init
@@ -33,7 +34,7 @@
       data-te-stepper-content-ref
       class="absolute w-full p-2 transition-all mt-6 duration-500 ease-in-out"
     >
-      <h5 class="text-xl sm:text-3xl text-left mb-6">Let's set up the first leg of your new trip</h5>
+      <p class="mb-6">Let's set up the first leg of your new trip</p>
 
       <app-add-place [formGroup]="this.form.controls.start"></app-add-place>
 
@@ -52,7 +53,7 @@
           data-te-ripple-color="light"
           (click)="validateStart()"
         >
-          Next
+          Next step
         </button>
       </div>
     </div>
@@ -86,9 +87,9 @@
       class="absolute left-0 w-full translate-x-[150%] p-2 mt-6 transition-all duration-500 ease-in-out"
     >
       <div
-        class="flex flex-col rounded-b-md border-b-2 border-neutral-100 border-opacity-100 dark:border-opacity-50"
+        class="flex flex-row gap-4 justify-between mb-3 items-center"
       >
-        <p>Do you know where you want to stop your trip?</p>
+        <p class="flex">Do you know where you want to stop your trip?</p>
         <div class="flex flex-shrink-0 flex-wrap items-center justify-end">
           <button
             type="button"
@@ -98,7 +99,8 @@
             shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
             hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
             focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"            data-te-ripple-init
+            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+            data-te-ripple-init
             data-te-ripple-color="light"
             (click)="validateStop()"
           >
@@ -116,13 +118,13 @@
             <label
               for="react-option"
               class="flex py-2 px-6 sm:mx-0
-              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]  
+              rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]  
               shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
               hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
               focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
               active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-              >
-              yes
+            >
+              Yes
             </label>
           </div>
         </div>
@@ -132,7 +134,7 @@
         <app-add-place [formGroup]="this.form.controls.end"></app-add-place>
 
         <div
-          class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
+          class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4"
         >
           <button
             type="button"
@@ -146,7 +148,7 @@
             data-te-ripple-color="light"
             (click)="previousStep()"
           >
-            Previous
+            Previous step
           </button>
           <button
             type="button"
@@ -160,7 +162,7 @@
             data-te-ripple-color="light"
             (click)="validateStop()"
           >
-            Next
+            Next step
           </button>
         </div>
       </div>
@@ -193,7 +195,6 @@
       class="absolute left-0 w-full translate-x-[150%] p-2 mt-6 transition-all duration-500 ease-in-out"
     >
       <p>Let's recap</p>
-      <p></p>
       <div
         class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
       >
@@ -209,7 +210,7 @@
           data-te-ripple-color="light"
           (click)="previousStep()"
         >
-          Previous
+          Previous step
         </button>
         <button
           type="button"
