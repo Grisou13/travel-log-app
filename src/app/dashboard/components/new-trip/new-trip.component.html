@@ -38,24 +38,27 @@
 
       <app-add-place [formGroup]="this.form.controls.start"></app-add-place>
 
-      <div
-        class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
-      >
-        <button
-          type="button"
-          class="flex py-2 px-6 sm:mx-0
-          rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-          sm:ml-auto   
-          shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-          hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-          focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-          active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"          data-te-ripple-init
-          data-te-ripple-color="light"
-          (click)="validateStart()"
+        <div
+          class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
         >
-          Next step
-        </button>
-      </div>
+          <button
+            type="button"
+            class="flex py-2 px-6 sm:mx-0
+              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+              sm:ml-auto   
+              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+              disabled:bg-neutral-500"
+            data-te-ripple-init
+            data-te-ripple-color="light"
+            (click)="validateStart()"
+          >
+            Next step
+          </button>
+        </div>
+
     </div>
   </li>
 
@@ -89,17 +92,17 @@
       <div
         class="flex flex-row gap-4 justify-between mb-3 items-center"
       >
-        <p class="flex">Do you know where you want to stop your trip?</p>
+        <p class="flex">Do you know where you want to end your trip?</p>
         <div class="flex flex-shrink-0 flex-wrap items-center justify-end">
           <button
             type="button"
             class="flex py-2 px-6 sm:mx-0
-            rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-            sm:ml-auto   
-            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+              sm:ml-auto   
+              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
             data-te-ripple-init
             data-te-ripple-color="light"
             (click)="validateStop()"
@@ -118,11 +121,11 @@
             <label
               for="react-option"
               class="flex py-2 px-6 sm:mx-0
-              rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]  
-              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]  
+                shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+                hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+                focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+                active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
             >
               Yes
             </label>
@@ -139,11 +142,11 @@
           <button
             type="button"
             class="flex py-2 px-6
-            rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]   
-            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]   
+              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
             data-te-ripple-init
             data-te-ripple-color="light"
             (click)="previousStep()"
@@ -153,11 +156,12 @@
           <button
             type="button"
             class="flex py-2 px-6 ml-2
-            rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]  
-            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]" 
+              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]  
+              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+              disabled:bg-neutral-500" 
             data-te-ripple-init
             data-te-ripple-color="light"
             (click)="validateStop()"
@@ -173,7 +177,7 @@
   <li data-te-stepper-step-ref class="w-[4.5rem] flex-auto">
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row bg-white rounded-r-lg cursor-pointer text-center items-center pr-2 leading-[1.3rem] no-underline 
+      class="flex flex-col sm:flex-row bg-white rounded-r-lg cursor-pointer text-center items-center pr-2 leading-[1.3rem] no-underline  
         before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] 
         hover:bg-[#f9f9f9] focus:outline-none"
     >
@@ -185,47 +189,59 @@
       </span>
       <span
         data-te-stepper-head-text-ref
-        class="mb-2 sm:mb-0 text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
+        class="mb-2 sm:mb-0 text-neutral-500
+          after:flex after:text-[0.8rem] after:content-[data-content]"
       >
         Overview
       </span>
     </div>
+    
     <div
       data-te-stepper-content-ref
       class="absolute left-0 w-full translate-x-[150%] p-2 mt-6 transition-all duration-500 ease-in-out"
     >
-      <p>Let's recap</p>
+      <p class="mb-6">Let's recap</p>
+
+      <div>
+        <p class="mb-3 text-sm sm:text-base">Depending on the information you entered, your trip will be</p>
+        <ul>
+          <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100">Start: <strong class="k500">{{this.form.controls.start.controls.title.value}}</strong> <br>Scheduled on <strong class="k500">{{this.form.controls.start.controls.dateOfVisit.value}}</strong></li>
+          <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100">Destination: <strong class="k500">{{this.form.controls.end.controls.title.value}}</strong> <br>Scheduled on <strong class="k500">{{this.form.controls.end.controls.dateOfVisit.value}}</strong></li>
+        </ul>
+      </div>
+
       <div
-        class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
+        class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4"
       >
         <button
           type="button"
           class="flex py-2 px-6
-          rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]   
-          shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-          hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-          focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-          active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+            rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]   
+            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
           data-te-ripple-init
           data-te-ripple-color="light"
           (click)="previousStep()"
         >
-          Previous step
+          Go back
         </button>
         <button
           type="button"
           class="flex py-2 px-6 ml-2
-          rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]   
-          shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-          hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-          focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
-          active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+            rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]   
+            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
+            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+            disabled:bg-neutral-500"
           data-te-ripple-init
           data-te-ripple-color="light"
           [disabled]="!tripIsValid()"
           (click)="createTrip()"
         >
-          Save changes
+          Save your trip
         </button>
       </div>
     </div>
