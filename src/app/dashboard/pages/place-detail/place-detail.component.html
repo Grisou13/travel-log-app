@@ -83,7 +83,7 @@
 
   <ng-container *ngIf="this.form.disabled && !this.form.controls.pictureUrl.value">
     <div class="relative flex h-[15vh] w-full 
-      items-center justify-center text-center text-xs bg-neutral-100 mb-3" 
+      items-center justify-center text-center text-xs bg-white/30 border border-white mb-3" 
     >
       <span>No picture uploaded</span>
     </div>
@@ -193,7 +193,7 @@
       </div>
     </div>
     <div class="flex-1 my-2 w-full sm:w-2/5">
-      <ol class="border-l-2 border-neutral-300">
+      <ol class="border-l-2 border-neutral-300 bg-white">
         <!-- Previous place -->
         <li
           *ngIf="vm.previousPlace"
@@ -204,7 +204,7 @@
           <div class="flex-start flex items-center">
             <div
               class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-neutral-300"
-            ></div>
+            > previous</div>
             <hr
               class="w-[1rem] h-1 ml-[-1rem] bg-neutral-300/50 border-0 rounded"
             />
@@ -242,7 +242,7 @@
           <div class="flex-start flex items-center">
             <div
               class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-[rgba(var(--ui-button-color),1)]"
-            ></div>
+            > current</div>
             <hr
               class="w-[1rem] h-1 ml-[-1rem] bg-[rgba(var(--ui-button-color),0.5)] border-0 rounded"
             />
@@ -280,7 +280,7 @@
           <div class="flex-start flex items-center">
             <div
               class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-neutral-300"
-            ></div>
+            >next</div>
             <hr
               class="w-[1rem] h-1 ml-[-1rem] bg-neutral-300/50 border-0 rounded"
             />
@@ -296,6 +296,7 @@
             </h4>
           </div>
           <div class="ml-[4rem]">
+            budget
             <span
               *ngIf="vm.nextPlace.budget"
               class="inline-block whitespace-nowrap rounded-full bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
@@ -322,16 +323,16 @@
 
     <div *ngIf="poi$ | async as pois">
       <ng-container *ngFor="let poi of pois.features" class="flex ">
-        <div class="inline-flex items-center rounded-full px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
+        <div class="inline-flex items-center rounded-full bg-white px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
         >
           <input
-            class="flex items-center
+            class="flex relative items-center
               mr-2 h-4 w-4 appearance-none justify-center rounded-full
               border-solid border-[1px] border-neutral-300 outline-none bg-white
               before:pointer-events-none before:flex before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-white before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']
               checked:items-center checked:justify-center checked:border-neutral-300 checked:bg-[rgba(var(--ui-button-color),1)]
               checked:before:opacity-[1]
-              checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:scale-75 checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-['']
+              checked:after:flex checked:after:absolute checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:scale-75 checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-['']
               hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)]
               focus:shadow-none focus:transition-[border-color_0.2s]
               focus:before:scale-0 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] "
