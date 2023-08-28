@@ -8,11 +8,8 @@ import { routes } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '@shared/shared.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { HomeComponent } from './pages/home/home.component';
 import TripListComponent from './pages/trip-list/trip-list.component';
 import { NewTripComponent } from './components/new-trip/new-trip.component';
-import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
-import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { LogoComponent } from '@shared/components/logo/logo.component';
 import { TripService } from './services/trip.service';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
@@ -36,12 +33,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @NgModule({
   declarations: [
     DashboardComponent,
-    HomeComponent,
     TripDetailComponent,
     TripListComponent,
     NewTripComponent,
-    TripPlannerComponent,
-    UserDashboardComponent,
     AddPlaceComponent,
     TripCardComponent,
     TripMapComponent,
