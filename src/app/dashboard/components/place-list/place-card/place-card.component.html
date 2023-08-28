@@ -20,24 +20,24 @@
   </ng-container> 
 
   <div class="flex w-8/12 sm:w-10/12 flex-wrap ml-3">
-    <div
-      class="flex w-full"
-    >
-      <h6
-        class="flex mb-2 text-left leading-tight text-neutral-800"
-      >
+    <div class="flex w-full">
+      <h6 class="flex mb-2 text-left leading-tight text-neutral-800">
         {{ place.name }}
       </h6>
     </div>
     
-    <div class="w-full justify-end">
-      <p class="mb-4 text-sm font-medium text-neutral-600">
+    <div class="w-full sm:w-11/12 justify-start">
+      <p class="mb-2 text-sm font-medium text-neutral-600">
         {{ place.description }}
       </p>
-
+      <p class="text-xs sm:text-sm font-medium text-neutral-600">
+        {{ place.startDate}}
+      </p>
+    </div>
+    <div class="flex sm:justify-end items-center">
       <button
         type="button"
-        class="flex py-2 px-6 mx-auto sm:mx-0
+        class="flex py-2 px-6
         rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
         sm:ml-auto   
         shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
@@ -50,8 +50,7 @@
       >
         View
       </button>
-
-<!-- TODO: Add delete place button -->
     </div>
+<!-- TODO: Add delete place button -->
   </div>
 </div>
