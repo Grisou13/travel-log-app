@@ -7,7 +7,6 @@ import { TravelLogApiModule } from '../httpClients/travelLogApi/travelLogApi.mod
 import { routes } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '@shared/shared.module';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HomeComponent } from './pages/home/home.component';
 import TripListComponent from './pages/trip-list/trip-list.component';
@@ -36,7 +35,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
-    NavbarComponent,
     DashboardComponent,
     HomeComponent,
     TripDetailComponent,
@@ -60,6 +58,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     TripAddPlaceComponent,
   ],
   imports: [
+    SharedModule,
+    DragDropModule,
+    RouterModule.forChild(routes),
     SweetAlert2Module,
   ],
   exports: [RouterModule],
