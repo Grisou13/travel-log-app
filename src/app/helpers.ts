@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Input } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, defer, finalize } from 'rxjs';
 import { __decorate } from 'tslib';
@@ -177,4 +178,8 @@ export function ObservableInput<T>(inputKey: string): PropertyDecorator {
     // Include Input decorator for observed property
     __decorate([Input(inputKey)], target, inputKey, null);
   };
+}
+
+function isHttpError(error: {}): error is HttpErrorResponse {
+  return (error as HttpErrorResponse).status !== undefined;
 }

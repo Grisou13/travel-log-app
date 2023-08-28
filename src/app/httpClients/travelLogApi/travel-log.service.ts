@@ -78,9 +78,8 @@ export class TravelLogService {
       tripFuncs.fetchAll(this.httpClient, data).pipe(
         handleAppError(this.errorHandler, (err) => ({
           message: 'could not fetch data your trip, sorry',
-          status: 0,
+          status: err?.status || 0,
           context: 'trip',
-
           error: err,
         }))
       ),

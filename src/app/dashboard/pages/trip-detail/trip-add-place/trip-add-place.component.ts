@@ -97,7 +97,7 @@ export class TripAddPlaceComponent implements OnDestroy {
     );
   }
 
-  form = new FormGroup({ ...placeForm.controls });
+  form = new FormGroup({ ...placeForm.controls }, { updateOn: 'change' });
 
   addPlace() {
     this.sub$ = zip([this.tripId$, this.places$])

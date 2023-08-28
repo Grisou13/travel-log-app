@@ -17,12 +17,15 @@ function addDays(date: Date, days: number) {
   result.setDate(result.getDate() + days);
   return result;
 }
-export const addTrip = new FormGroup({
-  startDate: new FormControl(),
-  defineStop: new FormControl<boolean>(false, []),
-  start: new FormGroup({ ...placeForm.controls }),
-  end: new FormGroup({ ...placeForm.controls }),
-});
+export const addTrip = new FormGroup(
+  {
+    startDate: new FormControl(),
+    defineStop: new FormControl<boolean>(false, []),
+    start: new FormGroup({ ...placeForm.controls }),
+    end: new FormGroup({ ...placeForm.controls }),
+  },
+  { updateOn: 'change' }
+);
 
 export type NewTripForm = typeof addTrip.value;
 export const NEW_TRIP_STORAGE_KEY = 'new-trip-form';

@@ -31,7 +31,7 @@ import * as _ from 'lodash';
 import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
 import { ArrayElement } from '../../../helpers';
 import { Input, initTE } from 'tw-elements';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -40,13 +40,18 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: [],
 })
 export class PlaceDetailComponent implements OnDestroy, OnInit {
-  form = new FormGroup({
-    editing: new FormControl(false),
-    name: new FormControl(''),
-    description: new FormControl(''),
-    startDate: new FormControl(''),
-    pictureUrl: new FormControl(''),
-  });
+  form = new FormGroup(
+    {
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      startDate: new FormControl(''),
+      pictureUrl: new FormControl(''),
+    },
+    { updateOn: 'change' }
+  );
   toggle($event: any) {
     if (this.form.enabled) {
       this.form.disable();
@@ -77,7 +82,19 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         startDate: new Date(startDate.toString()),
         pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
       })
-      .subscribe();
+      .subscribe({
+        next: (val) => {
+          if (typeof val === 'boolean') {
+            this.toastrService.error(
+              `Error in the data supplied to update your trip`,
+              'Could not update place'
+            );
+          }
+        },
+        error: (err) => {
+          this.toastrService.error(`${err}`, 'Could not update place');
+        },
+      });
 
     this.form.disable();
   }

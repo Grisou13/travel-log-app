@@ -81,8 +81,8 @@ export class PoisService {
         bbox: latLngToBounds(
           location.coordinates[1],
           location.coordinates[0],
-          4500,
-          4500
+          3500,
+          3500
         ),
         geojson: { ...location },
         buffer: 2000,
@@ -103,7 +103,7 @@ export class PoisService {
           request: 'list',
         }).pipe(
           catchError((err) => of(null)),
-          retry({ delay: () => timer(1500) }),
+          retry({ delay: () => timer(1000 * 60 * 1) }), //retry in an hour
           tap({
             next: (val) =>
               localStorage.setItem(this.KEY_POI_LIST, JSON.stringify(val)),
