@@ -22,7 +22,7 @@
           Delete trip
       </button>
         <button
-          [disabled]="canStopTrip(vm.trip)"
+          [disabled]="!canStopTrip(vm.trip)"
           class="flex py-2 px-6 ml-2 sm:grow max-w-[9.1rem] cursor-pointer
             rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
             shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out

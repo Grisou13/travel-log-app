@@ -37,7 +37,11 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
   getPlacesWithRelated(id: string) {
     return this.get(id).pipe(
       switchMap((current) => {
-        if (typeof current === 'undefined' || typeof current === 'boolean')
+        if (
+          typeof current === 'undefined' ||
+          typeof current === 'boolean' ||
+          current === null
+        )
           return of(null);
 
         return this.fetchForTripId(current.tripId).pipe(

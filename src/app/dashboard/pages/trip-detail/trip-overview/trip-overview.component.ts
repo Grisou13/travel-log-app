@@ -31,7 +31,7 @@ export class TripOverviewComponent implements OnDestroy {
     private router: Router
   ) {}
 
-  trip$: Observable<Trip | null> = this.route.paramMap.pipe(
+  trip$ = this.route.paramMap.pipe(
     switchMap((params) => {
       const id = params.get('tripId') || null;
       if (id === null) return of(null);
@@ -127,6 +127,6 @@ export class TripOverviewComponent implements OnDestroy {
   canStopTrip(trip: Trip | null) {
     if (trip === null) return false;
 
-    return trip.endDate !== null || trip.endDate !== undefined;
+    return trip.endDate === null || trip.endDate === undefined;
   }
 }
