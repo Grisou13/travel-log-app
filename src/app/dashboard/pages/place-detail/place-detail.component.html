@@ -10,15 +10,15 @@
         <input
           data-te-input-state-active
           type="text"
-          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px] 
-            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
             [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
           id="placeName"
           formControlName="name"
           placeholder="Place name" />
         <label
           for="placeName"
-          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 
+          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500
             transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
           >name
         </label>
@@ -27,8 +27,8 @@
         <input
           data-te-input-state-active
           type="text"
-          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px] 
-            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
             [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
           id="placeDescription"
           formControlName="description"
@@ -43,8 +43,8 @@
         <input
           data-te-input-state-active
           type="text"
-          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px] 
-            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
             [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
           id="placeStartDate"
           formControlName="startDate"
@@ -59,8 +59,8 @@
         <input
         data-te-input-state-active
           type="text"
-          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px] 
-            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none 
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
             [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
           id="placePictureUrl"
           formControlName="pictureUrl"
@@ -75,15 +75,15 @@
   </form>
 
   <ng-container *ngIf="this.form.disabled && this.form.controls.pictureUrl.value">
-    <div class="relative flex h-[35vh] w-full 
-      bg-center bg-no-repeat bg-cover mb-3" 
+    <div class="relative flex h-[35vh] w-full
+      bg-center bg-no-repeat bg-cover mb-3"
       [ngStyle]="{'background-image': 'url(' + this.form.controls.pictureUrl.value + ')'}">
     </div>
   </ng-container>
 
   <ng-container *ngIf="this.form.disabled && !this.form.controls.pictureUrl.value">
-    <div class="relative flex h-[15vh] w-full 
-      items-center justify-center text-center text-xs bg-white/30 border border-white mb-3" 
+    <div class="relative flex h-[15vh] w-full
+      items-center justify-center text-center text-xs bg-white/30 border border-white mb-3"
     >
       <span>No picture uploaded</span>
     </div>
@@ -116,11 +116,11 @@
       <label
         *ngIf="this.form.disabled"
         for="toggle-place-detail"
-        class="flex py-2 px-6 
-        rounded-full align-center text-center sm:mx-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
-        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+        class="flex py-2 px-6
+        rounded-full align-center text-center sm:mx-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
         active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
       >
         <div class="flex flex-wrap flex-col sm:flex-row justify-center items-center">
@@ -133,16 +133,16 @@
               stroke="currentColor"
               class="w-6 h-6"
             >
-            <path 
-              d="M3 21L12 21H21" 
-              stroke="currentColor" 
-              stroke-linecap="round" 
+            <path
+              d="M3 21L12 21H21"
+              stroke="currentColor"
+              stroke-linecap="round"
               stroke-linejoin="round"
             />
-            <path 
-              d="M12.2218 5.82839L15.0503 2.99996L20 7.94971L17.1716 10.7781M12.2218 5.82839L6.61522 11.435C6.42769 11.6225 6.32233 11.8769 6.32233 12.1421L6.32233 16.6776L10.8579 16.6776C11.1231 16.6776 11.3774 16.5723 11.565 16.3847L17.1716 10.7781M12.2218 5.82839L17.1716 10.7781" 
-              stroke="currentColor" 
-              stroke-linecap="round" 
+            <path
+              d="M12.2218 5.82839L15.0503 2.99996L20 7.94971L17.1716 10.7781M12.2218 5.82839L6.61522 11.435C6.42769 11.6225 6.32233 11.8769 6.32233 12.1421L6.32233 16.6776L10.8579 16.6776C11.1231 16.6776 11.3774 16.5723 11.565 16.3847L17.1716 10.7781M12.2218 5.82839L17.1716 10.7781"
+              stroke="currentColor"
+              stroke-linecap="round"
               stroke-linejoin="round"
             />
             </svg>
@@ -161,10 +161,24 @@
     <button
       type="button"
       class="flex py-2 px-6
-        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
-        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+        self-start
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-slate-500
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-slate-400 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-slate-400 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
+        active:bg-slate-500 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+        [swal]="{title: 'Delete place...',confirmButtonColor: '#DD6B55', text:'Are you sure you want to delete this place?', icon:'question',confirmButtonText:'Delete', showCancelButton: true, allowEnterKey: false}"
+        (confirm)="deletePlace(vm.current, vm.nextPlace)"
+    >
+      Delete
+    </button>
+    <button
+      type="button"
+      class="flex py-2 px-6
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
         active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
         (click)="cancel()"
     >
@@ -173,10 +187,10 @@
     <button
       type="button"
       class="flex py-2 px-6 ml-2
-        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] 
-        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
         active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
       (click)="updatePlace(vm.current)"
     >

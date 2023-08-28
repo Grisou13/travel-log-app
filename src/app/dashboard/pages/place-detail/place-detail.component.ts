@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   BehaviorSubject,
   EMPTY,
@@ -8,6 +8,7 @@ import {
   combineLatest,
   distinctUntilChanged,
   filter,
+  forkJoin,
   map,
   of,
   shareReplay,
@@ -29,6 +30,7 @@ import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
 import { ArrayElement } from '../../../helpers';
 import { Input, initTE } from 'tw-elements';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-place-detail',
@@ -74,7 +76,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
       })
       .subscribe();
-      
+
     this.form.disable();
   }
   cancel() {
@@ -183,11 +185,14 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     private route: ActivatedRoute,
     private placeService: PlaceService,
     private poiService: PoisService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
   ngOnDestroy(): void {
     this._subs.forEach((x) => x.unsubscribe());
     this.sub?.unsubscribe();
+    this.deleteSub$?.unsubscribe();
   }
 
   tripHasPoi(pois: Array<Partial<Place>>, osm_id: number) {
@@ -234,5 +239,47 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     const categoryId = Object.keys(poi.properties.category_ids)[0];
 
     return poi.properties.category_ids[categoryId].category_name;
+  }
+  deleteSub$: Subscription | null = null;
+
+  deletePlace(place: Place, nextPlace: Place | null) {
+    if (this.deleteSub$ != null) {
+      this.deleteSub$.unsubscribe(); //don't repeat the operation if already subscribed?
+    }
+    const update = of(nextPlace).pipe(
+      switchMap((x) => {
+        if (x === null) return of(true);
+        return this.placeService
+          .update(x.id, {
+            ...x,
+            directions: {
+              distance: 0,
+              previous: null,
+              next: x.directions?.next,
+            },
+          })
+          .pipe(
+            map((x) => {
+              if (typeof x === 'boolean') return x;
+              return true;
+            })
+          );
+      })
+    );
+
+    this.deleteSub$ = forkJoin([this.placeService.delete(place.id), update])
+      .pipe(map(([deleted, updated]) => deleted && updated))
+      .subscribe({
+        next: (val) => {
+          if (val) {
+            this.toastrService.success('Your place was deleted successfully');
+            this.router.navigate([`/dashboard/trips/${place.tripId}`]);
+          } else {
+            this.toastrService.error(
+              'Could not delete trip, please try again later'
+            );
+          }
+        },
+      });
   }
 }
