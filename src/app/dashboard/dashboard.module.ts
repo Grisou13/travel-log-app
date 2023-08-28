@@ -32,6 +32,7 @@ import { TripDetailMapComponent } from './pages/trip-detail/trip-detail-map/trip
 import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
 import { TripHomeComponent } from './pages/trip-detail/trip-home/trip-home.component';
 import { TripAddPlaceComponent } from './pages/trip-detail/trip-add-place/trip-add-place.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,9 @@ import { TripAddPlaceComponent } from './pages/trip-detail/trip-add-place/trip-a
     TripDetailMapComponent,
     TripAddPlaceComponent,
   ],
-  imports: [SharedModule, DragDropModule, RouterModule.forChild(routes)],
+  imports: [
+    SweetAlert2Module,
+  ],
   exports: [RouterModule],
 })
 export class DashboardModule {

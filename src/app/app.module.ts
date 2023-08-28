@@ -16,6 +16,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ErrorHandlerService } from '@shared/error-handler.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [AppComponent, SettingsComponent],
@@ -24,6 +25,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({}),
+    SweetAlert2Module.forRoot({}),
     OpenRouteServiceModule,
     TravelLogApiModule,
     SharedModule,
