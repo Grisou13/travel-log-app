@@ -118,4 +118,10 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     this.formGroup.reset(this?.initialValue ?? {});
     this.formGroup.disable();
   }
+
+  tripEnded(trip: Trip | null) {
+    if (trip === null) return false;
+
+    return trip.endDate !== null && trip.endDate !== undefined;
+  }
 }

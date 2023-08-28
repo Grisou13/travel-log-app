@@ -105,6 +105,7 @@ export class TripOverviewComponent implements OnDestroy {
   updateSub$: Subscription | null = null;
   stopTrip(trip: Trip | null) {
     if (trip === null) return;
+    if (!this.canStopTrip(trip)) return;
     if (this.updateSub$ !== null) {
       this.updateSub$.unsubscribe();
     }
@@ -122,5 +123,10 @@ export class TripOverviewComponent implements OnDestroy {
           this.toastrService.success('Your trip has been stopped!');
         },
       });
+  }
+  canStopTrip(trip: Trip | null) {
+    if (trip === null) return false;
+
+    return trip.endDate !== null || trip.endDate !== undefined;
   }
 }

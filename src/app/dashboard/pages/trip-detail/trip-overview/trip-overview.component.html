@@ -22,13 +22,15 @@
           Delete trip
       </button>
         <button
-          [disabled]="vm.trip?.endDate !== null"
+          [disabled]="canStopTrip(vm.trip)"
           class="flex py-2 px-6 ml-2 sm:grow max-w-[9.1rem] cursor-pointer
             rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
             shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
             hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
             focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-            active:bg-slate-500 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+            active:bg-slate-500 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+            disabled:bg-slate-500 disabled:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+
             [swal]="{title: 'Ohoooy worthy traveller trip...',confirmButtonColor: 'rgb(253,116,7)', text:'Are you done with your trip?', icon:'question',confirmButtonText:'Confirm', showCancelButton: true, allowEnterKey: false}"
           (confirm)="stopTrip(vm.trip)"
         >

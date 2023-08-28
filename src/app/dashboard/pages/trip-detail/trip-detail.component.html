@@ -86,12 +86,18 @@
 <hr
   class="my-2 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
 
+
 <div
   *ngIf="loadable$ | withLoadingStatus | async as obs"
   class="p-3"
 >
   <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
   <ng-template [ngIf]="obs.value">
+    <div *ngIf="tripEnded(obs.value.trip)"
+      class="mb-4 rounded-lg bg-warning-100 px-6 py-2.5 text-base text-warning-800"
+      role="alert">
+      This trip has ended, you can still modify it if you want!
+    </div>
     <ng-container *ngIf="this.formGroup.enabled" [formGroup]="this.formGroup">
         <div class="flex flex-col w-full">
           <div class="relative mb-6" data-te-input-wrapper-init>

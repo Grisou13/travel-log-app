@@ -1,6 +1,7 @@
+import { startWith } from 'rxjs';
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, of, switchMap } from 'rxjs';
+import { BehaviorSubject, map, of, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { indicate } from 'src/app/helpers';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
@@ -27,7 +28,22 @@ export default class TripListComponent {
   loading$ = new BehaviorSubject(false);
 
   trips$ = this.tripService.items$;
-
+  vm$ = this.trips$.pipe(
+    map((trips) => {
+      const currentTrips = trips.filter(
+        (x) => x.endDate === null || x.endDate === undefined
+      );
+      const pastTrips = trips.filter(
+        (x) => x.endDate !== null && x.endDate !== undefined
+      );
+      return {
+        currentTrips,
+        pastTrips,
+      };
+    }),
+    map((x) => ({ type: 'end', value: x })),
+    startWith({ type: 'start', value: null })
+  );
   constructor(
     private router: Router,
     private tripService: TripService,
