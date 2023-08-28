@@ -4,6 +4,7 @@ import {
   BehaviorSubject,
   EMPTY,
   Observable,
+  Subject,
   Subscription,
   combineLatest,
   distinctUntilChanged,
@@ -11,6 +12,7 @@ import {
   forkJoin,
   map,
   of,
+  retry,
   shareReplay,
   startWith,
   switchMap,
@@ -162,6 +164,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     }),
 
     startWith({ type: 'start', value: null }),
+    retry({ delay: () => this.retryPoiState.asObservable() }),
     catchError((err) => of(null)),
     distinctUntilChanged(),
     shareReplay(1)
@@ -302,5 +305,10 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
           }
         },
       });
+  }
+
+  retryPoiState = new Subject<void>();
+  retryPoi() {
+    this.retryPoiState.next();
   }
 }

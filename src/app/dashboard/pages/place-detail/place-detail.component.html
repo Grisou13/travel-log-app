@@ -365,7 +365,9 @@
         </ng-container>
       </ng-template>
       <ng-template [ngIf]="obs.error">
+        <p>Could not load pois</p>
         <pre>{{ obs.error | json }}</pre>
+        <button (click)="retryPoi()">Retry</button>
       </ng-template>
     </div>
   </div>
