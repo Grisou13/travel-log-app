@@ -4,7 +4,7 @@
       <div class="flex border-b-[1px] items-center pb-1 mb-2">
         <button
         type="button"
-        class="w-full inline-flex text-left text-sm capitalize leading-normal text-black shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px, rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out"
+        class="w-full cursor-pointer inline-flex text-left text-sm capitalize leading-normal text-black shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px, rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out"
         (click)="toggleMainCategory(category)"
         >
         <span class="flex w-full font-bold ">{{ category.name.replaceAll('_', ' ') }}</span>
@@ -30,7 +30,7 @@
       <div class="flex flex-wrap flex-row mt-1 mb-3" *ngIf="isSelected(settings, category)">
         <button
           type="button"
-          class="inline-flex items-center rounded-full px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
+          class="inline-flex cursor-pointer items-center rounded-full px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
           (click)="toggleSubCategory(subcat)"
           [ngClass]="{'bg-[rgba(var(--ui-button-color),1) text-white]': isSubCatSelected(settings, subcat), 'bg-white text-black': !isSubCatSelected(settings, subcat)}"
           *ngFor="let subcat of category.children"
