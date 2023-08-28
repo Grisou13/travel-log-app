@@ -52,7 +52,7 @@ export class CitiesSearchComponent {
   private selected:
     | ArrayElement<GeocodeResponse['features']>
     | null
-    | undefined = undefined;
+    | undefined = null;
 
   searchSubject = new BehaviorSubject('');
 
@@ -61,6 +61,7 @@ export class CitiesSearchComponent {
     distinctUntilChanged(),
     tap({
       next: (v) => {
+        if (v === this.searchValue) return;
         this.searchValue = v;
         this.selected = null;
         console.debug('New input status: ', v);
@@ -105,7 +106,7 @@ export class CitiesSearchComponent {
   showList() {
     return (
       this.inputValid(this.searchValue) &&
-      (this.selected === null || this.selected === undefined)
+      (this.selected === null || this.selected !== undefined)
     );
   }
   shouldShowLoading() {

@@ -249,6 +249,8 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     const update = of(nextPlace).pipe(
       switchMap((x) => {
         if (x === null) return of(true);
+        if (typeof x === 'undefined') return of(true);
+
         return this.placeService
           .update(x.id, {
             ...x,

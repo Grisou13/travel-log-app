@@ -49,17 +49,12 @@ export class NewTripComponent implements OnInit {
   private stepperInstance: any | null = () =>
     Stepper.getOrCreateInstance(this.stepper.nativeElement);
 
-  constructor(
-    private travelLogService: TravelLogService,
-    private fb: FormBuilder
-  ) {}
-
   ngOnInit(): void {
     initTE({ Modal, Ripple, Stepper });
     const restored = localStorage.getItem(NEW_TRIP_STORAGE_KEY);
     if (!restored) return;
 
-    this.form.patchValue(JSON.parse(restored));
+    // this.form.patchValue(JSON.parse(restored));
   }
 
   previousStep() {
@@ -72,8 +67,8 @@ export class NewTripComponent implements OnInit {
       return;
     }
 
-    if (!this.form.controls.end.invalid) return;
-
+    if (this.form.controls.end.invalid) return;
+    this.form.patchValue({});
     this.stepperInstance().nextStep();
   }
   validateStart() {

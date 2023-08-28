@@ -100,11 +100,13 @@ export const formToPlace = (payload: {
   )
     return null;
 
-  const stops = places.filter((x) => x.type === 'TripStop');
+  const stops = _.orderBy(
+    places.filter((x) => x.type === 'TripStop'),
+    'order'
+  );
   let previousStop: Place | null = null;
   if (stops.length > 0)
-    previousStop =
-      _.orderBy(stops, 'order')[form?.order || stops.length - 1] || null;
+    previousStop = stops[form?.order || stops.length - 1] || null;
 
   let x: string | Date = form.dateOfVisit || new Date();
   let startDate = new Date();
@@ -127,7 +129,9 @@ export const formToPlace = (payload: {
   }
   let order = form.order;
   if (order === null || typeof order === 'undefined') {
-    order = places.filter((x) => x.type === 'TripStop').length + 1;
+    order =
+      (stops.at(-1)?.order ||
+        places.filter((x) => x.type === 'TripStop').length) + 1;
   }
   const type: PlaceType = form.placeType || 'TripStop';
   return {
