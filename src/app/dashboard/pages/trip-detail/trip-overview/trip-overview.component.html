@@ -1,0 +1,18 @@
+<div *ngIf="vm$ | async as vm" class="p-5 grid grid-cols-2 gap-2">
+
+    <ul>
+      <li class="my-1.5 p-3 ">General information about your trip</li>
+      <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.firstStop">Start: <strong class="k500">{{vm.firstStop.name}}</strong> <br>Scheduled on <strong class="k500">{{vm.firstStop.startDate}}</strong></li>
+      <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.lastStop">Destination: <strong class="k500">{{vm.lastStop.name}}</strong> <br>Scheduled on <strong class="k500">{{vm.lastStop.startDate}}</strong></li>
+    </ul>
+
+    <ul>
+      <li class="my-1.5 p-3 ">Actions</li>
+      <li class="cursor-pointer my-1.5 p-3 rounded-xl border border-neutral-100 bg-red-500"
+      [swal]="{title: 'Delete trip...',confirmButtonColor: '#DD6B55', text:'Are you sure you want to delete this trip?', icon:'question',confirmButtonText:'Delete', showCancelButton: true, allowEnterKey: false}"
+      (confirm)="deleteTrip(vm.trip)"
+    >Delete this trip</li>
+    <li class="cursor-pointer my-1.5 p-3 rounded-xl border border-neutral-100 bg-orange-300">Stop this trip</li>
+    </ul>
+
+</div>
