@@ -33,7 +33,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TripService } from 'src/app/dashboard/services/trip.service';
 import {
   NewPlaceForm,
-  placeForm,
+  newPlaceForm,
 } from 'src/app/dashboard/components/add-place/add-place.component';
 import { formToPlace, placeToMarker } from 'src/app/dashboard/helpers';
 import { iconDefault } from '@shared/components/map/map.component';
@@ -97,7 +97,7 @@ export class TripAddPlaceComponent implements OnDestroy {
     );
   }
 
-  form = new FormGroup({ ...placeForm.controls }, { updateOn: 'change' });
+  form = new FormGroup({ ...newPlaceForm.controls }, { updateOn: 'change' });
 
   addPlace() {
     this.sub$ = zip([this.tripId$, this.places$])

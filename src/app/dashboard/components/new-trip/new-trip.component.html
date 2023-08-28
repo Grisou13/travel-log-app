@@ -4,6 +4,7 @@
   data-te-stepper-init
   data-te-stepper-noEditable="true"
   class="relative m-0 flex list-none justify-between overflow-hidden p-0 h-full min-h-full"
+  [formGroup]="this.form"
 >
   <!--First item-->
   <li
@@ -13,9 +14,7 @@
   >
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row bg-white rounded-l-lg cursor-pointer text-center items-center pl-2 leading-[1.3rem] no-underline
-        after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-['']
-        hover:bg-[#f9f9f9] focus:outline-none"
+      class="flex flex-col sm:flex-row bg-white rounded-l-lg cursor-pointer text-center items-center pl-2 leading-[1.3rem] no-underline after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none"
     >
       <span
         data-te-stepper-head-icon-ref
@@ -38,38 +37,30 @@
 
       <app-add-place [formGroup]="this.form.controls.start"></app-add-place>
 
-        <div
-          class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
+      <div
+        class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 pt-4"
+      >
+        <button
+          type="button"
+          class="flex py-2 px-6 sm:mx-0 rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] sm:ml-auto shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] disabled:bg-neutral-500"
+          data-te-ripple-init
+          data-te-ripple-color="light"
+          (click)="validateStart()"
         >
-          <button
-            type="button"
-            class="flex py-2 px-6 sm:mx-0
-              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-              sm:ml-auto
-              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-              disabled:bg-neutral-500"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-            (click)="validateStart()"
-          >
-            Next step
-          </button>
-        </div>
-
+          Next step
+        </button>
+      </div>
     </div>
   </li>
 
   <!--Second item-->
-  <li data-te-stepper-step-ref class="w-[4.5rem] flex-col flex-auto sm:flex-row">
+  <li
+    data-te-stepper-step-ref
+    class="w-[4.5rem] flex-col flex-auto sm:flex-row"
+  >
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row bg-white cursor-pointer text-center items-center leading-[1.3rem] no-underline
-        before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-['']
-        after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-['']
-        hover:bg-[#f9f9f9] focus:outline-none"
+      class="flex flex-col sm:flex-row bg-white cursor-pointer text-center items-center leading-[1.3rem] no-underline before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] after:ml-2 after:h-px after:w-full after:flex-1 after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none"
     >
       <span
         data-te-stepper-head-icon-ref
@@ -79,8 +70,7 @@
       </span>
       <span
         data-te-stepper-head-text-ref
-        class="mb-2 sm:mb-0 text-neutral-500
-          after:flex after:text-[0.8rem] after:content-[data-content]"
+        class="mb-2 sm:mb-0 text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
       >
         Destination
       </span>
@@ -89,91 +79,77 @@
       data-te-stepper-content-ref
       class="absolute left-0 w-full translate-x-[150%] p-2 mt-6 transition-all duration-500 ease-in-out"
     >
-      <div
-        class="flex flex-row gap-4 justify-between mb-3 items-center"
-      >
+      <div class="flex flex-row gap-4 justify-between mb-1 items-center">
         <p class="flex">Do you know where you want to end your trip?</p>
         <div class="flex flex-shrink-0 flex-wrap items-center justify-end">
-          <button
-            type="button"
-            class="flex py-2 px-6 sm:mx-0
-              cursor-pointer
-              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-              sm:ml-auto
-              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-            (click)="validateStop()"
-          >
-            No
-          </button>
           <div class="mb-[0.125rem] block text-xs ml-2">
             <input
-              [formControl]="this.form.controls.defineStop"
-              type="checkbox"
-              id="react-option"
-              [checked]="this.form.controls.defineStop.value"
+              formControlName="defineStop"
+              type="radio"
+              id="define-stop-no"
+              [value]="false"
               class="hidden peer"
-              required=""
             />
             <label
-              for="react-option"
-              class="flex py-2 px-6 sm:mx-0
-                cursor-pointer
-                rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-                shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-                hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-                active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                peer-checked:bg-primary-700 peer-checked:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-
+              for="define-stop-no"
+              class="flex py-2 px-6 sm:mx-0 cursor-pointer rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] peer-checked:bg-primary-700 peer-checked:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              (click)="nextStep()"
+            >
+              No
+            </label>
+          </div>
+          <div class="mb-[0.125rem] block text-xs ml-2">
+            <input
+              formControlName="defineStop"
+              [value]="true"
+              type="radio"
+              id="define-stop-yes"
+              class="hidden peer"
+            />
+            <label
+              for="define-stop-yes"
+              class="flex py-2 px-6 sm:mx-0 cursor-pointer rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] peer-checked:bg-primary-700 peer-checked:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
             >
               Yes
             </label>
           </div>
         </div>
       </div>
-      <div *ngIf="this.form.controls.defineStop.value">
-        <p class="mb-6">Okey then, let's fill this up together shall we</p>
-        <app-add-place [formGroup]="this.form.controls.end"></app-add-place>
+      <ng-container *ngIf="this.form.valueChanges | async as fmValue">
+        <div *ngIf="fmValue.defineStop">
+          <small class="mb-6"
+            >Okey then, let's fill this up together shall we</small
+          >
+          <app-add-place
+            [formGroup]="this.form.controls.end"
+            [extraMarkers]="startMarker()"
+          ></app-add-place>
 
-        <div
-          class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4"
-        >
-          <button
-            type="button"
-            class="flex py-2 px-6
-              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-            (click)="previousStep()"
+          <div
+            class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4"
           >
-            Previous step
-          </button>
-          <button
-            type="button"
-            class="flex py-2 px-6 ml-2
-              rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-              shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-              hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-              focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-              active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-              disabled:bg-neutral-500"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-            (click)="validateStop()"
-          >
-            Next step
-          </button>
+            <button
+              type="button"
+              class="flex py-2 px-6 rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              (click)="previousStep()"
+            >
+              Previous step
+            </button>
+            <button
+              type="button"
+              class="flex py-2 px-6 ml-2 rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] disabled:bg-neutral-500"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              [disabled]="this.form.get('end')?.invalid ?? false"
+              (click)="validateStop()"
+            >
+              Next step
+            </button>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </li>
 
@@ -181,9 +157,7 @@
   <li data-te-stepper-step-ref class="w-[4.5rem] flex-auto">
     <div
       data-te-stepper-head-ref
-      class="flex flex-col sm:flex-row bg-white rounded-r-lg cursor-pointer text-center items-center pr-2 leading-[1.3rem] no-underline
-        before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-['']
-        hover:bg-[#f9f9f9] focus:outline-none"
+      class="flex flex-col sm:flex-row bg-white rounded-r-lg cursor-pointer text-center items-center pr-2 leading-[1.3rem] no-underline before:mr-2 before:h-px before:w-full before:flex-1 before:bg-[#e0e0e0] before:content-[''] hover:bg-[#f9f9f9] focus:outline-none"
     >
       <span
         data-te-stepper-head-icon-ref
@@ -193,8 +167,7 @@
       </span>
       <span
         data-te-stepper-head-text-ref
-        class="mb-2 sm:mb-0 text-neutral-500
-          after:flex after:text-[0.8rem] after:content-[data-content]"
+        class="mb-2 sm:mb-0 text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content]"
       >
         Overview
       </span>
@@ -207,24 +180,33 @@
       <p class="mb-6">Let's recap</p>
 
       <div *ngIf="this.form.valueChanges | async as vm">
-        <p class="mb-3 text-sm sm:text-base">Depending on the information you entered, your trip will be</p>
+        <p class="mb-3 text-sm sm:text-base">
+          Depending on the information you entered, your trip will be
+        </p>
         <ul>
-          <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.start">Start: <strong class="k500">{{vm.start.title}}</strong> <br>Scheduled on <strong class="k500">{{vm.start.dateOfVisit}}</strong></li>
-          <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.defineStop && vm.end">Destination: <strong class="k500">{{vm.end.title}}</strong> <br>Scheduled on <strong class="k500">{{vm.end.dateOfVisit}}</strong></li>
+          <li
+            class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100"
+            *ngIf="vm.start"
+          >
+            Start: <strong class="k500">{{ vm.start.title }}</strong>
+            <br />Scheduled on
+            <strong class="k500">{{ vm.start.dateOfVisit }}</strong>
+          </li>
+          <li
+            class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100"
+            *ngIf="vm.defineStop && vm.end"
+          >
+            Destination: <strong class="k500">{{ vm.end.title }}</strong>
+            <br />Scheduled on
+            <strong class="k500">{{ vm.end.dateOfVisit }}</strong>
+          </li>
         </ul>
       </div>
 
-      <div
-        class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4"
-      >
+      <div class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4">
         <button
           type="button"
-          class="flex py-2 px-6
-            rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+          class="flex py-2 px-6 rounded-full align-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
           data-te-ripple-init
           data-te-ripple-color="light"
           (click)="previousStep()"
@@ -233,16 +215,9 @@
         </button>
         <button
           type="button"
-          class="flex py-2 px-6 ml-2
-            rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-            shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
-            hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-            focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
-            active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-            disabled:bg-neutral-500"
+          class="flex py-2 px-6 ml-2 rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] disabled:bg-neutral-500"
           data-te-ripple-init
           data-te-ripple-color="light"
-          [disabled]="!tripIsValid()"
           (click)="createTrip()"
         >
           Save your trip

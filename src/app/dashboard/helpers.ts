@@ -56,7 +56,7 @@ export const formToTrip = (payload: { form: NewTripForm }) => {
 
   if (typeof x === 'string') {
     const y = x.split('-').map((z) => parseInt(z));
-    startDate = new Date(y[2], y[1], y[0]);
+    startDate = new Date(y[0], y[1], y[2]);
   }
 
   x = form?.end?.dateOfVisit || new Date();
@@ -64,16 +64,18 @@ export const formToTrip = (payload: { form: NewTripForm }) => {
 
   if (typeof x === 'string') {
     const y = x.split('-').map((z) => parseInt(z));
-    endDate = new Date(y[2], y[1], y[0]);
+    endDate = new Date(y[0], y[1], y[2]);
   }
 
-  let title =
-    'Trip from ' + form?.start?.title + ' ' + startDate.toLocaleDateString();
+  let title = 'Trip from ' + form?.start?.title;
   if (
     typeof form.end !== 'undefined' &&
     typeof form.end.title !== 'undefined'
   ) {
-    title += ' ' + form.end.title + endDate.toLocaleDateString();
+    title += ' ' + form.end.title;
+  }
+  if (title.length >= 100) {
+    title = title.slice(0, 100);
   }
   return {
     title: title,
@@ -113,7 +115,7 @@ export const formToPlace = (payload: {
 
   if (typeof x === 'string') {
     const y = x.split('-').map((z) => parseInt(z));
-    startDate = new Date(y[2], y[1], y[0]);
+    startDate = new Date(y[0], y[1], y[2]);
   }
   let title = form.title;
   if (title === null || typeof title === 'undefined') {

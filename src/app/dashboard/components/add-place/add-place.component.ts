@@ -20,18 +20,16 @@ import { Result } from '@shared/components/cities-search/cities-search.component
 import { Subscription, distinctUntilChanged, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-export const placeForm = new FormGroup(
+export const newPlaceForm = new FormGroup(
   {
     location: new FormGroup({
       lat: new FormControl<number>(0, []),
       lng: new FormControl<number>(0, []),
     }),
     title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
+    description: new FormControl('', [Validators.minLength(5)]),
     dateOfVisit: new FormControl('', [
+      Validators.required,
       Validators.pattern(/\d\d\d\d-\d\d-\d\d/),
     ]),
     placeType: new FormControl<PlaceType>('TripStop', [Validators.required]),
@@ -41,7 +39,7 @@ export const placeForm = new FormGroup(
   { updateOn: 'change' }
 );
 
-export type NewPlaceForm = typeof placeForm.value;
+export type NewPlaceForm = typeof newPlaceForm.value;
 
 @Component({
   selector: 'app-add-place',
@@ -49,7 +47,7 @@ export type NewPlaceForm = typeof placeForm.value;
   styleUrls: [],
 })
 export class AddPlaceComponent implements OnInit {
-  public newPlaceForm!: typeof placeForm;
+  public newPlaceForm!: typeof newPlaceForm;
   public control!: FormControl;
   @OgInput() controlName!: string;
   @OgInput() placeHolder!: string;
@@ -63,7 +61,7 @@ export class AddPlaceComponent implements OnInit {
 
   ngOnInit(): void {
     initTE({ Ripple, Datepicker, Input });
-    this.newPlaceForm = <typeof placeForm>this.controlContainer.control;
+    this.newPlaceForm = <typeof newPlaceForm>this.controlContainer.control;
     this.control = <FormControl>this.newPlaceForm.get(this.controlName);
 
     const now = new Date(Date.now());

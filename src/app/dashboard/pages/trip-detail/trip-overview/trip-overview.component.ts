@@ -77,15 +77,16 @@ export class TripOverviewComponent implements OnDestroy {
       this.deleteSub$.unsubscribe(); //don't repeat the operation if already subscribed?
     }
 
-    this.deleteSub$ = forkJoin(
-      places.map((x) => this.placeService.delete(x.id))
-    )
+    this.deleteSub$ = forkJoin([
+      ...places.map((x) => this.placeService.delete(x.id)),
+      this.tripService.delete(trip.id),
+    ])
       .pipe(
-        switchMap((deleted) => {
+        map((deleted) => {
           if (deleted.some((x) => !x)) {
-            return of(false);
+            return false;
           }
-          return this.tripService.delete(trip.id);
+          return true;
         })
       )
       .subscribe({
