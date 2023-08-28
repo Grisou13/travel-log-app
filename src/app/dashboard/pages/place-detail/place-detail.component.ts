@@ -152,13 +152,16 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       if (typeof place?.current.location === 'undefined') return of(null);
       const location = place.current.location;
       //TODO: concat with pois already in the trip
-      return this.poiService.fetchPois(location, {
-        category_group_ids: settings?.pois.categories ?? [],
-        category_ids: settings?.pois.sub_categories ?? [],
-      });
+      return this.poiService
+        .fetchPois(location, {
+          category_group_ids: settings?.pois.categories ?? [],
+          category_ids: settings?.pois.sub_categories ?? [],
+        })
+        .pipe(map((x) => ({ type: 'end', value: x })));
       //.pipe(tap({ next: console.log }));
     }),
-    startWith(null),
+
+    startWith({ type: 'start', value: null }),
     catchError((err) => of(null)),
     distinctUntilChanged(),
     shareReplay(1)
