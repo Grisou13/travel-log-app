@@ -5,6 +5,7 @@ import {
   Subscription,
   combineLatest,
   distinctUntilChanged,
+  forkJoin,
   map,
   of,
   shareReplay,
@@ -16,6 +17,7 @@ import { Trip } from '../../../models/trips';
 import * as _ from 'lodash';
 import { PlaceService } from 'src/app/dashboard/services/place.service';
 import { ToastrService } from 'ngx-toastr';
+import { Place } from 'src/app/dashboard/models/places';
 @Component({
   templateUrl: './trip-overview.component.html',
   styleUrls: [],
@@ -59,6 +61,8 @@ export class TripOverviewComponent implements OnDestroy {
         trip,
         lastStop,
         firstStop: stops[0] || null,
+        places,
+        stops,
       };
     })
   );
@@ -67,23 +71,35 @@ export class TripOverviewComponent implements OnDestroy {
     this.deleteSub$?.unsubscribe();
   }
   deleteSub$: Subscription | null = null;
-  deleteTrip(trip: Trip | null) {
+  deleteTrip(trip: Trip | null, places: Place[]) {
     if (trip === null) return;
     if (this.deleteSub$ != null) {
       this.deleteSub$.unsubscribe(); //don't repeat the operation if already subscribed?
     }
-    this.deleteSub$ = this.tripService.delete(trip.id).subscribe({
-      next: (val) => {
-        if (val) {
-          this.toastrService.success('Your trip was deleted successfully');
-          this.router.navigate(['/dashboard/trips']);
-        } else {
-          this.toastrService.error(
-            'Could not delete trip, please try again later'
-          );
-        }
-      },
-    });
+
+    this.deleteSub$ = forkJoin(
+      places.map((x) => this.placeService.delete(x.id))
+    )
+      .pipe(
+        switchMap((deleted) => {
+          if (deleted.some((x) => !x)) {
+            return of(false);
+          }
+          return this.tripService.delete(trip.id);
+        })
+      )
+      .subscribe({
+        next: (val) => {
+          if (val) {
+            this.toastrService.success('Your trip was deleted successfully');
+            this.router.navigate(['/dashboard/trips']);
+          } else {
+            this.toastrService.error(
+              'Could not delete trip, please try again later'
+            );
+          }
+        },
+      });
   }
 
   endTrip(trip: Trip | null) {}

@@ -10,7 +10,7 @@
       <li class="my-1.5 p-3 ">Actions</li>
       <li class="cursor-pointer my-1.5 p-3 rounded-xl border border-neutral-100 bg-red-500"
       [swal]="{title: 'Delete trip...',confirmButtonColor: '#DD6B55', text:'Are you sure you want to delete this trip?', icon:'question',confirmButtonText:'Delete', showCancelButton: true, allowEnterKey: false}"
-      (confirm)="deleteTrip(vm.trip)"
+      (confirm)="deleteTrip(vm.trip, vm.places)"
     >Delete this trip</li>
     <li class="cursor-pointer my-1.5 p-3 rounded-xl border border-neutral-100 bg-orange-300">Stop this trip</li>
     </ul>

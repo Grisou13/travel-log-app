@@ -66,6 +66,7 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
               pois,
               previousPlace,
               nextPlace,
+              stops,
             };
           })
         );

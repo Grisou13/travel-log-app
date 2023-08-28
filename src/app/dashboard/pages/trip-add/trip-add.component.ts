@@ -49,12 +49,15 @@ export class TripAddComponent implements OnDestroy {
             geoJson: undefined,
           });
 
-          const stop = formToPlace({
+          let stop = formToPlace({
             tripId: trip.id,
             places: [],
             form: form?.end || {},
             geoJson: undefined,
           });
+          if (!form.defineStop) {
+            stop = null;
+          }
           return forkJoin([
             of(trip),
             of(start).pipe(

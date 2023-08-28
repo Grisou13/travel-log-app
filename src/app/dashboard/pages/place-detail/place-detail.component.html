@@ -168,7 +168,7 @@
         focus:bg-slate-400 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
         active:bg-slate-500 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
         [swal]="{title: 'Delete place...',confirmButtonColor: '#DD6B55', text:'Are you sure you want to delete this place?', icon:'question',confirmButtonText:'Delete', showCancelButton: true, allowEnterKey: false}"
-        (confirm)="deletePlace(vm.current, vm.nextPlace)"
+        (confirm)="deletePlace(vm.current, vm.stops, vm.pois)"
     >
       Delete
     </button>

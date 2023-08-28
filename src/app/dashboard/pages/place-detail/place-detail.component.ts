@@ -245,35 +245,51 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
   }
   deleteSub$: Subscription | null = null;
 
-  deletePlace(place: Place, nextPlace: Place | null) {
+  deletePlace(place: Place, stops: Place[], pois: Place[]) {
     if (this.deleteSub$ != null) {
       this.deleteSub$.unsubscribe(); //don't repeat the operation if already subscribed?
     }
-    const update = of(nextPlace).pipe(
-      switchMap((x) => {
-        if (x === null) return of(true);
-        if (typeof x === 'undefined') return of(true);
+    const ordered = _.orderBy(stops, 'order');
+    const currentIdx = ordered.findIndex((x) => x.id === place.id);
 
-        return this.placeService
-          .update(x.id, {
-            ...x,
-            directions: {
-              distance: 0,
-              previous: null,
-              next: x.directions?.next,
-            },
-          })
-          .pipe(
-            map((x) => {
-              if (typeof x === 'boolean') return x;
-              return true;
+    const nextStops = ordered.splice(currentIdx + 1);
+    const update = nextStops.map((stop) =>
+      of(stop).pipe(
+        switchMap((x) => {
+          return this.placeService
+            .update(x.id, {
+              ...x,
+              order: x.order - 1,
+              directions: {
+                distance: 0,
+                previous: null,
+                next: x.directions?.next,
+              },
             })
-          );
-      })
+            .pipe(
+              map((x) => {
+                if (typeof x === 'boolean') return x;
+                return true;
+              })
+            );
+        })
+      )
     );
 
-    this.deleteSub$ = forkJoin([this.placeService.delete(place.id), update])
-      .pipe(map(([deleted, updated]) => deleted && updated))
+    this.deleteSub$ = forkJoin([
+      this.placeService.delete(place.id),
+      ...pois.map((x) => this.placeService.delete(x.id)),
+      ...update,
+    ])
+      .pipe(
+        catchError((err) => {
+          console.error(err);
+          this.toastrService.error(
+            'Could not delete trip, please try again later'
+          );
+          return of(false);
+        })
+      )
       .subscribe({
         next: (val) => {
           if (val) {
