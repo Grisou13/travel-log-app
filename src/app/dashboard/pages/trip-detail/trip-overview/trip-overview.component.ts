@@ -102,6 +102,25 @@ export class TripOverviewComponent implements OnDestroy {
         },
       });
   }
+  updateSub$: Subscription | null = null;
+  stopTrip(trip: Trip | null) {
+    if (trip === null) return;
+    if (this.updateSub$ !== null) {
+      this.updateSub$.unsubscribe();
+    }
 
-  endTrip(trip: Trip | null) {}
+    this.updateSub$ = this.tripService
+      .update(trip.id, { ...trip, endDate: new Date() })
+      .subscribe({
+        next: (val) => {
+          if (typeof val === 'boolean') {
+            this.toastrService.error(
+              'Could not update your trip, please try again later'
+            );
+            return;
+          }
+          this.toastrService.success('Your trip has been stopped!');
+        },
+      });
+  }
 }

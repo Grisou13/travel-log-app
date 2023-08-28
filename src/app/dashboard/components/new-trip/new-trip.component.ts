@@ -27,7 +27,7 @@ function addDays(date: Date, days: number) {
 }
 export const addTrip = new FormGroup(
   {
-    defineStop: new FormControl<boolean>(false, [Validators.required]),
+    defineStop: new FormControl<boolean | null>(null, [Validators.required]),
     start: new FormGroup({ ...newPlaceForm.controls }, [Validators.required]),
     end: new FormGroup({ ...newPlaceForm.controls }, [
       requiredIfValidator((form) => form?.get('defineStop')?.value ?? false),

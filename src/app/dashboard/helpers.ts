@@ -81,7 +81,7 @@ export const formToTrip = (payload: { form: NewTripForm }) => {
     title: title,
     description: title,
     startDate,
-    endDate,
+    endDate: null, //dont use end date and only set it when using stop button
   };
 };
 
