@@ -16,6 +16,7 @@ import {
   Subject,
   takeUntil,
   distinctUntilChanged,
+  startWith,
 } from 'rxjs';
 
 export type EntityWithId<K> = {
@@ -59,17 +60,32 @@ export abstract class CacheableService<
   }
 
   get(id: K) {
-    const currentItems: T[] = this.getAll();
-    if (currentItems.length === 0) {
-      return this.fetchItem(id);
-    }
+    const localItems = this.getAll();
+    const filterFn = (x: T) => x.id === id;
+    //TODO maybe update this somehow every couple of times so things keep in sync?
+    const localItemIdx = localItems.findIndex(filterFn);
+    // if (placesForTrip.length > 0) return of(placesForTrip);
 
-    const index1 = currentItems.findIndex((element) => {
-      return element.id === id;
-    });
-    return index1 >= 0 && currentItems[index1]
-      ? of(currentItems[index1])
-      : this.fetchItem(id);
+    return this.fetchItem(id).pipe(
+      tap({ subscribe: () => console.debug('Subscribing to place fetch') }),
+      startWith(localItems.at(localItemIdx)),
+      switchMap((trip) => {
+        //doing this is pretty stupid, but for now it will work.
+        // the idea is that get  does not bring us from the cacheed items and will never emit a new value.
+        // what we need here is an operator that allows us to add/update stuff and has an internal cache of it's own.
+        // this allows us to keep the fetch for trip to be
+        if (trip === null) return of(null);
+        if (trip === undefined) return of(null);
+        if (typeof trip === 'undefined') return of(null);
+        if (typeof trip === 'boolean') return of(null);
+        return this.items$.pipe(
+          map((items) => {
+            const idx = items.findIndex(filterFn);
+            return items[idx];
+          })
+        );
+      })
+    );
   }
 
   delete(id: K): Observable<boolean> {
@@ -88,7 +104,7 @@ export abstract class CacheableService<
     );
   }
 
-  protected fetchItem(id: K): Observable<T | boolean> {
+  protected fetchItem(id: K): Observable<T | boolean | null> {
     return this.fetchSingleRemote(id).pipe(
       tap({
         next: (val) => {

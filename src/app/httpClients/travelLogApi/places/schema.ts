@@ -31,7 +31,7 @@ export const validator = z
       .optional()
       .nullable(),
 
-    pictureUrl: z.string().min(10).max(500).optional(), // "https://www.example.com/picture.jpg",
+    pictureUrl: z.string().optional(), // "https://www.example.com/picture.jpg",
     tripId: z.string(), //"7f063c6e-7717-401a-aa47-34a52f6a45cf",
   })
   .merge(common);

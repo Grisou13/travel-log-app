@@ -1,15 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   BehaviorSubject,
   EMPTY,
   Observable,
+  Subject,
   Subscription,
   combineLatest,
   distinctUntilChanged,
   filter,
+  forkJoin,
   map,
   of,
+  retry,
   shareReplay,
   startWith,
   switchMap,
@@ -28,7 +31,8 @@ import * as _ from 'lodash';
 import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
 import { ArrayElement } from '../../../helpers';
 import { Input, initTE } from 'tw-elements';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-place-detail',
@@ -36,13 +40,18 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: [],
 })
 export class PlaceDetailComponent implements OnDestroy, OnInit {
-  form = new FormGroup({
-    editing: new FormControl(false),
-    name: new FormControl(''),
-    description: new FormControl(''),
-    startDate: new FormControl(''),
-    pictureUrl: new FormControl(''),
-  });
+  form = new FormGroup(
+    {
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      startDate: new FormControl(''),
+      pictureUrl: new FormControl(''),
+    },
+    { updateOn: 'change' }
+  );
   toggle($event: any) {
     if (this.form.enabled) {
       this.form.disable();
@@ -73,7 +82,21 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         startDate: new Date(startDate.toString()),
         pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
       })
-      .subscribe();
+      .subscribe({
+        next: (val) => {
+          if (typeof val === 'boolean') {
+            this.toastrService.error(
+              `Error in the data supplied to update your trip`,
+              'Could not update place'
+            );
+          }
+        },
+        error: (err) => {
+          this.toastrService.error(`${err}`, 'Could not update place');
+        },
+      });
+
+    this.form.disable();
   }
   cancel() {
     this.form.reset(this?.initialValue ?? {});
@@ -148,13 +171,17 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       if (typeof place?.current.location === 'undefined') return of(null);
       const location = place.current.location;
       //TODO: concat with pois already in the trip
-      return this.poiService.fetchPois(location, {
-        category_group_ids: settings?.pois.categories ?? [],
-        category_ids: settings?.pois.sub_categories ?? [],
-      });
+      return this.poiService
+        .fetchPois(location, {
+          category_group_ids: settings?.pois.categories ?? [],
+          category_ids: settings?.pois.sub_categories ?? [],
+        })
+        .pipe(map((x) => ({ type: 'end', value: x })));
       //.pipe(tap({ next: console.log }));
     }),
-    startWith(null),
+
+    startWith({ type: 'start', value: null }),
+    retry({ delay: () => this.retryPoiState.asObservable() }),
     catchError((err) => of(null)),
     distinctUntilChanged(),
     shareReplay(1)
@@ -181,11 +208,14 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     private route: ActivatedRoute,
     private placeService: PlaceService,
     private poiService: PoisService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
   ngOnDestroy(): void {
     this._subs.forEach((x) => x.unsubscribe());
     this.sub?.unsubscribe();
+    this.deleteSub$?.unsubscribe();
   }
 
   tripHasPoi(pois: Array<Partial<Place>>, osm_id: number) {
@@ -232,5 +262,70 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     const categoryId = Object.keys(poi.properties.category_ids)[0];
 
     return poi.properties.category_ids[categoryId].category_name;
+  }
+  deleteSub$: Subscription | null = null;
+
+  deletePlace(place: Place, stops: Place[], pois: Place[]) {
+    if (this.deleteSub$ != null) {
+      this.deleteSub$.unsubscribe(); //don't repeat the operation if already subscribed?
+    }
+    const ordered = _.orderBy(stops, 'order');
+    const currentIdx = ordered.findIndex((x) => x.id === place.id);
+
+    const nextStops = ordered.splice(currentIdx + 1);
+    const update = nextStops.map((stop) =>
+      of(stop).pipe(
+        switchMap((x) => {
+          return this.placeService
+            .update(x.id, {
+              ...x,
+              order: x.order - 1,
+              directions: {
+                distance: 0,
+                previous: null,
+                next: x.directions?.next,
+              },
+            })
+            .pipe(
+              map((x) => {
+                if (typeof x === 'boolean') return x;
+                return true;
+              })
+            );
+        })
+      )
+    );
+
+    this.deleteSub$ = forkJoin([
+      this.placeService.delete(place.id),
+      ...pois.map((x) => this.placeService.delete(x.id)),
+      ...update,
+    ])
+      .pipe(
+        catchError((err) => {
+          console.error(err);
+          this.toastrService.error(
+            'Could not delete trip, please try again later'
+          );
+          return of(false);
+        })
+      )
+      .subscribe({
+        next: (val) => {
+          if (val) {
+            this.toastrService.success('Your place was deleted successfully');
+            this.router.navigate([`/dashboard/trips/${place.tripId}`]);
+          } else {
+            this.toastrService.error(
+              'Could not delete trip, please try again later'
+            );
+          }
+        },
+      });
+  }
+
+  retryPoiState = new Subject<void>();
+  retryPoi() {
+    this.retryPoiState.next();
   }
 }

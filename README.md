@@ -116,3 +116,4 @@ This created a major error whilest handling auth because the auth service keept 
 
 - Refactoring the module alos required some extra steps that were barried in the documentation about how it needed the `forRoot` (`auth-module.ts`) and not just a module exposing it's own providers as "normal"
 
+- Handling data and it's lifetime was a bit uneasy.

@@ -1,116 +1,197 @@
 <div *ngIf="place$ | async as vm">
-  <ng-container *ngIf="vm === null"
-    ><p>
+  <ng-container *ngIf="vm === null">
+    <p>
       Could not load your place, please refresh and try again later
-    </p></ng-container
-  >
-    <form *ngIf="this.form.enabled" [formGroup]="this.form">
-    <div class="flex flex-col" >
-      <div class="relative mb-3" data-te-input-wrapper-init>
-       <input
+    </p>
+  </ng-container>
+  <form *ngIf="this.form.enabled" [formGroup]="this.form">
+    <div class="flex flex-col w-full">
+      <div class="relative mb-6" data-te-input-wrapper-init>
+        <input
+          data-te-input-state-active
+          type="text"
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
+            [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+          id="placeName"
+          formControlName="name"
+          placeholder="Place name" />
+        <label
+          for="placeName"
+          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500
+            transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+          >name
+        </label>
+      </div>
+      <div class="relative mb-6" data-te-input-wrapper-init>
+        <input
+          data-te-input-state-active
+          type="text"
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
+            [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+          id="placeDescription"
+          formControlName="description"
+          placeholder="Place description" />
+        <label
+          for="placeDescription"
+          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+          >Description
+        </label>
+      </div>
+      <div class="relative mb-6" data-te-input-wrapper-init>
+        <input
+          data-te-input-state-active
+          type="text"
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
+            [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+          id="placeStartDate"
+          formControlName="startDate"
+          placeholder="StartDate" />
+        <label
+          for="placeStartDate"
+          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+          >StartDate
+        </label>
+      </div>
+      <div class="relative" data-te-input-wrapper-init>
+        <input
         data-te-input-state-active
-         type="text"
-         class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-         id="placeName"
-         formControlName="name"
-         placeholder="name" />
-       <label
-         for="placeName"
-         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-         >name
-       </label>
-     </div>
-     <div class="relative mb-3" data-te-input-wrapper-init>
-       <input
-        data-te-input-state-active
-         type="text"
-         class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-         id="placeDescription"
-         formControlName="description"
-         placeholder="Description" />
-       <label
-         for="placeDescription"
-         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-         >Description
-       </label>
-     </div>
-     <div class="relative mb-3" data-te-input-wrapper-init>
-       <input
-        data-te-input-state-active
-         type="text"
-         class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-         id="placeStartDate"
-         formControlName="startDate"
-         placeholder="StartDate" />
-       <label
-         for="placeStartDate"
-         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-         >StartDate
-       </label>
-     </div>
-
-
-     <div class="relative mb-3" data-te-input-wrapper-init>
-      <input
-       data-te-input-state-active
-        type="text"
-        class="peer block min-h-[auto] w-full rounded border-b-2 border-slate-500  px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-        id="placePictureUrl"
-        formControlName="pictureUrl"
-        placeholder="PictureUrl" />
-      <label
-        for="placePictureUrl"
-        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-        >PictureUrl
-      </label>
-    </div>
+          type="text"
+          class="peer block min-h-[auto] w-full rounded text-sm sm:text-base px-3 py-[0.32rem] leading-[2.15] outline-none shadow-[rgba(50,50,93,0.15)_0px_2px_5px_-1px,rgba(0,0,0,0.2)_0px_1px_3px_-1px]
+            transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none
+            [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+          id="placePictureUrl"
+          formControlName="pictureUrl"
+          placeholder="Picture URL" />
+        <label
+          for="placePictureUrl"
+          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+          >Picture Url
+        </label>
+      </div>
     </div>
   </form>
-  <ng-container *ngIf="this.form.disabled">
-      <h2
-        class="text-2xl sm:text-4xl text-center sm:text-left mx-6 sm:mt-6"
-      >{{this.form.controls.name.value}}</h2>
-      <p
-        class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
-      >{{this.form.controls.description.value}}</p>
-      <p
-        class="text-lg sm:text-xl text-center sm:text-left mx-6 sm:mt-6"
-      >{{this.form.controls.startDate.value}}</p>
 
-      <img [src]="this.form.controls.pictureUrl" alt="image" />
+  <ng-container *ngIf="this.form.disabled && this.form.controls.pictureUrl.value">
+    <div class="relative flex h-[35vh] w-full
+      bg-center bg-no-repeat bg-cover mb-3"
+      [ngStyle]="{'background-image': 'url(' + this.form.controls.pictureUrl.value + ')'}">
+    </div>
   </ng-container>
-  <div class="mb-[0.125rem] block text-xs ml-2">
-    <input
-      [value]="this.form.enabled"
-      (change)="toggle($event)"
-      type="checkbox"
-      id="toggle-place-detail"
-      value=""
-      class="hidden peer"
-    />
-    <label
-      for="toggle-place-detail"
-      class="inline-flex items-center justify-between w-full px-6 pb-2 pt-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:bg-primary-600 peer-checked:text-primary-accent-100 hover:text-gray-600 dark:peer-checked:text-gray-300 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+
+  <ng-container *ngIf="this.form.disabled && !this.form.controls.pictureUrl.value">
+    <div class="relative flex h-[15vh] w-full
+      items-center justify-center text-center text-xs bg-white/30 border border-white mb-3"
     >
-      <div class="block">
-        <div class="w-full text-lg font-semibold">Editing Icon</div>
+      <span>No picture uploaded</span>
+    </div>
+  </ng-container>
+
+  <div class="flex">
+    <ng-container *ngIf="this.form.disabled">
+
+      <div class="w-10/12 sm:text-left">
+        <h2 class="text-xl sm:text-3xl mb-3 leading-tight">
+          {{this.form.controls.name.value}}
+        </h2>
+        <p class="text-md sm:text-lg mb-3 sm:mt-3 leading-tight">
+          {{this.form.controls.description.value}}
+        </p>
+        <p class="text-sm sm:text-lg sm:mt-3 leading-tight">
+          {{this.form.controls.startDate.value}}
+        </p>
       </div>
-    </label>
+    </ng-container>
+    <div class="flex w-2/12 mr-2 items-center">
+      <input
+        [value]="this.form.enabled"
+        (change)="toggle($event)"
+        type="checkbox"
+        id="toggle-place-detail"
+        value=""
+        class="hidden peer"
+      />
+      <label
+        *ngIf="this.form.disabled"
+        for="toggle-place-detail"
+        class="flex py-2 px-6 cursor-pointer
+        rounded-full align-center text-center sm:ml-auto text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
+        active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+      >
+        <div class="flex flex-wrap flex-col sm:flex-row justify-center items-center">
+          <span class="flex">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+            <path
+              d="M3 21L12 21H21"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12.2218 5.82839L15.0503 2.99996L20 7.94971L17.1716 10.7781M12.2218 5.82839L6.61522 11.435C6.42769 11.6225 6.32233 11.8769 6.32233 12.1421L6.32233 16.6776L10.8579 16.6776C11.1231 16.6776 11.3774 16.5723 11.565 16.3847L17.1716 10.7781M12.2218 5.82839L17.1716 10.7781"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            </svg>
+          </span>
+          <span class="hidden sm:flex ml-2">
+            Edit infos
+          </span>
+        </div>
+      </label>
+    </div>
   </div>
   <div
     *ngIf="this.form.enabled"
-    class="grid w-full self-center m-10 justify-items-stretch items-center"
+    class="flex sm:flex-row w-full self-center items-center mt-3 justify-end"
   >
     <button
       type="button"
-      class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-      (click)="cancel()"
+      class="flex py-2 px-6 cursor-pointer
+        mr-auto
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-slate-500
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-slate-400 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-slate-400 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
+        active:bg-slate-500 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+        [swal]="{title: 'Delete place...',confirmButtonColor: '#DD6B55', text:'Are you sure you want to delete this place?', icon:'question',confirmButtonText:'Delete', showCancelButton: true, allowEnterKey: false}"
+        (confirm)="deletePlace(vm.current, vm.stops, vm.pois)"
+    >
+      Delete
+    </button>
+    <button
+      type="button"
+      class="flex py-2 px-6 cursor-pointer
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
+        active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+        (click)="cancel()"
     >
       Cancel
     </button>
     <button
       type="button"
-      class="flex rounded text-center bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      class="flex py-2 px-6 ml-2 cursor-pointer
+        rounded-full align-center justify-center text-xs font-medium uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
+        active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
       (click)="updatePlace(vm.current)"
     >
       Save Changes
@@ -118,7 +199,7 @@
   </div>
   <div class="flex w-full flex-col sm:flex-row sm:gap-4 ">
     <div *ngIf="mapData$ | async as mapData" class="w-full sm:w-3/5">
-      <div style="height: 40vh" class="-mt-3">
+      <div style="height: 25vh" class="mt-3">
         <app-map
           [markers]="mapData.markers"
           [directions]="mapData.direction"
@@ -126,7 +207,7 @@
       </div>
     </div>
     <div class="flex-1 my-2 w-full sm:w-2/5">
-      <ol class="border-l-2 border-neutral-300 dark:border-neutral-500">
+      <ol class="border-l-2 border-neutral-300 bg-white">
         <!-- Previous place -->
         <li
           *ngIf="vm.previousPlace"
@@ -136,12 +217,12 @@
         >
           <div class="flex-start flex items-center">
             <div
-              class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-neutral-300 dark:bg-neutral-500"
+              class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-neutral-300"
             ></div>
             <hr
-              class="w-[1rem] h-1 ml-[-1rem] bg-neutral-300/50 border-0 rounded dark:bg-gray-700"
+              class="w-[1rem] h-1 ml-[-1rem] bg-neutral-300/50 border-0 rounded"
             />
-            <p class="-ml-[2px] text-sm text-neutral-500 dark:text-neutral-300">
+            <p class="-ml-[2px] text-sm text-neutral-500">
               <span
                class="inline-flex whitespace-nowrap w-[2rem] h-[2rem] rounded-full p-3 bg-neutral-300 items-center justify-center text-[1.05em] font-semibold leading-none text-white"
               >
@@ -170,17 +251,16 @@
         <li
           [routerLink]="['../', vm.current.id]"
           class="relative py-3 -ml-[4px] hover:bg-neutral-100/80 hover:cursor-pointer
-          before:flex before:top-0 before:absolute before:w-[6px] before:h-[100%] before:rounded-lg before:bg-[rgba(var(--ui-button-color),0.75)] before:content['.']
-          "
+          before:flex before:top-0 before:absolute before:w-[6px] before:h-[100%] before:rounded-lg before:bg-[rgba(var(--ui-button-color),0.75)] before:content['.']"
         >
           <div class="flex-start flex items-center">
             <div
-              class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-[rgba(var(--ui-button-color),1)] dark:bg-neutral-500"
+              class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-[rgba(var(--ui-button-color),1)]"
             ></div>
             <hr
-              class="w-[1rem] h-1 ml-[-1rem] bg-[rgba(var(--ui-button-color),0.5)] border-0 rounded dark:bg-gray-700"
+              class="w-[1rem] h-1 ml-[-1rem] bg-[rgba(var(--ui-button-color),0.5)] border-0 rounded"
             />
-            <p class="-ml-[2px] text-sm text-neutral-500 dark:text-neutral-300">
+            <p class="-ml-[2px] text-sm text-neutral-500">
               <span
                 class="inline-flex whitespace-nowrap w-[2rem] h-[2rem] rounded-full p-3 bg-[rgba(var(--ui-button-color),1)] items-center justify-center text-[1.05em] font-semibold leading-none text-white"
               >
@@ -213,12 +293,12 @@
         >
           <div class="flex-start flex items-center">
             <div
-              class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-neutral-300 dark:bg-neutral-500"
+              class="-ml-[3px] mr-3 h-[12px] w-[12px] rounded-full bg-neutral-300"
             ></div>
             <hr
-              class="w-[1rem] h-1 ml-[-1rem] bg-neutral-300/50 border-0 rounded dark:bg-gray-700"
+              class="w-[1rem] h-1 ml-[-1rem] bg-neutral-300/50 border-0 rounded"
             />
-            <p class="-ml-[2px] text-sm text-neutral-500 dark:text-neutral-300">
+            <p class="-ml-[2px] text-sm text-neutral-500">
               <span
                 class="inline-flex whitespace-nowrap w-[2rem] h-[2rem] rounded-full p-3 bg-neutral-300 items-center justify-center text-[1.05em] font-semibold leading-none text-white"
               >
@@ -254,33 +334,41 @@
   <div class="flex flex-wrap flex-row">
     <h2 class="w-full text-lg mb-2">Nearest point of interests</h2>
 
-    <div *ngIf="poi$ | async as pois">
-      <ng-container *ngFor="let poi of pois.features" class="flex ">
-        <div class="inline-flex items-center rounded-full px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
-        >
-          <input
-            class="flex items-center
-              mr-2 h-4 w-4 appearance-none justify-center rounded-full
-              border-solid border-[1px] border-neutral-300 outline-none bg-white
-              before:pointer-events-none before:flex before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-white before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']
-              checked:items-center checked:justify-center checked:border-neutral-300 checked:bg-[rgba(var(--ui-button-color),1)]
-              checked:before:opacity-[1]
-              checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:scale-75 checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-['']
-              hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)]
-              focus:shadow-none focus:transition-[border-color_0.2s]
-              focus:before:scale-0 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] "
-            type="checkbox"
-            [checked]="tripHasPoi(vm.pois, poi.properties.osm_id)"
-            (click)="togglePoi(vm.current, poi)"
-            [value]="poi.properties.osm_id"
-            [id]="'checkbox'+poi.properties.osm_id" />
-          <label
-            class="inline-block pl-[0.15rem] hover:cursor-pointer text-sm"
-            [for]="'checkbox'+poi.properties.osm_id">
-            {{poiName(poi)}}
-          </label>
-        </div>
-      </ng-container>
+    <div *ngIf="poi$ | withLoadingStatus | async as obs">
+      <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
+      <ng-template [ngIf]="obs.value">
+        <ng-container *ngFor="let poi of obs.value.value?.features" class="flex ">
+          <div class="inline-flex items-center rounded-full bg-white px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
+          >
+            <input
+              class="flex relative items-center
+                mr-2 h-4 w-4 appearance-none justify-center rounded-full
+                border-solid border-[1px] border-neutral-300 outline-none bg-white
+                before:pointer-events-none before:flex before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-white before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']
+                checked:items-center checked:justify-center checked:border-neutral-300 checked:bg-[rgba(var(--ui-button-color),1)]
+                checked:before:opacity-[1]
+                checked:after:flex checked:after:absolute checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:scale-75 checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-['']
+                hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)]
+                focus:shadow-none focus:transition-[border-color_0.2s]
+                focus:before:scale-0 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] "
+              type="checkbox"
+              [checked]="tripHasPoi(vm.pois, poi.properties.osm_id)"
+              (click)="togglePoi(vm.current, poi)"
+              [value]="poi.properties.osm_id"
+              [id]="'checkbox'+poi.properties.osm_id" />
+            <label
+              class="inline-block pl-[0.15rem] hover:cursor-pointer text-sm"
+              [for]="'checkbox'+poi.properties.osm_id">
+              {{poiName(poi)}}
+            </label>
+          </div>
+        </ng-container>
+      </ng-template>
+      <ng-template [ngIf]="obs.error">
+        <p>Could not load pois</p>
+        <pre>{{ obs.error | json }}</pre>
+        <button (click)="retryPoi()">Retry</button>
+      </ng-template>
     </div>
   </div>
 </div>

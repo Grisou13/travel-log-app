@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   EMPTY,
@@ -36,13 +36,22 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     initTE({ Input });
     this.formGroup.enable();
   }
-  formGroup = new FormGroup({
-    editing: new FormControl(false),
-    title: new FormControl(''),
-    description: new FormControl(''),
-    startDate: new FormControl(''),
-    pictureUrl: new FormControl(''),
-  });
+  formGroup = new FormGroup(
+    {
+      title: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      startDate: new FormControl(''),
+      endDate: new FormControl(''),
+    },
+    { updateOn: 'change' }
+  );
+
   initialValue: typeof this.formGroup.value | null = null;
   sub: Subscription | null = null;
   ngOnInit(): void {
@@ -64,6 +73,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
           title: val?.title ?? '',
           description: val?.description ?? '',
           startDate: val?.startDate?.toISOString() ?? '',
+          endDate: val?.endDate?.toISOString() ?? '',
         });
         this.initialValue = this.formGroup.value;
         this.formGroup.disable();
@@ -102,9 +112,16 @@ export class TripDetailComponent implements OnInit, OnDestroy {
         startDate: new Date(startDate.toString()),
       })
       .subscribe();
+    this.formGroup.disable();
   }
   cancel() {
     this.formGroup.reset(this?.initialValue ?? {});
     this.formGroup.disable();
+  }
+
+  tripEnded(trip: Trip | null) {
+    if (trip === null) return false;
+
+    return trip.endDate !== null && trip.endDate !== undefined;
   }
 }

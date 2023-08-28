@@ -1,4 +1,20 @@
-<button (click)="navigateBack()">
-  Back
-</button>
-<app-settings-poi></app-settings-poi>
+
+<app-navbar>
+  <li>
+    <button
+      type="button"
+      class="block w-full whitespace-nowrap bg-transparent rounded-lg px-4 py-2 text-sm font-normal text-left text-neutral-700
+        hover:bg-[rgba(var(--ui-button-color),0.5)]  active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
+        (click)="navigateBack()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+      </svg>
+
+      <span>Back</span>
+    </button>
+  </li>
+</app-navbar>
+<section class="mt-20">
+  <app-settings-poi></app-settings-poi>
+</section>

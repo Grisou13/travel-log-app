@@ -17,8 +17,10 @@ import { EditableParagrapheComponent } from './components/editable-paragraphe/ed
 import { ContenteditableValueAccessor } from './directives/content-editable.directive';
 import { EmptyRouterOutletComponent } from './components/empty-router-outlet/empty-router-outlet.component';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
 @NgModule({
   declarations: [
+    NavbarComponent,
     WithLoadingPipe,
     CitiesSearchComponent,
     LogoComponent,
@@ -50,6 +52,7 @@ import { RouterModule } from '@angular/router';
     OffCanvasComponent,
     SettingsPoiComponent,
     EditableParagrapheComponent,
+    NavbarComponent,
   ],
 })
 export class SharedModule {

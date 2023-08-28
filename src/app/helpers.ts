@@ -1,4 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Input } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { BehaviorSubject, Observable, Subject, defer, finalize } from 'rxjs';
 import { __decorate } from 'tslib';
 export type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
@@ -176,5 +183,25 @@ export function ObservableInput<T>(inputKey: string): PropertyDecorator {
 
     // Include Input decorator for observed property
     __decorate([Input(inputKey)], target, inputKey, null);
+  };
+}
+
+export function isHttpError(error: {}): error is HttpErrorResponse {
+  return (error as HttpErrorResponse).status !== undefined;
+}
+
+export function requiredIfValidator<T>(
+  predicate: (
+    formControl: AbstractControl<T> | FormGroup<any> | FormArray<any>
+  ) => boolean
+) {
+  return (formControl: AbstractControl<T>) => {
+    if (!formControl.parent) {
+      return null;
+    }
+    if (predicate(formControl.parent)) {
+      return Validators.required(formControl);
+    }
+    return null;
   };
 }

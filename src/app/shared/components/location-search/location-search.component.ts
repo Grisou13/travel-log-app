@@ -68,8 +68,8 @@ export class LocationSearchComponent {
                     location: {
                       type: 'Point',
                       coordinates: [
-                        result.geometry.coordinates[1],
-                        result.geometry.coordinates[0],
+                        marker.getLatLng().lng,
+                        marker.getLatLng().lat,
                       ],
                     },
                   });

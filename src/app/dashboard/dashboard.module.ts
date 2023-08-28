@@ -7,13 +7,9 @@ import { TravelLogApiModule } from '../httpClients/travelLogApi/travelLogApi.mod
 import { routes } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '@shared/shared.module';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { HomeComponent } from './pages/home/home.component';
 import TripListComponent from './pages/trip-list/trip-list.component';
 import { NewTripComponent } from './components/new-trip/new-trip.component';
-import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
-import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { LogoComponent } from '@shared/components/logo/logo.component';
 import { TripService } from './services/trip.service';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
@@ -32,17 +28,14 @@ import { TripDetailMapComponent } from './pages/trip-detail/trip-detail-map/trip
 import { TripDetailComponent } from './pages/trip-detail/trip-detail.component';
 import { TripHomeComponent } from './pages/trip-detail/trip-home/trip-home.component';
 import { TripAddPlaceComponent } from './pages/trip-detail/trip-add-place/trip-add-place.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
-    NavbarComponent,
     DashboardComponent,
-    HomeComponent,
     TripDetailComponent,
     TripListComponent,
     NewTripComponent,
-    TripPlannerComponent,
-    UserDashboardComponent,
     AddPlaceComponent,
     TripCardComponent,
     TripMapComponent,
@@ -58,7 +51,12 @@ import { TripAddPlaceComponent } from './pages/trip-detail/trip-add-place/trip-a
     TripDetailMapComponent,
     TripAddPlaceComponent,
   ],
-  imports: [SharedModule, DragDropModule, RouterModule.forChild(routes)],
+  imports: [
+    SharedModule,
+    DragDropModule,
+    RouterModule.forChild(routes),
+    SweetAlert2Module,
+  ],
   exports: [RouterModule],
 })
 export class DashboardModule {

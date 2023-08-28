@@ -56,7 +56,7 @@ export const formToTrip = (payload: { form: NewTripForm }) => {
 
   if (typeof x === 'string') {
     const y = x.split('-').map((z) => parseInt(z));
-    startDate = new Date(y[2], y[1], y[0]);
+    startDate = new Date(y[0], y[1], y[2]);
   }
 
   x = form?.end?.dateOfVisit || new Date();
@@ -64,22 +64,24 @@ export const formToTrip = (payload: { form: NewTripForm }) => {
 
   if (typeof x === 'string') {
     const y = x.split('-').map((z) => parseInt(z));
-    endDate = new Date(y[2], y[1], y[0]);
+    endDate = new Date(y[0], y[1], y[2]);
   }
 
-  let title =
-    'Trip from ' + form?.start?.title + ' ' + startDate.toLocaleDateString();
+  let title = 'Trip from ' + form?.start?.title;
   if (
     typeof form.end !== 'undefined' &&
     typeof form.end.title !== 'undefined'
   ) {
-    title += ' ' + form.end.title + endDate.toLocaleDateString();
+    title += ' ' + form.end.title;
+  }
+  if (title.length >= 100) {
+    title = title.slice(0, 100);
   }
   return {
     title: title,
     description: title,
     startDate,
-    endDate,
+    endDate: null, //dont use end date and only set it when using stop button
   };
 };
 
@@ -100,18 +102,20 @@ export const formToPlace = (payload: {
   )
     return null;
 
-  const stops = places.filter((x) => x.type === 'TripStop');
+  const stops = _.orderBy(
+    places.filter((x) => x.type === 'TripStop'),
+    'order'
+  );
   let previousStop: Place | null = null;
   if (stops.length > 0)
-    previousStop =
-      _.orderBy(stops, 'order')[form?.order || stops.length - 1] || null;
+    previousStop = stops[form?.order || stops.length - 1] || null;
 
   let x: string | Date = form.dateOfVisit || new Date();
   let startDate = new Date();
 
   if (typeof x === 'string') {
     const y = x.split('-').map((z) => parseInt(z));
-    startDate = new Date(y[2], y[1], y[0]);
+    startDate = new Date(y[0], y[1], y[2]);
   }
   let title = form.title;
   if (title === null || typeof title === 'undefined') {
@@ -127,7 +131,9 @@ export const formToPlace = (payload: {
   }
   let order = form.order;
   if (order === null || typeof order === 'undefined') {
-    order = places.filter((x) => x.type === 'TripStop').length + 1;
+    order =
+      (stops.at(-1)?.order ||
+        places.filter((x) => x.type === 'TripStop').length) + 1;
   }
   const type: PlaceType = form.placeType || 'TripStop';
   return {

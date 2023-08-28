@@ -53,7 +53,8 @@ export class TripMapComponent {
     shareReplay({ refCount: true, bufferSize: 1 })
   );
   tripStops$ = this.places$.pipe(
-    map((x) => x.filter((y) => y.type === 'TripStop'))
+    map((x) => x.filter((y) => y.type === 'TripStop')),
+    map((x) => _.orderBy(x, 'order'))
   );
 
   placesAsMarkers$ = this.tripStops$.pipe(

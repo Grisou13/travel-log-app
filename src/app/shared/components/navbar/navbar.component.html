@@ -1,0 +1,93 @@
+<nav
+  class="fixed top-0 flex w-full flex-wrap items-center justify-between bg-white h-[5rem] py-2 border-b-[1px] text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 lg:py-4 z-[1500]"
+>
+  <div class="flex w-full flex-wrap items-center justify-between px-3">
+    <!-- Left elements -->
+    <button
+    class="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 lg:hidden"
+    type="button"
+    data-te-collapse-init
+    data-te-target="#navbarSupportedContent1"
+    aria-controls="navbarSupportedContent1"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <!-- Hamburger icon -->
+    <span class="[&>svg]:w-7">
+      <svg
+        width="50px"
+        height="50px"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M4 7C4 6.44771 4.44772 6 5 6H24C24.5523 6 25 6.44771 25 7C25 7.55229 24.5523 8 24 8H5C4.44772 8 4 7.55229 4 7Z" fill="#000000"/>
+        <path d="M4 13.9998C4 13.4475 4.44772 12.9997 5 12.9997L16 13C16.5523 13 17 13.4477 17 14C17 14.5523 16.5523 15 16 15L5 14.9998C4.44772 14.9998 4 14.552 4 13.9998Z" fill="#000000"/>
+        <path d="M5 19.9998C4.44772 19.9998 4 20.4475 4 20.9998C4 21.552 4.44772 21.9997 5 21.9997H22C22.5523 21.9997 23 21.552 23 20.9998C23 20.4475 22.5523 19.9998 22 19.9998H5Z" fill="#000000"/>
+      </svg>
+    </span>
+  </button>
+  <!-- Left elements -->
+
+  <!-- Center elements -->
+  <div class="flex">
+    <!-- Brand -->
+    <a
+      class="mx-2 my-1 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
+      href="#"
+      >
+      <div class="w-10 h-10">
+        <app-logo [displaySlogan]="false"></app-logo>
+      </div>
+    </a>
+  </div>
+  <div id="navbarSupportedContent1"
+    class="!visible hidden sm:flex absolute w-full left-0 top-[5rem]
+      sm:relative sm:top-0 sm:w-auto"
+  >
+    <ul class="flex justify-center bg-white">
+      <ng-content></ng-content>
+      <li>
+        <button
+          type="button"
+          class="block w-full whitespace-nowrap bg-transparent rounded-lg px-4 py-2 text-sm font-normal text-left text-neutral-700
+            hover:bg-[rgba(var(--ui-button-color),0.5)]  active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
+          routerLink="/settings"
+        >
+          POI Settings
+        </button>
+      </li>
+          <!-- Dropdown menu items -->
+      <li>
+        <button
+          type="button"
+          class="block w-full whitespace-nowrap bg-transparent rounded-lg px-4 py-2 text-sm font-normal text-left text-neutral-700
+            hover:bg-[rgba(var(--ui-button-color),0.5)] active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 "
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </li>
+    </ul>
+  </div>
+  <!-- Center elements -->
+
+  <!-- Right elements -->
+  <div class="relative" data-te-dropdown-ref>
+    <!-- Dropdown trigger -->
+    <div
+      class="hidden-arrow flex h-[4.5vh] w-[4.5vh] items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none border-2 border-white rounded-full"
+      id="dropdownMenuButton2"
+    >
+      <!-- User avatar -->
+      <img
+        src="https://placehold.it/60x60"
+        class="rounded-full"
+        alt="User avatar"
+        loading="lazy"
+      />
+    </div>
+  </div>
+  <!-- Right elements -->
+  </div>
+</nav>

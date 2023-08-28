@@ -37,9 +37,12 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
   getPlacesWithRelated(id: string) {
     return this.get(id).pipe(
       switchMap((current) => {
-        if (typeof current === 'undefined' || typeof current === 'boolean')
+        if (
+          typeof current === 'undefined' ||
+          typeof current === 'boolean' ||
+          current === null
+        )
           return of(null);
-        const currentOrder = current.order;
 
         return this.fetchForTripId(current.tripId).pipe(
           map((places) => {
@@ -52,13 +55,22 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
               places.filter((x) => x.type === 'TripStop'),
               'order'
             );
+            const currentIdx = stops.findIndex((x) => x.id === current.id);
+
+            let previousPlace = undefined;
+            if (stops.length > 1) {
+              previousPlace = stops[currentIdx - 1];
+            }
+            let nextPlace = null;
+            if (currentIdx < stops.length - 1) {
+              nextPlace = stops[currentIdx + 1];
+            }
             return {
               current,
               pois,
-              previousPlace:
-                stops.length >= 2 ? stops[currentOrder - 1] : undefined,
-              nextPlace:
-                currentOrder < stops.length ? stops[currentOrder + 1] : null,
+              previousPlace,
+              nextPlace,
+              stops,
             };
           })
         );

@@ -18,161 +18,54 @@ import {
   concatMap,
   merge,
   combineLatest,
+  concat,
+  throwError,
 } from 'rxjs';
 import { TravelLogService } from '@httpClients/travelLogApi/travel-log.service';
 import type { AddTrip, Trip } from '../models/trips';
+import { CacheableService } from './cachable.service';
+import { ArgumentTypes } from 'src/app/helpers';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TripService {
-  private itemsSubject = new BehaviorSubject<Trip[]>([]);
-  public items$ = combineLatest([
-    this.itemsSubject.asObservable(),
-    this.fetch(),
-  ]).pipe(
-    switchMap((x) => x),
-    shareReplay({ refCount: true, bufferSize: 1 })
-  );
-
+export class TripService extends CacheableService<Trip, AddTrip, string> {
+  private lastRefresh = -1;
   constructor(
     private authService: AuthService,
     private travelLogService: TravelLogService
-  ) {}
-
-  clear(): void {
-    this.itemsSubject.next([]);
+  ) {
+    super(-1); //every second refresh data
   }
 
-  private getAll(): Trip[] {
-    return this.itemsSubject.getValue();
-  }
-
-  get(id: string) {
-    const currentItems: Trip[] = this.getAll();
-    if (currentItems.length === 0) {
-      return this.fetchItem(id);
-    }
-
-    const index1 = currentItems.findIndex((element) => {
-      return element.id === id;
-    });
-    return index1 >= 0 && currentItems[index1]
-      ? of(currentItems[index1])
-      : this.fetchItem(id);
-  }
-
-  delete(id: string): Observable<boolean> {
-    return this.travelLogService.trips.removeById(id).pipe(
-      map((data) => {
-        return true;
-      }),
-      tap((success) => {
-        if (success) {
-          this.deleteItem(id);
-        }
-      }), // when success, delete the item from the local service
-      catchError((err) => {
-        return of(false);
-      })
-    );
-  }
-
-  private fetchItem(id: string): Observable<Trip | null> {
-    return this.travelLogService.trips.fetchById(id).pipe(
-      catchError((err) => {
-        return of(null);
-      })
-    );
-  }
-
-  update(id: string, payload: Trip) {
-    return this.travelLogService.trips.update(payload).pipe(
-      tap((item) => {
-        if (item) {
-          this.updateItem(id, { ...item });
-        }
-      }), // when success result, update the item in the local service
-      catchError((err) => {
-        console.error(err);
-        return of(false);
-      })
-    );
-  }
-
-  add(payload: AddTrip) {
-    return this.travelLogService.trips.create(payload).pipe(
-      map((t) => ({ ...t, places: [] })),
-      tap((item) => {
-        if (item) {
-          this.addItem(item);
-        }
-      }), // when success, add the item to the local service
-      catchError((err) => {
-        return of(false);
-      })
-    );
-  }
-
-  private deleteItem(id: string): boolean {
-    const currentItems: Trip[] = this.getAll();
-    if (currentItems.length > 0) {
-      const index1 = currentItems.findIndex((element) => {
-        return element.id === id;
-      });
-      if (index1 >= 0) {
-        currentItems.splice(index1, 1);
-        this.itemsSubject.next(currentItems);
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private addItem(item: Trip): void {
-    const currentItems: Trip[] = this.getAll();
-    currentItems.push(item);
-    this.itemsSubject.next(currentItems);
-  }
-
-  private updateItem(id: string, item: Trip): boolean {
-    const currentItems: Trip[] = this.getAll();
-    if (currentItems.length > 0) {
-      const index1 = currentItems.findIndex((element) => {
-        return element.id === id;
-      });
-      if (index1 >= 0) {
-        currentItems[index1] = item;
-        this.itemsSubject.next(currentItems);
-        return true;
-      }
-    }
-    return false;
-  }
-
-  fetch(): Observable<Trip[]> {
-    // this.clear();
-
-    return this.authService.user$.pipe(
+  override fetchRemote(
+    params: ArgumentTypes<typeof this.travelLogService.trips.fetchAll>[0]
+  ): Observable<Trip[]> {
+    return this.authService.IsAuthenticated$.pipe(
       switchMap((user) => {
         if (!user) return of([]);
-
-        return this.travelLogService.trips.fetchAll({
-          user: user.id,
-        });
-      }),
-      // mergeMap((trips) =>
-      //   forkJoin(trips.map((t) => this.fetchPlacesForTrip(t)))
-      // ),
-
-      tap((items) => {
-        if (items) {
-          this.itemsSubject.next(items);
-        }
-      }),
-      catchError((err) => {
-        return of([]);
+        return this.travelLogService.trips.fetchAll(params);
       })
     );
+  }
+  override removeRemote(id: string): Observable<boolean> {
+    return this.travelLogService.trips.removeById(id).pipe(
+      map((x) => true),
+      catchError((err) =>
+        concat(
+          of(false),
+          throwError(() => new Error('Could not delete ' + id + ' remotly'))
+        )
+      )
+    );
+  }
+  override fetchSingleRemote(id: string): Observable<Trip> {
+    return this.travelLogService.trips.fetchById(id);
+  }
+  override updateRemote(id: string, payload: Trip): Observable<Trip> {
+    return this.travelLogService.trips.update(payload);
+  }
+  override createRemote(payload: AddTrip): Observable<Trip> {
+    return this.travelLogService.trips.create(payload);
   }
 }
