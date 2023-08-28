@@ -36,25 +36,11 @@ export class NewTripComponent implements OnInit {
   @Output() newTrip = new EventEmitter<NewTripForm>();
   form = addTrip;
 
-  _ = this.form.valueChanges
-    .pipe(
-      tap({
-        next: (val) => {
-          localStorage.setItem(NEW_TRIP_STORAGE_KEY, JSON.stringify(val));
-        },
-      }),
-      takeUntilDestroyed()
-    )
-    .subscribe();
   private stepperInstance: any | null = () =>
     Stepper.getOrCreateInstance(this.stepper.nativeElement);
 
   ngOnInit(): void {
     initTE({ Modal, Ripple, Stepper });
-    const restored = localStorage.getItem(NEW_TRIP_STORAGE_KEY);
-    if (!restored) return;
-
-    // this.form.patchValue(JSON.parse(restored));
   }
 
   previousStep() {
@@ -68,10 +54,10 @@ export class NewTripComponent implements OnInit {
     }
 
     if (this.form.controls.end.invalid) return;
-    this.form.patchValue({});
     this.stepperInstance().nextStep();
   }
   validateStart() {
+    //if the date is not defined in the end (as to not re-do action)
     if (!this.form.controls.end.get('dateOfVisit')?.invalid) {
       let dateOfEnd = addDays(
         new Date(this.form.get('start.dateOfVisit')?.value || ''),
