@@ -10,6 +10,13 @@ https://mediacomem.github.io/comem-masrad-dfa/latest/subjects/intro/#7
 - node >= 16
 - @angular/cli >= 16.0.2
 
+# Documentation
+
+The following docs are available:
+- tech choices
+- tutorial for the app
+- Installing and running the app
+
 # Install
 
 ```
@@ -30,61 +37,8 @@ The app is already available and you don't have to build it yourself if you don'
 
 https://travel-log-app-grisou13-b98de78dd78835c46dbbfad4b4aca23a8584b05.gitlab.io/
 
-# Running the app
 
-Before running the app you will need an api.
-
-For that, there are a couple of ways to use the api that goes with the app, you will need to choose your way.
-
-- Running api localy with the database
-- using the already available api running, but it will be the prod api
-
-## Running the API **locally**
-
-
-Requirements:
-- `mongodb`
-
-To run the api locally you will need to create a `.env`
-
-## Using the 
-2 options are offered here: manual and vsocde
-
-for vscode you go to the debugging tab then:
-- Launch api
-- ng-serve (firefox or chrome depending on the browser you have installed)
-
-Or manually
-
-```
-cd <repo>
-npm run start
-# in another terminal
-cd <repo>/comem-travel-log-api
-npm run start
-```
-
-
-You shoul dbe good to go.
-
-The app will be served at the following: `localhost:4200`
-And the api will be at `localhost:3000`
-
-## Running Trek Tracks
-
-same as before. Either vscode or manually
-
-vscode: 
-- goto the debugging tab and run `ng-serve`  (firefox or chrome depending on the browser you have installed)
-
-manually:
-
-```
-cd <repo>
-npm run start
-```
-
-# Locator
+# Trek Tracks
 
 The only app you will need to prepare your futur road trips!
 
@@ -100,8 +54,10 @@ For now the app includes:
 
 - Planning a road trip
 - defining stops on the trip
-- being able to see places of interest on each place you visite
-- budget
+- seing what points of interest are around the town you chose.
+- being able to stop a trip when you are over with it, allowing you to unclutter your planning
+
+Each place you want to visit and each trip can include a date of visit
 
 ## Development server
 
@@ -116,4 +72,4 @@ This created a major error whilest handling auth because the auth service keept 
 
 - Refactoring the module alos required some extra steps that were barried in the documentation about how it needed the `forRoot` (`auth-module.ts`) and not just a module exposing it's own providers as "normal"
 
-- Handling data and it's lifetime was a bit uneasy.
+- Handling lat/lng has been a pain.... This is only due to the choice of libraries and the fact that formats are never the same. The api wants an array `[lat, lng]` but the library leaflet produces `[lng, lat]` which sometimes resulted in some pretty weird bugs around the app
