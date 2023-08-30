@@ -55,12 +55,16 @@ export abstract class CacheableService<
     this.cacheSubject.next([]);
   }
 
-  protected getAll(): T[] {
+  protected getLocalCache(): T[] {
     return this.cacheSubject.getValue();
+  }
+  getAll() {
+    const localItems = this.getLocalCache();
+    return this.fetchRemote({}).pipe(startWith(localItems));
   }
 
   get(id: K) {
-    const localItems = this.getAll();
+    const localItems = this.getLocalCache();
     const filterFn = (x: T) => x.id === id;
     //TODO maybe update this somehow every couple of times so things keep in sync?
     const localItemIdx = localItems.findIndex(filterFn);
@@ -108,7 +112,7 @@ export abstract class CacheableService<
     return this.fetchSingleRemote(id).pipe(
       tap({
         next: (val) => {
-          const all = this.getAll();
+          const all = this.getLocalCache();
           const next = all.filter((x) => x.id === id);
 
           this.cacheSubject.next([...next, val]);
@@ -157,7 +161,7 @@ export abstract class CacheableService<
   }
 
   protected deleteItem(id: K): boolean {
-    const currentItems: T[] = this.getAll();
+    const currentItems: T[] = this.getLocalCache();
     if (currentItems.length > 0) {
       const index1 = currentItems.findIndex((element) => {
         return element.id === id;
@@ -172,13 +176,13 @@ export abstract class CacheableService<
   }
 
   protected addItem(item: T): void {
-    const currentItems: T[] = this.getAll();
+    const currentItems: T[] = this.getLocalCache();
     currentItems.push(item);
     this.cacheSubject.next(currentItems);
   }
 
   protected updateItem(id: K, item: T): boolean {
-    const currentItems: T[] = this.getAll();
+    const currentItems: T[] = this.getLocalCache();
     if (currentItems.length > 0) {
       const index1 = currentItems.findIndex((element) => {
         return element.id === id;

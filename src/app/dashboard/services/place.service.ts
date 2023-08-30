@@ -80,7 +80,7 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     );
   }
   fetchForTripId(tripId: string) {
-    const localItems = this.getAll();
+    const localItems = this.getLocalCache();
     const filterFn = (x: Place) => x.tripId === tripId;
     //TODO maybe update this somehow every couple of times so things keep in sync?
     const placesForTrip = localItems.filter(filterFn);

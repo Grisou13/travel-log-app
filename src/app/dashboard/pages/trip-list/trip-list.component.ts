@@ -27,7 +27,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export default class TripListComponent {
   loading$ = new BehaviorSubject(false);
 
-  trips$ = this.tripService.items$;
+  trips$ = this.tripService.getAll();
   vm$ = this.trips$.pipe(
     map((trips) => {
       const currentTrips = trips.filter(
