@@ -15,17 +15,7 @@ export class TripAddComponent implements OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private travelLogService: TravelLogService
-  ) {
-    // this.router.events.pipe(tap({
-    //   next: event => {
-    //     if(event instanceof NavigationStart){
-    //       console.debug(event)
-    //       console.debug("Changing url")
-    //       this.show = true;
-    //     }
-    //   }
-    // }), takeUntilDestroyed()).subscribe()
-  }
+  ) {}
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }

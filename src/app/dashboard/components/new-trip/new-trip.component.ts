@@ -20,6 +20,8 @@ import { newPlaceForm } from '../add-place/add-place.component';
 import { requiredIfValidator } from 'src/app/helpers';
 import * as L from 'leaflet';
 import { iconDefault } from '../../../shared/components/map/map.component';
+import { ActivatedRoute, Route } from '@angular/router';
+import { Result } from '@shared/components/cities-search/cities-search.component';
 function addDays(date: Date, days: number) {
   var result = new Date(date);
   result.setDate(result.getDate() + days);
@@ -47,10 +49,35 @@ export class NewTripComponent implements OnInit {
   @ViewChild('stepper') stepper!: ElementRef;
   @Output() newTrip = new EventEmitter<NewTripForm>();
   form = new FormGroup({ ...addTrip.controls }, { updateOn: 'change' });
-
+  _ = this.route.queryParamMap
+    .pipe(
+      tap({
+        next: (params) => {
+          if (!('initialData' in params)) {
+            return;
+          }
+          try {
+            const data = JSON.parse(params['initialData'] as string) as Result;
+            this.form.patchValue({
+              start: {
+                location: {
+                  lng: data.location.coordinates[0] ?? 0,
+                  lat: data.location.coordinates[1] ?? 0,
+                },
+                title: data?.name ?? '',
+                pictureUrl: data?.pictureUrl ?? '',
+              },
+            });
+          } catch (err) {}
+        },
+      }),
+      takeUntilDestroyed()
+    )
+    .subscribe();
   private stepperInstance: any | null = () =>
     Stepper.getOrCreateInstance(this.stepper.nativeElement);
 
+  constructor(private route: ActivatedRoute) {}
   ngOnInit(): void {
     initTE({ Modal, Ripple, Stepper });
     const now = new Date();

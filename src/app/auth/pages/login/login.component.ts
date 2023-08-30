@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (user) => {
           console.debug('Logged in as user:', user);
-          this.router.navigate([this.returnUrl]);
+          const { returnUrl, ...params } = this.route.snapshot.queryParams;
+          this.router.navigate([returnUrl], { queryParams: params });
         },
         error: console.error,
         complete: () => {},
