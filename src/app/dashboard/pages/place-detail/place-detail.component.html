@@ -341,7 +341,7 @@
           <div *ngFor="let item of poisPerCategory(obs.value.value) | keyvalue">
             <h6 class="flex flex-rows items-center capitalize k500">
               <span class="mr-2 my-2 w-6 h-6">
-                <img src="././assets/poi-icons/icon-accomodation.svg">
+                <img [src]="'././assets/poi-icons/icon-'+item.key+'.svg'" alt="">
               </span>
               {{ item.key.replaceAll('_', ' ').split("-").pop() }}
             </h6>
@@ -372,7 +372,7 @@
             </div>
           </ng-container>
         </div>
-          
+
         </ng-template>
         <ng-template [ngIf]="obs.error">
           <p>Could not load pois</p>
