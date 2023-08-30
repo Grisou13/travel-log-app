@@ -347,6 +347,7 @@
             </h6>
           <ng-container *ngFor="let poi of item.value" class="flex ">
             <div class="inline-flex items-center rounded-full bg-white px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
+            (click)="togglePoi(vm.current, poi)"
             >
               <input
                 class="flex relative items-center
@@ -361,7 +362,6 @@
                   focus:before:scale-0 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] "
                 type="checkbox"
                 [checked]="tripHasPoi(vm.pois, poi.properties.osm_id)"
-                (click)="togglePoi(vm.current, poi)"
                 [value]="poi.properties.osm_id"
                 [id]="'checkbox'+poi.properties.osm_id" />
               <label

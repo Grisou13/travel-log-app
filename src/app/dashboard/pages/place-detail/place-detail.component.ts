@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   BehaviorSubject,
@@ -40,6 +45,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-place-detail',
   templateUrl: './place-detail.component.html',
   styleUrls: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceDetailComponent implements OnDestroy, OnInit {
   form = new FormGroup(
@@ -303,6 +309,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
   }
   _subs: Subscription[] = [];
   togglePoi(place: Place, poi: ArrayElement<PoiSearchResponse['features']>) {
+    console.log('TOGGLING POI');
     const poiName = `POI ${
       poi.properties.osm_tags?.name
     } ${poi.geometry.coordinates.join(', ')} for place ${place.name}`;
