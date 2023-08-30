@@ -335,14 +335,12 @@
     <div class="flex flex-wrap flex-row">
       <h2 class="w-full text-lg mb-2">Nearest point of interests</h2>
 
-      <div *ngIf="poi$ | withLoadingStatus | async as obs">
+      <ng-container *ngIf="poi$ | withLoadingStatus | async as obs">
         <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
         <ng-template [ngIf]="obs.value ">
           <div *ngFor="let item of poisPerCategory(obs.value.value) | keyvalue">
             <p>{{item.key}}</p>
-            <ng-container *ngFor="let poi of item.value" class="flex ">
-              <div class="inline-flex items-center rounded-full bg-white px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
-              >
+            <div *ngFor="let poi of item.value" class="inline-flex items-center rounded-full bg-white px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out ">
                 <input
                   class="flex relative items-center
                     mr-2 h-4 w-4 appearance-none justify-center rounded-full
@@ -364,16 +362,15 @@
                   [for]="'checkbox'+poi.properties.osm_id">
                   {{poiName(poi)}}
                 </label>
-              </div>
-            </ng-container>
+            </div>
           </div>
         </ng-template>
         <ng-template [ngIf]="obs.error">
           <p>Could not load pois</p>
           <pre>{{ obs.error | json }}</pre>
-          <button (click)="retryPoi()">Retry</button>
+          <button (click)="retryPoi()">Try again</button>
         </ng-template>
-      </div>
+      </ng-container>
     </div>
   </ng-container>
 
