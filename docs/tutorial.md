@@ -2,14 +2,18 @@
 
 Here, a simple signup or account creation.
 
+![home.png](./imgs/home.png)
+
 # 1.1 Signup
 
 Here you can create your account, the account can be any other information.
+![signup.png](./imgs/signup.png)
 
 # 1.2 Login
 
 Login is similar to signup, here, well you login
 
+![login.png](./imgs/login.png)
 
 # 2 Dashboard
 
