@@ -92,7 +92,8 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
       })
     );
     return combineLatest([this.fetch({ trip: tripId }), itemsFromCache$]).pipe(
-      map(([_, cache]) => cache)
+      map(([_, cache]) => cache),
+      distinctUntilChanged()
       /*tap({ subscribe: () => console.debug('Subscribing to place fetch') }),
       startWith(placesForTrip),
       switchMap((places) => {

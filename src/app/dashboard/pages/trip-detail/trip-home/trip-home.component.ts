@@ -29,7 +29,9 @@ export class TripHomeComponent {
       const id = params.get('tripId') || null;
       if (id === null) return of(null);
       return this.tripService.get(id);
-    })
+    }),
+    distinctUntilChanged(),
+    shareReplay(1)
   );
 
   loadable$ = this.trip$.pipe(

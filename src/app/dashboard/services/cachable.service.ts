@@ -159,7 +159,7 @@ export abstract class CacheableService<
       tap({
         next: (val) => {
           const all = this.getLocalCache();
-          const next = all.filter((x) => x.id === id);
+          const next = all.filter((x) => x.id !== id);
 
           this.cacheSubject.next([...next, val]);
         },
