@@ -1,3 +1,17 @@
+# Install
+
+```
+npm i -g @angular/cli
+git clone <repo>
+cd <repo>
+git submodule update --init --recursive
+npm i
+cd comem-travel-log-api
+git pull
+npm i
+cd ..
+```
+
 # Running the app yourself
 
 Before running the app you will need an api.
@@ -33,7 +47,7 @@ npm run start
 ```
 
 
-You shoul dbe good to go.
+You should be good to go.
 
 The app will be served at the following: `localhost:4200`
 And the api will be at `localhost:3000`

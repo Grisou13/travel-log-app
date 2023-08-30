@@ -17,19 +17,7 @@ The following docs are available:
 - tutorial for the app
 - Installing and running the app
 
-# Install
 
-```
-npm i -g @angular/cli
-git clone <repo>
-cd <repo>
-git submodule update --init --recursive
-npm i
-cd comem-travel-log-api
-git pull
-npm i
-cd ..
-```
 
 # Accessing the app
 
