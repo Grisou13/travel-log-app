@@ -41,10 +41,13 @@ export class TripService extends CacheableService<Trip, AddTrip, string> {
   override fetchRemote(
     params: ArgumentTypes<typeof this.travelLogService.trips.fetchAll>[0]
   ): Observable<Trip[]> {
-    return this.authService.IsAuthenticated$.pipe(
+    return this.authService.user$.pipe(
       switchMap((user) => {
-        if (!user) return of([]);
-        return this.travelLogService.trips.fetchAll(params);
+        if (user === null) return of([]);
+        return this.travelLogService.trips.fetchAll({
+          ...params,
+          user: user.id,
+        });
       })
     );
   }
