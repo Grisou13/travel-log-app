@@ -253,14 +253,13 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       const key =
         cur.properties.category_ids[
           categoryId
-        ].category_name.toLocaleLowerCase();
+        ].category_group.toLocaleLowerCase();
       if (!(key in acc)) {
         acc[key] = [];
       }
       acc[key].push(cur);
       return acc;
     }, {} as { [key: string]: Array<(typeof result.features)[0]> });
-    console.log('POIS:', res);
     return res;
   }
   // geoJson$ = combineLatest([this.directions$, this.poi$]).pipe(
