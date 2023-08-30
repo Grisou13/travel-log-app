@@ -245,7 +245,24 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     distinctUntilChanged(),
     shareReplay(1)
   );
+  poisPerCategory(result: PoiSearchResponse | null) {
+    if (result === null) return {};
+    const res = result.features.reduce((acc, cur) => {
+      const categoryId = Object.keys(cur.properties.category_ids)[0];
 
+      const key =
+        cur.properties.category_ids[
+          categoryId
+        ].category_name.toLocaleLowerCase();
+      if (!(key in acc)) {
+        acc[key] = [];
+      }
+      acc[key].push(cur);
+      return acc;
+    }, {} as { [key: string]: Array<(typeof result.features)[0]> });
+    console.log('POIS:', res);
+    return res;
+  }
   // geoJson$ = combineLatest([this.directions$, this.poi$]).pipe(
   //   map(([directions, pois]) => {
   //     if (pois !== null) {

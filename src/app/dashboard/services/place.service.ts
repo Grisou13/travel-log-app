@@ -85,9 +85,15 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
     //TODO maybe update this somehow every couple of times so things keep in sync?
     const placesForTrip = localItems.filter(filterFn);
     // if (placesForTrip.length > 0) return of(placesForTrip);
-
-    return this.fetch({ trip: tripId }).pipe(
-      tap({ subscribe: () => console.debug('Subscribing to place fetch') }),
+    const itemsFromCache$ = this.items$.pipe(
+      map((items) => {
+        console.debug('Items in cache: ', items);
+        return items.filter((i) => i.tripId === tripId);
+      })
+    );
+    return combineLatest([this.fetch({ trip: tripId }), itemsFromCache$]).pipe(
+      map(([_, cache]) => cache)
+      /*tap({ subscribe: () => console.debug('Subscribing to place fetch') }),
       startWith(placesForTrip),
       switchMap((places) => {
         console.debug('Got places from api');
@@ -99,13 +105,8 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
         if (places.length <= 0) return of([]);
         if (tripId === undefined) return of([]);
         console.debug('Filtering for tripId: ', tripId);
-        return this.items$.pipe(
-          map((items) => {
-            console.debug('Items in cache: ', items);
-            return items.filter((i) => i.tripId === tripId);
-          })
-        );
-      })
+
+      })*/
       /*startWith(placesForTrip),
       distinctUntilChanged(),
       shareReplay({ refCount: true, bufferSize: 1 })*/
