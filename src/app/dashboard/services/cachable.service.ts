@@ -86,6 +86,18 @@ export abstract class CacheableService<
     if (typeof startItem === 'undefined') {
       startItem = null;
     }
+    const itemsFromCache$ = this.items$.pipe(
+      map((items) => {
+        const idx = items.findIndex((x) => x.id === id);
+        if (idx >= 0) return items[idx];
+        return null;
+      }),
+      startWith(startItem)
+    );
+    return combineLatest([this.fetchItem(id), itemsFromCache$]).pipe(
+      map(([_, cache]) => cache),
+      distinctUntilChanged()
+    );
     // if (placesForTrip.length > 0) return of(placesForTrip);
     /*
 

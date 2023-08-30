@@ -116,7 +116,11 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       return this.placeService.get(id);
     }),
     catchError((err) => of(null)),
-    distinctUntilChanged(),
+    distinctUntilChanged((prev, cur) => {
+      if (prev === null) return false;
+      if (cur == null) return false;
+      return prev.id === cur.id;
+    }),
     tap({ next: (val) => console.log('New value for place ', val) }),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
@@ -127,6 +131,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     }),
     catchError((err) => of([])),
     distinctUntilChanged(),
+    tap({ next: (val) => console.log('New value for related place') }),
     shareReplay({ refCount: true, bufferSize: 1 })
   );
   vm$ = combineLatest([this.place$, this.relatedPlaces$]).pipe(
@@ -214,10 +219,10 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     startWith([])
   );
 
-  poi$ = combineLatest([this.vm$, this.settingsService.settings$]).pipe(
+  poi$ = combineLatest([this.place$, this.settingsService.settings$]).pipe(
     switchMap(([place, settings]) => {
-      if (typeof place?.current?.location === 'undefined') return of(null);
-      const location = place.current.location;
+      if (typeof place?.location === 'undefined') return of(null);
+      const location = place.location;
       //TODO: concat with pois already in the trip
       return this.poiService
         .fetchPois(location, {
