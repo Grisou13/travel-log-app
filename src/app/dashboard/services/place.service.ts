@@ -74,9 +74,9 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
             };
           })
         );
-      }),
-      distinctUntilChanged(),
-      shareReplay({ refCount: true, bufferSize: 1 })
+      })
+      // distinctUntilChanged(),
+      // shareReplay({ refCount: true, bufferSize: 1 })
     );
   }
   fetchForTripId(tripId: string) {
@@ -105,9 +105,10 @@ export class PlaceService extends CacheableService<Place, AddPlace, string> {
             return items.filter((i) => i.tripId === tripId);
           })
         );
-      }),
+      })
+      /*startWith(placesForTrip),
       distinctUntilChanged(),
-      shareReplay({ refCount: true, bufferSize: 1 })
+      shareReplay({ refCount: true, bufferSize: 1 })*/
     ); /*.pipe(
       switchMap(() => this.items$.pipe(map((i) => i.filter(filterFn))))
     );*/

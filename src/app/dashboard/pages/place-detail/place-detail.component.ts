@@ -7,6 +7,7 @@ import {
   Subject,
   Subscription,
   combineLatest,
+  concat,
   distinctUntilChanged,
   filter,
   forkJoin,
@@ -17,6 +18,7 @@ import {
   startWith,
   switchMap,
   takeLast,
+  throwError,
   zip,
 } from 'rxjs';
 import { PlaceService } from '../../services/place.service';
@@ -102,7 +104,6 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     this.form.reset(this?.initialValue ?? {});
     this.form.disable();
   }
-
   place$ = this.route.paramMap.pipe(
     map((params) => {
       const id = params.get('placeId');
@@ -110,39 +111,86 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       if (id.length <= 0) return null;
       return id;
     }),
-    distinctUntilChanged(),
     switchMap((id) => {
       if (id === null) return of(null);
-      return this.placeService.getPlacesWithRelated(id).pipe(
-        catchError((err) => of(null)),
-        map((x) => {
-          if (typeof x === 'undefined' || typeof x === 'boolean') return null;
-          return x;
-        }),
-        tap({
-          next: (val) => {
-            console.debug(val);
-            this.form.patchValue({
-              name: val?.current.name ?? '',
-              description: val?.current.description ?? '',
-              startDate: val?.current.startDate?.toISOString() || '',
-              pictureUrl: val?.current.pictureUrl ?? '',
-            });
-            this.initialValue = this.form.value;
-            this.form.disable();
-          },
-        })
+      return this.placeService.get(id);
+    }),
+    catchError((err) => of(null)),
+    distinctUntilChanged(),
+    tap({ next: (val) => console.log('New value for place ', val) }),
+    shareReplay({ refCount: true, bufferSize: 1 })
+  );
+  relatedPlaces$ = this.place$.pipe(
+    switchMap((place) => {
+      if (place === null) return of(null);
+      return this.placeService.fetchForTripId(place.tripId);
+    }),
+    catchError((err) => of([])),
+    distinctUntilChanged(),
+    shareReplay({ refCount: true, bufferSize: 1 })
+  );
+  vm$ = combineLatest([this.place$, this.relatedPlaces$]).pipe(
+    map(([current, places]) => {
+      if (current === null)
+        return {
+          current: null,
+          pois: [],
+          previousPlace: undefined,
+          nextPlace: undefined,
+          stops: [],
+        };
+      let related = places === null ? [] : places;
+      const pois = related.filter(
+        (x) =>
+          x.infos?.relatedToPlace === current.id && x.type === 'PlaceOfInterest'
       );
+      console.debug('Pois for place: ', pois);
+      const stops = _.sortBy(
+        related.filter((x) => x.type === 'TripStop'),
+        'order'
+      );
+      const currentIdx = stops.findIndex((x) => x.id === current.id);
+
+      let previousPlace = undefined;
+      if (stops.length > 1) {
+        previousPlace = stops[currentIdx - 1];
+      }
+      let nextPlace = null;
+      if (currentIdx < stops.length - 1) {
+        nextPlace = stops[currentIdx + 1];
+      }
+      return {
+        current,
+        pois,
+        previousPlace,
+        nextPlace,
+        stops,
+      };
     }),
     distinctUntilChanged(),
-    shareReplay(1)
+    shareReplay({ refCount: true, bufferSize: 1 }),
+    tap({
+      next: (val) => {
+        console.debug(val);
+        if (val.current === null) return;
+        this.form.patchValue({
+          name: val?.current.name ?? '',
+          description: val?.current.description ?? '',
+          startDate: val?.current.startDate?.toISOString() || '',
+          pictureUrl: val?.current.pictureUrl ?? '',
+        });
+        this.initialValue = this.form.value;
+        this.form.disable();
+      },
+    })
   );
-  markers$ = this.place$.pipe(
+  markers$ = this.vm$.pipe(
     map((p) => {
-      if (p === null) return [];
+      if (p.current === null) return [];
+
       const ret = [
-        placeToMarker(p.current, {
-          icon: iconDefault(`${p.current.order}`),
+        placeToMarker(p!.current, {
+          icon: iconDefault(`${p.current!.order}`),
         }),
 
         ...p.pois.map((x) => placeToMarker(x, { icon: iconDefault(``) })),
@@ -158,17 +206,17 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     })
   );
 
-  directions$ = this.place$.pipe(
+  directions$ = this.vm$.pipe(
     map((p) => {
       if (p === null) return [];
-      return [new L.GeoJSON(p.current.directions?.previous)];
+      return [new L.GeoJSON(p.current?.directions?.previous)];
     }),
     startWith([])
   );
 
-  poi$ = combineLatest([this.place$, this.settingsService.settings$]).pipe(
+  poi$ = combineLatest([this.vm$, this.settingsService.settings$]).pipe(
     switchMap(([place, settings]) => {
-      if (typeof place?.current.location === 'undefined') return of(null);
+      if (typeof place?.current?.location === 'undefined') return of(null);
       const location = place.current.location;
       //TODO: concat with pois already in the trip
       return this.poiService
@@ -176,13 +224,19 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
           category_group_ids: settings?.pois.categories ?? [],
           category_ids: settings?.pois.sub_categories ?? [],
         })
-        .pipe(map((x) => ({ type: 'end', value: x })));
+        .pipe(
+          map((x) => ({ type: 'end', value: x })),
+          retry({ delay: () => this.retryPoiState.asObservable() }),
+          catchError((err) =>
+            concat(
+              of({ type: 'error', value: null, error: err }),
+              throwError(() => err)
+            )
+          )
+        );
       //.pipe(tap({ next: console.log }));
     }),
-
     startWith({ type: 'start', value: null }),
-    retry({ delay: () => this.retryPoiState.asObservable() }),
-    catchError((err) => of(null)),
     distinctUntilChanged(),
     shareReplay(1)
   );

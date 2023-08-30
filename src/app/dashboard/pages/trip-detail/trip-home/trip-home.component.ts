@@ -31,6 +31,7 @@ export class TripHomeComponent {
       return this.tripService.get(id);
     })
   );
+
   loadable$ = this.trip$.pipe(
     switchMap((trip) =>
       trip === null

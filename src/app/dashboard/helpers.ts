@@ -42,11 +42,12 @@ export function distConverter(num: number) {
 export const placeToMarker = (
   place: Place,
   options: L.MarkerOptions | undefined
-) =>
-  L.marker(
+) => {
+  return L.marker(
     [place.location.coordinates[1], place.location.coordinates[0]],
     options
   );
+};
 
 export const formToTrip = (payload: { form: NewTripForm }) => {
   const { form } = payload;

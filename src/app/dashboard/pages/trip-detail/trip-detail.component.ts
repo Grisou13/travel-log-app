@@ -7,6 +7,7 @@ import {
   Subscription,
   combineLatest,
   distinctUntilChanged,
+  filter,
   map,
   of,
   shareReplay,
@@ -67,6 +68,7 @@ export class TripDetailComponent implements OnInit, OnDestroy {
       if (id === null) return of(null);
       return this.tripService.get(id);
     }),
+
     tap({
       next: (val) => {
         this.formGroup.patchValue({

@@ -1,4 +1,4 @@
-import { startWith } from 'rxjs';
+import { distinctUntilChanged, shareReplay, startWith } from 'rxjs';
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, map, of, switchMap } from 'rxjs';
@@ -27,7 +27,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export default class TripListComponent {
   loading$ = new BehaviorSubject(false);
 
-  trips$ = this.tripService.getAll();
+  trips$ = this.tripService
+    .getAll({})
+    .pipe(distinctUntilChanged(), shareReplay(1));
   vm$ = this.trips$.pipe(
     map((trips) => {
       const currentTrips = trips.filter(

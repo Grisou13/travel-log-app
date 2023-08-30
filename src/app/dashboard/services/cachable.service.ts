@@ -17,6 +17,8 @@ import {
   takeUntil,
   distinctUntilChanged,
   startWith,
+  EMPTY,
+  filter,
 } from 'rxjs';
 
 export type EntityWithId<K> = {
@@ -43,10 +45,13 @@ export abstract class CacheableService<
       combineLatest([this.fetch({}), this.cacheSubject.asObservable()]).pipe(
         switchMap((x) => x)
       )
-    ),*/ = this.cacheSubject.asObservable().pipe(
+    ),*/ = this.cacheSubject
+    .asObservable()
+    .pipe
+    // distinctUntilChanged(),
     // takeUntil(this.reload$),
-    shareReplay({ refCount: true, bufferSize: 1 })
-  );
+    // shareReplay({ refCount: true, bufferSize: 1 })
+    ();
   forceReload() {
     this.reload$.next();
   }
@@ -58,38 +63,67 @@ export abstract class CacheableService<
   protected getLocalCache(): T[] {
     return this.cacheSubject.getValue();
   }
-  getAll() {
+  getAll(args: any) {
     const localItems = this.getLocalCache();
-    return this.fetchRemote({}).pipe(startWith(localItems));
+    return this.fetchRemote(args).pipe(
+      startWith(localItems)
+      // distinctUntilChanged(),
+      // shareReplay(1)
+      /*switchMap((items) => {
+        return this.items$.pipe(startWith(items));
+      })*/
+    );
   }
 
   get(id: K) {
     const localItems = this.getLocalCache();
     const filterFn = (x: T) => x.id === id;
-    //TODO maybe update this somehow every couple of times so things keep in sync?
     const localItemIdx = localItems.findIndex(filterFn);
+    let startItem = null;
+    if (localItemIdx < 0) {
+      startItem = localItems.at(localItemIdx);
+    }
+    if (typeof startItem === 'undefined') {
+      startItem = null;
+    }
     // if (placesForTrip.length > 0) return of(placesForTrip);
+    /*
 
-    return this.fetchItem(id).pipe(
-      tap({ subscribe: () => console.debug('Subscribing to place fetch') }),
-      startWith(localItems.at(localItemIdx)),
-      switchMap((trip) => {
-        //doing this is pretty stupid, but for now it will work.
-        // the idea is that get  does not bring us from the cacheed items and will never emit a new value.
-        // what we need here is an operator that allows us to add/update stuff and has an internal cache of it's own.
-        // this allows us to keep the fetch for trip to be
-        if (trip === null) return of(null);
-        if (trip === undefined) return of(null);
-        if (typeof trip === 'undefined') return of(null);
-        if (typeof trip === 'boolean') return of(null);
-        return this.items$.pipe(
-          map((items) => {
-            const idx = items.findIndex(filterFn);
-            return items[idx];
-          })
-        );
+    const itemsFromCache$ = this.items$.pipe(
+      map((items) => {
+        const idx = items.findIndex((x) => x.id === id);
+        if (idx >= 0) return items[idx];
+        return null;
+      }),
+      startWith(startItem)
+    );
+    return combineLatest([this.fetchItem(id), itemsFromCache$]).pipe(
+      map(([fetched, cache]) => {
+        if (cache === null) return fetched;
+        return cache;
+      }),
+      map((item) => {
+        if (item === null) return false;
+        if (item === undefined) return false;
+        if (typeof item === 'boolean') return false;
+        if (typeof item === 'undefined') return false;
+        return true;
       })
     );
+    */
+    return this.fetchItem(id).pipe(
+      switchMap((item) => {
+        if (item === null) return of(null);
+        if (item === undefined) return of(null);
+        if (typeof item === 'boolean') return of(null);
+        if (typeof item === 'undefined') return of(null);
+        return of(item);
+      }),
+      startWith(startItem),
+      filter((x) => x !== null)
+      // distinctUntilChanged(),
+      // shareReplay(1)
+    ) as Observable<T>;
   }
 
   delete(id: K): Observable<boolean> {
