@@ -29,6 +29,8 @@ Here you can drag n drop the cards for the trip to re-order them.
 
 From a ui percpective an icon or something to show the user we can do that would've been great.
 
+Nota: you can notice an `edit infos` button, this toggels a form that allows you to update and change the title/description/startDate of your trip
+
 # 3.1 Add a new place
 
 You can click on the map to add a place if you can't find anything from the text input!
@@ -36,6 +38,8 @@ You can click on the map to add a place if you can't find anything from the text
 Navigation here is a bit weird because you are re-routed to a route with no background.
 
 That is due to the link used and that routing should've been better thought through for this part.
+
+Nota: you can notice an `edit infos` button, this toggels a form that allows you to update and change the title/description/startDate/pictureUrl of your place
 
 # 3.2 Place list
 
