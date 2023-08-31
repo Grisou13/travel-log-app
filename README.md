@@ -2,8 +2,8 @@
 
 Welcome to the trek tracks project!
 
-!(https://gitlab.com/grisou13/travel-log-app/badges/master/pipeline.svg)[https://gitlab.com/grisou13/travel-log-app/badges/master/pipeline.svg]
-!(https://gitlab.com/grisou13/travel-log-app/-/badges/release.svg)[https://gitlab.com/grisou13/travel-log-app/-/badges/release.svg]
+![https://gitlab.com/grisou13/travel-log-app/badges/master/pipeline.svg](https://gitlab.com/grisou13/travel-log-app/badges/master/pipeline.svg)
+![https://gitlab.com/grisou13/travel-log-app/-/badges/release.svg](https://gitlab.com/grisou13/travel-log-app/-/badges/release.svg)
 
 # Requirements
 
