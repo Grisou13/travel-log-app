@@ -6,7 +6,9 @@ pages:
   script:
     - npm install -g @angular/cli
     - npm install
-    - ng build
+    - chmod +x ./buildEnv.sh
+    - ./buildEnv.sh
+    - ng build -c production
     - mkdir public
     - mv dist/locator/* public/
     - echo "/* /index.html 200" > public/_redirects

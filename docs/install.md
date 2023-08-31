@@ -18,15 +18,25 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 And in another terminal `cd comem-travel-log-api; npm run dev`. This will run the api on port `3000`
 # Running the app yourself
 
-Before running the app you will need an api.
+Before running the app you will need an api and an access key to (`openrouteservices`)[https://openrouteservice.org/dev/#/login]
 
-For that, there are a couple of ways to use the api that goes with the app, you will need to choose your way.
+```bash
+touch src/environments/environment.development.ts
+```
 
-- Running api localy with the database
-- using the already available api running, but it will be the prod api
+And put the following contents:
 
-## Running the API **locally**
+```ts
+export const environment = {
+  travelLogApi: 'http://localhost:3000/api',
+  openRouteServiceApiKey: '<YOUR KEY>',
+  openRouteUrl: 'https://api.openrouteservice.org/',
+};
 
+```
+
+
+## Running the API
 
 Requirements:
 - `mongodb`
@@ -42,39 +52,22 @@ CORS=true
 
 Of course you should personalise the database url and name for your local mongodb install.
 
-## Running the app
-2 options are offered here: manual and vsocde
-
-for vscode you go to the debugging tab then:
-- Launch api
-- ng-serve (firefox or chrome depending on the browser you have installed)
-
-Or manually
-
-```
-cd <repo>
-npm run start
-# in another terminal
-cd <repo>/comem-travel-log-api
-npm run start
-```
-
-
-You should be good to go.
-
-The app will be served at the following: `localhost:4200`
-And the api will be at `localhost:3000`
-
 ## Running the frontend project
 
-same as before. Either vscode or manually
-
-vscode: 
-- goto the debugging tab and run `ng-serve`  (firefox or chrome depending on the browser you have installed)
-
-manually:
-
 ```
 cd <repo>
 npm run start
 ```
+
+
+# TL;DR
+
+```bash
+# setup environment first!!!
+cd <repo>
+npm run start &
+cd <repo>/comem-travel-log-api
+npm run dev
+```
+
+The app will be served at the following: `localhost:4200`

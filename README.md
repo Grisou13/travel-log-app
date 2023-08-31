@@ -61,3 +61,9 @@ This created a major error whilest handling auth because the auth service keept 
 - Handling lat/lng has been a bit of a pain.... This is only due to the choice of libraries and the fact that formats are never the same. The api wants an array `[lat, lng]` but the library leaflet produces `[lng, lat]` which sometimes resulted in some pretty weird bugs around the app
 
 
+- Adding tailwind in the mix was probably not a great decision. There was already alot to learn and this made it a bit more confusing sometimes.
+And prettier just doesn't style lines correctly with tailwind classes... which makes the thing even less readable.
+
+Tailwind seems far more powerfull in a context where you can directly inline a function for a component. (eg: react)
+
+- Sharing secrets
