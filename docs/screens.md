@@ -43,6 +43,8 @@ Same as section #3
 
 # 3.3 Trip map
 
+A cool thing is that the line that is drawn is actually real life road travel.
+
 Here, it would've been nice to be able to drag n drop the cards, but we didn't think it would be necessary since there is already the `place list` view to do so.
 
 # 3.4 Trip overview

@@ -34,13 +34,11 @@ The only app you will need to prepare your futur road trips!
 The goal of this app: make travel planning easy
 
 There has been a couple of frustrations regarding travel planning lately, where a lot of internet startups create paywalled products for planning trips, when they all use open source technologies.
-
 There is also a common pattern where you have to plan your trips on 10 different apps.
 
 Trek Tracks tries to simplify this by unifying everything under the same roof.
 
 For now the app includes:
-
 - Planning a road trip
 - defining stops on the trip
 - seing what points of interest are around the town you chose.
@@ -48,6 +46,9 @@ For now the app includes:
 
 Each place you want to visit and each trip can include a date of visit
 
+The app is only for **you** and **your trips**. It isn't made to be collaborative yet.
+
+PS: The app is for now only for **road trips** (so drivable routes). So trips with legs from one continent to another will break stuff...
 
 # Set backs during development
 
