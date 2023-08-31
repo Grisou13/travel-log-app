@@ -7,7 +7,7 @@ pages:
     - npm install -g @angular/cli
     - npm install
     - chmod +x ./buildEnv.sh
-    - ./buildEnv.sh
+    - sh ./buildEnv.sh
     - ng build -c production
     - mkdir public
     - mv dist/locator/* public/
