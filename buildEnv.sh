@@ -5,4 +5,4 @@ echo "export const environment = {
   openRouteServiceApiKey:
     '$OPENROUTEKEY',
   openRouteUrl: 'https://api.openrouteservice.org/',
-}" > src/environments/environments.prod.ts
+}" > src/environments/environment.prod.ts
