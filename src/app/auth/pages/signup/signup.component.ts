@@ -1,6 +1,11 @@
 import { initTE, Input } from 'tw-elements';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth-service.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -14,9 +19,15 @@ export class SignupComponent implements OnInit, OnDestroy {
   protected loading$ = new BehaviorSubject(false);
   returnUrl: string = '/app';
 
-  signupForm = this.fb.group({
-    username: '', //['', Validators.required],
-    password: '', //['', Validators.required],
+  signupForm = new FormGroup({
+    username: new FormControl('', [
+      Validators.minLength(3),
+      Validators.required,
+    ]),
+    password: new FormControl('', [
+      Validators.minLength(4),
+      Validators.required,
+    ]),
   });
   sub: Subscription | null = null;
 
