@@ -8,6 +8,7 @@
 
 Before running the app you will need an api and an access key to (`openrouteservices`)[https://openrouteservice.org/dev/#/login]
 
+Create an account and then goto the (home page)[https://openrouteservice.org/dev/#/home] to create your token.
 ## Installing the frontend
 
 ```bash

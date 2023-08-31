@@ -1,23 +1,9 @@
-# The trek tracks project
+# Docs
 
-# Idea
-
-It is a super cool and super fun place to organize your next road trip.
-
-The app allows you to define your own itinierary from place to place.
-It gives you directions, and helps you refine your trip.
-
-It gives you a list of things you want to see during your time there.
-
-It also allows you to manage your budget
-
-# Work distribution
-
-(here is a document on how the work is seen and distributed amongs team members)[./team.md]
-
-# What has changed compared to the initial app
-
-The api has changed a bit, not func
-
-# What would've been done differently
-
+The following docs are available:
+- [tech choices](./tech_choices.md)
+  - explains a bit the evolution of the data models with previous version of the api
+- [Installing and running the app](./install.md)
+- [overview with images of the app](./overview.md)
+- [Side notes of the different screens](./screens.md)
+  - what you can do on those screens and some pointers on what could've made the experience better

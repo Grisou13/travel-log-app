@@ -49,7 +49,7 @@ For now the app includes:
 Each place you want to visit and each trip can include a date of visit
 
 
-# Difficulties
+# Set backs during development
 
 - Refactoring authentication to be in it's own module was a challenge because some systems worked before and stopped working. 
 This was due to the nature of modules being independant, creating lazy loaded services (transient) and not singletons
