@@ -65,7 +65,6 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     },
     { updateOn: 'change' }
   );
-  @ViewChild('stepper') datepicker: ElementRef | null = null;
 
   toggle($event: any) {
     if (this.form.enabled) {
@@ -75,11 +74,6 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
 
     this.form.enable();
     initTE({ Ripple, Input, Datepicker });
-    if (this.datepicker) {
-      Datepicker.getOrCreateInstance(this.datepicker.nativeElement, {
-        format: 'yyyy-mm-dd',
-      });
-    }
   }
   initialValue: typeof this.form.value | null = null;
   sub: Subscription | null = null;
