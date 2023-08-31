@@ -1,16 +1,16 @@
 # Navigation
 
-- *[ ] Define navigation routes and pages - Common
-- *[ ] Implement pages
+- *[X] Define navigation routes and pages - Common
+- *[X] Implement pages
   - *[X] index - Thomas
   - *[X] login - Thomas
   - *[X] signup - Thomas
-  - *[ ] dashboard
-    - *[ ] home
-    - *[ ] trip/details
-    - *[ ] trip/maps
-    - *[ ] trip/budget
-    - *[ ] trip/:id/place/details
+  - *[X] dashboard
+    - *[X] home
+    - *[X] trip/details
+    - *[X] trip/maps
+    - *[X] trip/budget
+    - *[X] trip/:id/place/details
 
 # Components
 
@@ -66,3 +66,4 @@
 - *[ ] Budget for a trip
 - *[ ] Budget for a place on a trip
 - *[ ] Budget with graphs
+- *[ ] Trip calendar
