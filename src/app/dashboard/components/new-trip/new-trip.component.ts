@@ -86,11 +86,14 @@ export class NewTripComponent implements OnInit {
     this.form.get('defineStop')?.setValue(false);
   }
   startMarker() {
-    const start = this.form.get('start.location')?.value;
-    if (!start) return [];
-
+    const start = this.form.get('start.location');
+    if (start === null) return [];
+    if (start.value === null) return [];
+    if (start.invalid) return [];
+    if (start.value.lat === null) return [];
+    if (start.value.lng === null) return [];
     return [
-      L.marker([start?.lat ?? 0, start?.lng ?? 0], {
+      L.marker([start.value.lat, start.value.lng], {
         icon: iconDefault('1'),
       }),
     ];
