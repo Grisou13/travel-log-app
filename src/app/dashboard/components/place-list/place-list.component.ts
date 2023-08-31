@@ -44,7 +44,8 @@ export class PlaceListComponent {
 
         const [place1, place2, maybe] = data;
 
-        const tmp = place1.order;
+        const tmpOrder = place1.order;
+        const tmpDate = place1.startDate;
         if (typeof place1.directions === 'undefined') {
           place1.directions = {
             distance: 0,
@@ -74,7 +75,9 @@ export class PlaceListComponent {
         }
 
         place1.order = place2.order;
-        place2.order = tmp;
+        place1.startDate = place2.startDate;
+        place2.order = tmpOrder;
+        place2.startDate = tmpDate;
         let payload = [place1, place2];
         if (typeof maybe !== 'undefined') payload = [maybe].concat(payload);
         // return of(null);
