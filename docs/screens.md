@@ -13,7 +13,7 @@ Error handling here is not the best, we should have made better use of the api's
 
 # 2 Dashboard
 
-N/A
+Nota: if you ever want to come back to this screen and you are logged in, just click on the little van and it will get you back here
 
 
 # 2.1 Create a new trip
