@@ -7,3 +7,6 @@ The following docs are available:
 - [overview with images of the app](./overview.md)
 - [Side notes of the different screens](./screens.md)
   - what you can do on those screens and some pointers on what could've made the experience better
+
+Behind the scenes:
+[Project draft / wireframes](./project-draft.md)
