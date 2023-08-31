@@ -345,6 +345,18 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
 
     return poi.properties.category_ids[categoryId].category_name;
   }
+  poiPhone(poi: PoiSearchResponse['features'][0]) {
+    if(poi.properties.osm_tags?.phone === undefined) {return}
+      return poi.properties.osm_tags.phone;
+  }
+  poiHours(poi: PoiSearchResponse['features'][0]) {
+    if(poi.properties.osm_tags?.opening_hours === undefined) {return}
+      return poi.properties.osm_tags.opening_hours;
+  }
+  poiWeb(poi: PoiSearchResponse['features'][0]) {
+    if(poi.properties.osm_tags?.website === undefined) {return}
+      return poi.properties.osm_tags.website;
+  }
   deleteSub$: Subscription | null = null;
 
   deletePlace(place: Place, stops: Place[], pois: Place[]) {

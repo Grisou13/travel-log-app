@@ -339,38 +339,61 @@
         <ng-template [ngIf]="obs.loading"><p>Loading...</p></ng-template>
         <ng-template [ngIf]="obs.value ">
           <div *ngFor="let item of poisPerCategory(obs.value.value) | keyvalue">
-            <h6 class="flex flex-rows items-center capitalize k500">
+            <h6 class="flex flex-rows items-center capitalize k600">
               <span class="mr-2 my-2 w-6 h-6">
                 <img [src]="'././assets/poi-icons/icon-'+item.key+'.svg'" alt="">
               </span>
               {{ item.key.replaceAll('_', ' ').split("-").pop() }}
             </h6>
-          <ng-container *ngFor="let poi of item.value" class="flex ">
-            <div class="inline-flex items-center rounded-full bg-white px-3 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
-            (click)="togglePoi(vm.current, poi)"
-            >
-              <input
-                class="flex relative items-center
-                  mr-2 h-4 w-4 appearance-none justify-center rounded-full
-                  border-solid border-[1px] border-neutral-300 outline-none bg-white
-                  before:pointer-events-none before:flex before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-white before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']
-                  checked:items-center checked:justify-center checked:border-neutral-300 checked:bg-[rgba(var(--ui-button-color),1)]
-                  checked:before:opacity-[1]
-                  checked:after:flex checked:after:absolute checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:scale-75 checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-['']
-                  hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)]
-                  focus:shadow-none focus:transition-[border-color_0.2s]
-                  focus:before:scale-0 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] "
-                type="checkbox"
-                [checked]="tripHasPoi(vm.pois, poi.properties.osm_id)"
-                [value]="poi.properties.osm_id"
-                [id]="'checkbox'+poi.properties.osm_id" />
-              <label
-                class="inline-block pl-[0.15rem] hover:cursor-pointer text-sm"
-                [for]="'checkbox'+poi.properties.osm_id">
-                {{poiName(poi)}}
-              </label>
-            </div>
-          </ng-container>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <ng-container *ngFor="let poi of item.value">
+
+              <div class="block rounded-lg bg-white pl-2 py-1 mb-2 mr-2 text-xs font-medium leading-loose shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] transition duration-150 ease-in-out "
+              (click)="togglePoi(vm.current, poi)"
+              >
+                <div class="flex items-center ">
+                  <input
+                    class="flex relative items-center
+                      mr-2 h-4 w-4 appearance-none justify-center rounded-full
+                      border-solid border-[1px] border-neutral-300 outline-none bg-white
+                      before:pointer-events-none before:flex before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-white before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']
+                      checked:items-center checked:justify-center checked:border-neutral-300 checked:bg-[rgba(var(--ui-button-color),1)]
+                      checked:before:opacity-[1]
+                      checked:after:flex checked:after:absolute checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:scale-75 checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-['']
+                      hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)]
+                      focus:shadow-none focus:transition-[border-color_0.2s]
+                      focus:before:scale-0 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] "
+                    type="checkbox"
+                    [checked]="tripHasPoi(vm.pois, poi.properties.osm_id)"
+                    [value]="poi.properties.osm_id"
+                    [id]="'checkbox'+poi.properties.osm_id" />
+                  <label
+                    class="inline-block pl-[0.15rem] hover:cursor-pointer text-sm k500 leading-[0.9rem]"
+                    [for]="'checkbox'+poi.properties.osm_id">
+                    {{poiName(poi)}}
+                  </label>              
+                </div>
+
+                <ng-container *ngIf="poi.properties.osm_tags.phone">
+                  <p class="leading-[0.9rem] ml-[1.8rem] mt-1">
+                    {{ poiPhone(poi) }}
+                  </p>
+                </ng-container>
+
+                <ng-container *ngIf="poi.properties.osm_tags.opening_hours">
+                  <p class="leading-[0.9rem] ml-[1.8rem] mt-1">
+                    {{ poiHours(poi) }}
+                  </p>
+                </ng-container>
+
+                <ng-container *ngIf="poi.properties.osm_tags.website">
+                  <a class="leading-[0.9rem] ml-[1.8rem] mt-1 m500 text-[rgba(var(--ui-button-color),0.75)]" href="{{ poiWeb(poi) }}" rel="noopener noreferrer" target="_new">Website</a>
+                </ng-container>
+
+              </div>
+
+            </ng-container>
+          </div>
         </div>
 
         </ng-template>
