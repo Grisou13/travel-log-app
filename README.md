@@ -67,4 +67,4 @@ And prettier just doesn't style lines correctly with tailwind classes... which m
 
 Tailwind seems far more powerfull in a context where you can directly inline a function for a component. (eg: react)
 
-- Sharing secrets
+- Handling dates.... common handling dates is the biggest mess in sowftware development ever... so yeah dates

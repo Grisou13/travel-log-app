@@ -65,6 +65,7 @@ Here the loading of poi's is done only with the trips location.
 
 An interesting feature would've been to be able to follow the map to load more poi's, for now the user is blocked on the list that is returned from `openrouteservice`.
 
+The poi search radius is ~10km^2 around the location of the place.
 # 5 Settings
 
 Settings could've been buffed up to contain even more stuff:

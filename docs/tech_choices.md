@@ -233,7 +233,7 @@ After:
 ```
 
 - `name` removed the unique constraint because multiple users can have multiple places with the same generated name
-- `order` defines the order in which this place appears in the trip
+- `order` defines the order in which this place appears in the trip. We could've used dates but ordering this way allows us to have 2 places that are very near within the same day (overlapping a little bit)
 - `type` is the most significant difference. This fields defines if a place is a stop or is a poi, pois have extra information so they can relate to another place
 - `directions` defines the geojson blob of coordinates that is returned by any directions api. This allows to display on the map a trace between 2 places that is coherant.
 - `transportMethod` still not used
