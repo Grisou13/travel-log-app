@@ -12,26 +12,28 @@
         {{ trip.title }}
       </h6>
     </div>
-    <div class="flex w-full sm:w-10/12 pt-3 place-content-between">
+    <div class="flex w-full sm:w-10/12 pt-3 flex-col place-content-between">
       <p class="flex grow text-sm mb-2 text-neutral-600 line-clamp-5">
         {{ trip.description }}
       </p>
-      <div *ngIf="tripStart$ | withLoadingStatus | async as obs" class="text-xs">
-        <ng-template [ngIf]="obs.loading">
-          <p>Loading....</p>
-        </ng-template>
-        <ng-template [ngIf]="obs.value">
-          <p>Start: {{obs.value.name}}</p>
-        </ng-template>
-      </div>
-      <div *ngIf="tripEnd$ | withLoadingStatus | async as obs" class="text-xs">
-        <ng-template [ngIf]="obs.loading">
-          <p>Loading....</p>
-        </ng-template>
-        <ng-template [ngIf]="obs.value">
-          <p>End: {{obs.value.name}}</p>
-        </ng-template>
-      </div>
+      <ng-container class="flex-col sm:flex-row">
+        <ng-container  *ngIf="tripStart$ | withLoadingStatus | async as obs">
+          <ng-template [ngIf]="obs.loading">
+            <p>Loading....</p>
+          </ng-template>
+          <ng-template [ngIf]="obs.value">
+            <p class="text-xs">Start: {{obs.value.name}}</p>
+          </ng-template>
+        </ng-container>
+        <ng-container  *ngIf="tripEnd$ | withLoadingStatus | async as obs">
+          <ng-template [ngIf]="obs.loading">
+            <p>Loading....</p>
+          </ng-template>
+          <ng-template [ngIf]="obs.value">
+            <p class="text-xs">End: {{obs.value.name}}</p>
+          </ng-template>
+        </ng-container>
+      </ng-container>
     </div>
     <div class="flex items-center justify-start
       w-full sm:w-2/12"
