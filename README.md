@@ -14,10 +14,11 @@ https://mediacomem.github.io/comem-masrad-dfa/latest/subjects/intro/#7
 
 The following docs are available:
 - tech choices
-- tutorial for the app
+  - explains a bit the evolution of the data models with previous version of the api
 - Installing and running the app
-
-
+- overview with images of the app
+- Side notes of the different screens
+  - what you can do on those screens and some pointers on what could've made the experience better
 
 # Accessing the app
 

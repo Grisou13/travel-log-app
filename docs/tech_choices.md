@@ -5,12 +5,13 @@ Here will be discuessed breifly the low level tech choices that have been made f
 
 # Diffs between original model and the current model.
 
+The api functionnality wise has not changed much, just the data models.
 
 Here is a small doc, so you can see the difference between api models from the original repository:
 https://github.com/Tazaf/comem-travel-log-api
 
 
-Nota: the models have been modified alot at the start of the project imagining a way too big project...this is why some fields are not really in use but are mapped
+Nota: the models have been modified alot at the start of the project imagining a way too big project...this is why some fields are not really in use but are present for future use
 
 # Trip
 Before:

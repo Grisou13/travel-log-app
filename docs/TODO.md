@@ -15,13 +15,13 @@
 # Components
 
 - *[X] Error handler - Thomas
-- *[ ] Success handler
-- *[ ] Map component
+- *[X] Success handler
+- *[X] Map component
   - *[X] Add markers to map
   - *[X] add directions to map
-  - *[ ] Add Input/Output for center of map
-  - *[ ] Add Input/Output for map bounding box
-  - *[ ] Output onMapReady with map ref
+  - *[X] Add Input/Output for center of map
+  - *[X] Add Input/Output for map bounding box
+  - *[X] Output onMapReady with map ref
 - *[X] Search for cities
   - *[X] Button to trigger Geolocation on autocomplete field - Eric
     - *[X] Service for geolocation of navigator - Eric
@@ -32,29 +32,28 @@
     - *[X] Update geocode service to be able to reverse geocode from lat/lng httpClient/open-route-service
       - *[X] map api models in typescript
       - *[X] add function in service to call api
-      - *[ ] Handle api errors
+      - *[X] Handle api errors
 - *[X] Search for related poi on a trip
-  - *[ ] Use open route service to find pois
+  - *[X] Use open route service to find pois
 - *[X] directions for a trip
-  - *[ ] Allow hover effect on directions, maybe pop an overlay with directions?
   - *[X] Center map on markers
 - *[X] Maps for a trip - Thomas
 - *[X] Toast service to notify user
   - *[X] Notify user on create trip
-  - *[ ] Notify user on create place
-  - *[ ] Notify user on delete trip
-  - *[ ] Notify user on delete place
-  - *[ ] Notify user on poi add
-  - *[ ] Notify user on poi delete
-- *[ ] Remove a place from a trip
-- *[ ] Remove a trip
-- *[ ] Past trips
-- *[ ] Present trips
+  - *[X] Notify user on create place
+  - *[X] Notify user on delete trip
+  - *[X] Notify user on delete place
+  - *[X] Notify user on poi add
+  - *[X] Notify user on poi delete
+- *[X] Remove a place from a trip
+- *[X] Remove a trip
+- *[X] Past trips
+- *[X] Present trips
 - *[X] Add a new trip
-  - *[ ] Use component Eric is doing to create the new trip
-  - *[ ] Multi step form to create a trip
+  - *[X] Use component Eric is doing to create the new trip
+  - *[X] Multi step form to create a trip
 - *[X] Add place to trip
-- *[ ] Change order of place in trip
+- *[X] Change order of place in trip
 - *[X] Login
 - *[X] Register
 
@@ -66,4 +65,4 @@
   - *[ ] On enter get first element and validate  
 - *[ ] Budget for a trip
 - *[ ] Budget for a place on a trip
-- *[ ] Budget with interesting graphs
+- *[ ] Budget with graphs
