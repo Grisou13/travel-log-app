@@ -20,6 +20,9 @@ N/A
 
 Here we would've liked for the user to be able to input a budget and be able to use that for our trips
 
+You can click on the map to add a place if you can't find anything from the text input!
+This will be the same on every part of the app that requires you to add some location (adding a place to a trip later, for example)
+
 # 3 My brand new trip
 
 Here you can drag n drop the cards for the trip to re-order them.
@@ -27,6 +30,8 @@ Here you can drag n drop the cards for the trip to re-order them.
 From a ui percpective an icon or something to show the user we can do that would've been great.
 
 # 3.1 Add a new place
+
+You can click on the map to add a place if you can't find anything from the text input!
 
 Navigation here is a bit weird because you are re-routed to a route with no background.
 

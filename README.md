@@ -13,11 +13,11 @@ https://mediacomem.github.io/comem-masrad-dfa/latest/subjects/intro/#7
 # Documentation
 
 The following docs are available:
-- tech choices
+- [tech choices](./docs/tech_choices.md)
   - explains a bit the evolution of the data models with previous version of the api
-- Installing and running the app
-- overview with images of the app
-- Side notes of the different screens
+- [Installing and running the app](./docs/install.md)
+- [overview with images of the app](./docs/overview.md)
+- [Side notes of the different screens](./docs/screens.md)
   - what you can do on those screens and some pointers on what could've made the experience better
 
 # Accessing the app
@@ -49,7 +49,6 @@ For now the app includes:
 Each place you want to visit and each trip can include a date of visit
 
 
-
 # Difficulties
 
 - Refactoring authentication to be in it's own module was a challenge because some systems worked before and stopped working. 
@@ -61,4 +60,4 @@ This created a major error whilest handling auth because the auth service keept 
 
 - Handling lat/lng has been a bit of a pain.... This is only due to the choice of libraries and the fact that formats are never the same. The api wants an array `[lat, lng]` but the library leaflet produces `[lng, lat]` which sometimes resulted in some pretty weird bugs around the app
 
-- 
+
