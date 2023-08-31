@@ -342,7 +342,7 @@
             <div *ngFor="let item of poisPerCategory(obs.value.value) | keyvalue" class="flex flex-col">
               <h6 class="flex flex-rows items-center capitalize k600">
                 <span class="mr-2 my-2 w-6 h-6">
-                  <img [src]="'././assets/poi-icons/icon-'+item.key+'.svg'" alt="">
+                  <img [src]="'./assets/poi-icons/icon-'+item.key+'.svg'" alt="">
                 </span>
                 {{ item.key.replaceAll('_', ' ').split("-").pop() }}
               </h6>

@@ -47,9 +47,7 @@ For now the app includes:
 
 Each place you want to visit and each trip can include a date of visit
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 # Difficulties
 
@@ -60,4 +58,6 @@ This created a major error whilest handling auth because the auth service keept 
 
 - Refactoring the module alos required some extra steps that were barried in the documentation about how it needed the `forRoot` (`auth-module.ts`) and not just a module exposing it's own providers as "normal"
 
-- Handling lat/lng has been a pain.... This is only due to the choice of libraries and the fact that formats are never the same. The api wants an array `[lat, lng]` but the library leaflet produces `[lng, lat]` which sometimes resulted in some pretty weird bugs around the app
+- Handling lat/lng has been a bit of a pain.... This is only due to the choice of libraries and the fact that formats are never the same. The api wants an array `[lat, lng]` but the library leaflet produces `[lng, lat]` which sometimes resulted in some pretty weird bugs around the app
+
+- 
