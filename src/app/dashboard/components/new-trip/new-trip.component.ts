@@ -13,7 +13,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { TravelLogService } from 'src/app/httpClients/travelLogApi/travel-log.service';
 import { initTE, Modal, Ripple, Stepper } from 'tw-elements';
 import { newPlaceForm } from '../add-place/add-place.component';
@@ -85,19 +85,22 @@ export class NewTripComponent implements OnInit {
     this.form.get('start.dateOfVisit')?.patchValue(dateToForm(now));
     this.form.get('defineStop')?.setValue(false);
   }
-  startMarker() {
-    const start = this.form.get('start.location');
-    if (start === null) return [];
-    if (start.value === null) return [];
-    if (start.invalid) return [];
-    if (start.value.lat === null) return [];
-    if (start.value.lng === null) return [];
-    return [
-      L.marker([start.value.lat, start.value.lng], {
-        icon: iconDefault('1'),
-      }),
-    ];
-  }
+  startMarker$: Observable<L.Marker<any>[]> = this.form.valueChanges.pipe(
+    map((value) => {
+      const start = this.form.get('start.location');
+      if (start === null) return [];
+      if (start.value === null) return [];
+      if (start.invalid) return [];
+      if (start.value.lat === null) return [];
+      if (start.value.lng === null) return [];
+      return [
+        L.marker([start.value.lat, start.value.lng], {
+          icon: iconDefault('1'),
+        }),
+      ];
+    })
+  );
+
   previousStep() {
     this.stepperInstance().previousStep();
   }
@@ -120,10 +123,23 @@ export class NewTripComponent implements OnInit {
       this.form.patchValue({
         end: {
           dateOfVisit: dateOfEnd,
+          title: '',
         },
       });
     }
     this.nextStep();
+  }
+  public clearStop() {
+    this.form.patchValue({
+      end: {
+        title: '',
+        description: '',
+        location: {
+          lat: null,
+          lng: null,
+        },
+      },
+    });
   }
   public createTrip() {
     if (this.form.invalid) return;

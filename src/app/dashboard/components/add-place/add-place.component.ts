@@ -22,10 +22,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const newPlaceForm = new FormGroup(
   {
-    location: new FormGroup({
-      lat: new FormControl<number>(0, []),
-      lng: new FormControl<number>(0, []),
-    }),
+    location: new FormGroup(
+      {
+        lat: new FormControl<number | null>(null, [Validators.required]),
+        lng: new FormControl<number | null>(null, [Validators.required]),
+      },
+      [Validators.required]
+    ),
     title: new FormControl('', [Validators.required, Validators.minLength(3)]),
     description: new FormControl('', [Validators.minLength(5)]),
     dateOfVisit: new FormControl('', [
@@ -51,7 +54,7 @@ export class AddPlaceComponent implements OnInit {
   public control!: FormControl;
   @OgInput() controlName!: string;
   @OgInput() placeHolder!: string;
-  @OgInput() extraMarkers: L.Marker[] = [];
+  @OgInput() extraMarkers: L.Marker[] | null = null;
 
   constructor(private controlContainer: ControlContainer) {}
 

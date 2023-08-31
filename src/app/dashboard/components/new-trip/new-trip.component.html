@@ -105,6 +105,7 @@
               type="radio"
               id="define-stop-yes"
               class="hidden peer"
+              (click)="clearStop()"
             />
             <label
               for="define-stop-yes"
@@ -120,10 +121,10 @@
           <small class="mb-6"
             >Okey then, let's fill this up together shall we</small
           >
-          <app-add-place
-            [formGroup]="this.form.controls.end"
-            [extraMarkers]="startMarker()"
-          ></app-add-place>
+            <app-add-place
+              [formGroup]="this.form.controls.end"
+              [extraMarkers]="startMarker$ | async"
+            ></app-add-place>
 
           <div
             class="flex flex-shrink-0 flex-wrap items-center justify-end pt-4"
@@ -218,6 +219,7 @@
           class="flex py-2 px-6 ml-2 rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)] shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] disabled:bg-neutral-500"
           data-te-ripple-init
           data-te-ripple-color="light"
+          [disabled]="this.form.invalid"
           (click)="createTrip()"
         >
           Save your trip

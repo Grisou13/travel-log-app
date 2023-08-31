@@ -30,7 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class LocationSearchComponent {
   constructor(private searchService: SearchService) {}
-  @Input() extraMarkers: L.Marker[] = [];
+  @Input() extraMarkers: L.Marker[] | null = null;
   @Input() searchedText = '';
   private mapClickedState = new BehaviorSubject<L.Marker | null>(null);
 
@@ -92,7 +92,7 @@ export class LocationSearchComponent {
   ]).pipe(
     map(
       ([markers, newMarkerOnMap]) =>
-        [markers, newMarkerOnMap, ...this.extraMarkers].filter(
+        [markers, newMarkerOnMap, ...(this.extraMarkers || [])].filter(
           (x) => x !== null
         ) as L.Marker[]
     )
