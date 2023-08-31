@@ -142,7 +142,7 @@ export class NewTripComponent implements OnInit {
     });
   }
   public createTrip() {
-    if (this.form.invalid) return;
+    if (this.form.controls.start.invalid) return;
 
     this.newTrip.emit(this.form.value);
   }
