@@ -31,7 +31,7 @@ import {
 import { PlaceService } from '../../services/place.service';
 import * as L from 'leaflet';
 import { placeToMarker, dateToForm } from '../../helpers';
-import { iconDefault } from '@shared/components/map/map.component';
+import { iconDefault, iconPoi } from '@shared/components/map/map.component';
 import { AddPlace, Place } from '../../models/places';
 import { PoisService } from '@httpClients/open-route-service/pois/pois.service';
 import { catchError, tap } from 'rxjs';
@@ -227,7 +227,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
             catName += '.svg';
           }
           return placeToMarker(x, {
-            icon: iconDefault(
+            icon: iconPoi(
               `<img width=24 height=24 class='map-poi-icon' src='./assets/poi-icons/icon-${catName}' />`
             ),
           });

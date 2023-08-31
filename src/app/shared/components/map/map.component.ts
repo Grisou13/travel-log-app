@@ -40,6 +40,16 @@ export const iconDefault = (html = '') =>
     popupAnchor: [18, 0],
     tooltipAnchor: [18, 0],
   });
+
+export const iconPoi = (html = '') =>
+  L.divIcon({
+    className: 'poi-icon',
+    html,
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    popupAnchor: [18, 0],
+    tooltipAnchor: [18, 0],
+  });
 L.Marker.prototype.options.icon = iconDefault();
 
 @Component({
