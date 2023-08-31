@@ -1,8 +1,9 @@
-# Documentation and goals of the project
+# Trek Tracks
 
-https://mediacomem.github.io/comem-masrad-dfa/latest/subjects/intro/#7
+Welcome to the trek tracks project!
 
-(Project report)[./docs/readme.md]
+!(https://gitlab.com/grisou13/travel-log-app/badges/master/pipeline.svg)[https://gitlab.com/grisou13/travel-log-app/badges/master/pipeline.svg]
+!(https://gitlab.com/grisou13/travel-log-app/-/badges/release.svg)[https://gitlab.com/grisou13/travel-log-app/-/badges/release.svg]
 
 # Requirements
 
