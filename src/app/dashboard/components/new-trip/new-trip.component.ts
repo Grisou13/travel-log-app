@@ -22,6 +22,7 @@ import * as L from 'leaflet';
 import { iconDefault } from '../../../shared/components/map/map.component';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Result } from '@shared/components/cities-search/cities-search.component';
+import { dateToForm } from '../../helpers';
 function addDays(date: Date, days: number) {
   var result = new Date(date);
   result.setDate(result.getDate() + days);
@@ -81,8 +82,7 @@ export class NewTripComponent implements OnInit {
   ngOnInit(): void {
     initTE({ Modal, Ripple, Stepper });
     const now = new Date();
-    const d = now.toISOString().split('T')[0];
-    this.form.get('start.dateOfVisit')?.patchValue(d);
+    this.form.get('start.dateOfVisit')?.patchValue(dateToForm(now));
     this.form.get('defineStop')?.setValue(false);
   }
   startMarker() {

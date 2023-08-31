@@ -28,7 +28,7 @@ import {
 } from 'rxjs';
 import { PlaceService } from '../../services/place.service';
 import * as L from 'leaflet';
-import { placeToMarker } from '../../helpers';
+import { placeToMarker, dateToForm } from '../../helpers';
 import { iconDefault } from '@shared/components/map/map.component';
 import { AddPlace, Place } from '../../models/places';
 import { PoisService } from '@httpClients/open-route-service/pois/pois.service';
@@ -37,7 +37,7 @@ import { SettingsService } from '@shared/services/settings.service';
 import * as _ from 'lodash';
 import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
 import { ArrayElement } from '../../../helpers';
-import { Input, initTE } from 'tw-elements';
+import { Input, Datepicker, initTE } from 'tw-elements';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -55,7 +55,10 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         Validators.required,
         Validators.minLength(5),
       ]),
-      startDate: new FormControl(''),
+      startDate: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/\d\d\d\d-\d\d-\d\d/),
+      ]),
       pictureUrl: new FormControl(''),
     },
     { updateOn: 'change' }
@@ -65,13 +68,13 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       this.form.disable();
       return;
     }
-    initTE({ Input });
+    initTE({ Input, Datepicker });
     this.form.enable();
   }
   initialValue: typeof this.form.value | null = null;
   sub: Subscription | null = null;
   ngOnInit(): void {
-    initTE({ Input });
+    initTE({ Input, Datepicker });
   }
 
   updatePlace(place: Place) {
@@ -81,28 +84,29 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
       typeof this.form.value?.startDate !== 'undefined'
     )
       startDate = new Date(this.form.value.startDate);
-
-    this.sub = this.placeService
-      .update(place.id, {
-        ...place,
-        name: this.form.value?.name ?? place.name,
-        description: this.form.value?.description ?? place.description,
-        startDate: new Date(startDate.toString()),
-        pictureUrl: this.form.value?.pictureUrl ?? place.pictureUrl,
-      })
-      .subscribe({
-        next: (val) => {
-          if (typeof val === 'boolean') {
-            this.toastrService.error(
-              `Error in the data supplied to update your trip`,
-              'Could not update place'
-            );
-          }
-        },
-        error: (err) => {
-          this.toastrService.error(`${err}`, 'Could not update place');
-        },
-      });
+    const payload = {
+      ...place,
+      name: this.form.value?.name ?? place.name,
+      description: this.form.value?.description ?? place.description,
+      startDate: new Date(startDate.toString()),
+    };
+    const picUrl = this.form.value?.pictureUrl ?? place.pictureUrl;
+    if (typeof picUrl !== 'undefined' && picUrl?.trim().length >= 10) {
+      payload.pictureUrl = picUrl.trim();
+    }
+    this.sub = this.placeService.update(place.id, payload).subscribe({
+      next: (val) => {
+        if (typeof val === 'boolean') {
+          this.toastrService.error(
+            `Error in the data supplied to update your trip`,
+            'Could not update place'
+          );
+        }
+      },
+      error: (err) => {
+        this.toastrService.error(`${err}`, 'Could not update place');
+      },
+    });
 
     this.form.disable();
   }
@@ -187,7 +191,7 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
         this.form.patchValue({
           name: val?.current.name ?? '',
           description: val?.current.description ?? '',
-          startDate: val?.current.startDate?.toISOString() || '',
+          startDate: dateToForm(val?.current.startDate),
           pictureUrl: val?.current.pictureUrl ?? '',
         });
         this.initialValue = this.form.value;

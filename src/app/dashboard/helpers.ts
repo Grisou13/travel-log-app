@@ -48,6 +48,15 @@ export const placeToMarker = (
     options
   );
 };
+export const dateToForm = (date: Date | null | undefined) => {
+  if (date === null) return '';
+  if (typeof date === 'undefined') return '';
+  return date?.toISOString().split('T')[0];
+};
+export const stringToDate = (date: string) => {
+  const y = date.split('-').map((z) => parseInt(z));
+  return new Date(y[0], y[1], y[2]);
+};
 
 export const formToTrip = (payload: { form: NewTripForm }) => {
   const { form } = payload;

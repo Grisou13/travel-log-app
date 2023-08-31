@@ -18,6 +18,7 @@ import { Trip } from '../../models/trips';
 import { PlaceService } from '../../services/place.service';
 import { TripService } from '../../services/trip.service';
 import { Input, initTE } from 'tw-elements';
+import { dateToForm } from '../../helpers';
 
 @Component({
   templateUrl: './trip-detail.component.html',
@@ -47,7 +48,10 @@ export class TripDetailComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(5),
       ]),
-      startDate: new FormControl(''),
+      startDate: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/\d\d\d\d-\d\d-\d\d/),
+      ]),
       endDate: new FormControl(''),
     },
     { updateOn: 'change' }
@@ -74,8 +78,8 @@ export class TripDetailComponent implements OnInit, OnDestroy {
         this.formGroup.patchValue({
           title: val?.title ?? '',
           description: val?.description ?? '',
-          startDate: val?.startDate?.toISOString() ?? '',
-          endDate: val?.endDate?.toISOString() ?? '',
+          startDate: dateToForm(val?.startDate) ?? '',
+          endDate: dateToForm(val?.endDate) ?? '',
         });
         this.initialValue = this.formGroup.value;
         this.formGroup.disable();
