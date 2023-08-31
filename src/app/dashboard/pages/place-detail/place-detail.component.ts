@@ -204,7 +204,20 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
           icon: iconDefault(`${p.current!.order}`),
         }),
 
-        ...p.pois.map((x) => placeToMarker(x, { icon: iconDefault(``) })),
+        ...p.pois.map((x) => {
+          const catId = Object.keys(x.infos?.category_ids)[0];
+          let catName = x.infos?.category_ids[catId].category_group || false;
+          if (catName === false) {
+            catName = 'default.png';
+          } else {
+            catName += '.svg';
+          }
+          return placeToMarker(x, {
+            icon: iconDefault(
+              `<img width=24 height=24 class='map-poi-icon' src='./assets/poi-icons/icon-${catName}' />`
+            ),
+          });
+        }),
       ];
       if (p.previousPlace !== undefined) {
         ret.push(
@@ -346,16 +359,22 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     return poi.properties.category_ids[categoryId].category_name;
   }
   poiPhone(poi: PoiSearchResponse['features'][0]) {
-    if(poi.properties.osm_tags?.phone === undefined) {return}
-      return poi.properties.osm_tags.phone;
+    if (poi.properties.osm_tags?.phone === undefined) {
+      return;
+    }
+    return poi.properties.osm_tags.phone;
   }
   poiHours(poi: PoiSearchResponse['features'][0]) {
-    if(poi.properties.osm_tags?.opening_hours === undefined) {return}
-      return poi.properties.osm_tags.opening_hours;
+    if (poi.properties.osm_tags?.opening_hours === undefined) {
+      return;
+    }
+    return poi.properties.osm_tags.opening_hours;
   }
   poiWeb(poi: PoiSearchResponse['features'][0]) {
-    if(poi.properties.osm_tags?.website === undefined) {return}
-      return poi.properties.osm_tags.website;
+    if (poi.properties.osm_tags?.website === undefined) {
+      return;
+    }
+    return poi.properties.osm_tags.website;
   }
   deleteSub$: Subscription | null = null;
 
