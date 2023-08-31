@@ -2,26 +2,26 @@
 
 Here, a simple signup or account creation.
 
-![index.png](./imgs/index.png)
+![index.png](./img/index.png)
 
 # 1.1 Signup
 
 Here you can create your account, the account can be any other information.
-![signup.png](./imgs/signup.png)
+![signup.png](./img/signup.png)
 
 # 1.2 Login
 
 Login is similar to signup, here, well you login
 
-![login.png](./imgs/login.png)
+![login.png](./img/login.png)
 
 # 2 Dashboard
 
 Here you can see your trips and past trips (if you have any)
 
-![dashboard.png](./imgs/dashboard.png)
+![dashboard.png](./img/dashboard.png)
 
-![dashboard-2.png](./imgs/dashboard-2.png)
+![dashboard-2.png](./img/dashboard-2.png)
 
 
 # 2.1 Create a new trip
@@ -32,49 +32,49 @@ A trip does not necessarily have to have an ending point, you just have to know 
 
 On each screen of your trip, you will see it's Title, Description and Date. All these information are editable once you click the `Edit infos` button.
 
-![trip-add.png](./imgs/trip-add.png)
-![trip-add-2.png](./imgs/trip-add-2.png)
-![trip-add-final.png](./imgs/trip-add-final.png)
+![trip-add.png](./img/trip-add.png)
+![trip-add-2.png](./img/trip-add-2.png)
+![trip-add-final.png](./img/trip-add-final.png)
 
 
 # 3 My brand new trip
 
 Here you can see the overview of the trip you just created, this includes all the places (towns) you want to visit
 
-![home.png](./imgs/home.png)
+![home.png](./img/home.png)
 
 # 3.1 Add a new place
 
 Here you can simple add a new leg to your trip. This new place will be appended to your places and you can re-order it afterwards.
-![trip-place-list.png](./imgs/trip-place-list.png)
+![trip-place-list.png](./img/trip-place-list.png)
 
 # 3.2 Place list
 
 Here you have all the places of your trip in a list style fashion. Here you can re-order the places of your trip.
-![trip-place-list.png](./imgs/trip-place-list.png)
+![trip-place-list.png](./img/trip-place-list.png)
 
 # 3.3 Trip map
 
 Here you can view your trip on a map, with directions between each places.
-![trip-map.png](./imgs/trip-map.png)
+![trip-map.png](./img/trip-map.png)
 
 # 3.4 Trip overview
 
 This tab allows you to do tasks on your trip, such as:
 - Deleting your trip
 - Stopping your trip
-![overview.png](./imgs/overview.png)
+![overview.png](./img/overview.png)
 
 # 4 Place detail
 
 You may have noticed that almost every screen on your trip has a a way for you to view the place in question.
 This will popup the place on the side and show it as is
-![place.png](./imgs/place.png)
+![place.png](./img/place.png)
 
 # 4.1 Poi
 
 Here you can see the list of points of interest associated with a place. These can range from any kind of places.
-![poi.png](./imgs/poi.png)
+![poi.png](./img/poi.png)
 
 # 5 Settings
 
@@ -86,4 +86,4 @@ It is a general filter, and allows you to enable some categories and not others 
 
 By default, none are activated so it will search everything.
 
-![settings.png](./imgs/settings.png)
+![settings.png](./img/settings.png)
