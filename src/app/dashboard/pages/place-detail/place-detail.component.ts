@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -37,7 +39,7 @@ import { SettingsService } from '@shared/services/settings.service';
 import * as _ from 'lodash';
 import { PoiSearchResponse } from '@httpClients/open-route-service/pois/types';
 import { ArrayElement } from '../../../helpers';
-import { Input, Datepicker, initTE } from 'tw-elements';
+import { Ripple, Input, Datepicker, initTE } from 'tw-elements';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -63,18 +65,26 @@ export class PlaceDetailComponent implements OnDestroy, OnInit {
     },
     { updateOn: 'change' }
   );
+  @ViewChild('stepper') datepicker: ElementRef | null = null;
+
   toggle($event: any) {
     if (this.form.enabled) {
       this.form.disable();
       return;
     }
-    initTE({ Input, Datepicker });
+
     this.form.enable();
+    initTE({ Ripple, Input, Datepicker });
+    if (this.datepicker) {
+      Datepicker.getOrCreateInstance(this.datepicker.nativeElement, {
+        format: 'yyyy-mm-dd',
+      });
+    }
   }
   initialValue: typeof this.form.value | null = null;
   sub: Subscription | null = null;
   ngOnInit(): void {
-    initTE({ Input, Datepicker });
+    initTE({ Ripple, Input, Datepicker });
   }
 
   updatePlace(place: Place) {

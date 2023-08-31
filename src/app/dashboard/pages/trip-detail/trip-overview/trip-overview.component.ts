@@ -18,11 +18,15 @@ import * as _ from 'lodash';
 import { PlaceService } from 'src/app/dashboard/services/place.service';
 import { ToastrService } from 'ngx-toastr';
 import { Place } from 'src/app/dashboard/models/places';
+import { dateToForm } from 'src/app/dashboard/helpers';
 @Component({
   templateUrl: './trip-overview.component.html',
   styleUrls: [],
 })
 export class TripOverviewComponent implements OnDestroy {
+  dateToForm(x: any) {
+    return dateToForm(x);
+  }
   constructor(
     private route: ActivatedRoute,
     private tripService: TripService,

@@ -1,23 +1,23 @@
 <div
   *ngIf="place"
-  class="flex h-40 
-    sm:w-[35vw] sm:h-full 
+  class="flex h-40
+    sm:w-[35vw] sm:h-full
     md:w-full
-    p-3 rounded-lg bg-white 
+    p-3 rounded-lg bg-white
     shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
 >
-  <ng-container *ngIf="this.place.pictureUrl"> 
+  <ng-container *ngIf="this.place.pictureUrl">
     <div class="flex h-auto w-4/12 sm:w-2/12
       bg-center bg-no-repeat bg-cover"
       [ngStyle]="{'background-image': 'url(' + place.pictureUrl + ')'}">
     </div>
-  </ng-container> 
-  <ng-container *ngIf="!this.place.pictureUrl"> 
-    <div class="flex h-auto w-4/12 sm:w-2/12 
+  </ng-container>
+  <ng-container *ngIf="!this.place.pictureUrl">
+    <div class="flex h-auto w-4/12 sm:w-2/12
       items-center justify-center text-center text-xs bg-neutral-100">
       <span>No picture <br>uploaded</span>
     </div>
-  </ng-container> 
+  </ng-container>
 
   <div class="flex w-8/12 sm:w-10/12 flex-wrap ml-3">
     <div class="flex w-full">
@@ -25,13 +25,13 @@
         {{ place.name }}
       </h6>
     </div>
-    
+
     <div class="w-full sm:w-11/12 justify-start">
       <p class="mb-2 text-sm font-medium text-neutral-600">
         {{ place.description }}
       </p>
       <p class="text-xs sm:text-sm font-medium text-neutral-600">
-        {{ place.startDate}}
+        {{ dateToForm(place.startDate)}}
       </p>
     </div>
     <div class="flex sm:justify-end items-center">
@@ -39,10 +39,10 @@
         type="button"
         class="flex py-2 px-6
         rounded-full align-center text-xs uppercase leading-normal text-white bg-[rgba(var(--ui-button-color),1)]
-        sm:ml-auto   
-        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out 
-        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
+        sm:ml-auto
+        shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out
+        hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+        focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0
         active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
         data-te-ripple-init
         data-te-ripple-color="light"

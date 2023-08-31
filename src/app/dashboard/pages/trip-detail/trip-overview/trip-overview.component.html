@@ -2,8 +2,8 @@
 
     <ul class="w-full sm:w-9/12">
       <li class="my-1.5 p-3 ">General information about your trip</li>
-      <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.firstStop">Start: <strong class="k500">{{vm.firstStop.name}}</strong> <br>Scheduled on <strong class="k500">{{vm.firstStop.startDate}}</strong></li>
-      <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.lastStop">Destination: <strong class="k500">{{vm.lastStop.name}}</strong> <br>Scheduled on <strong class="k500">{{vm.lastStop.startDate}}</strong></li>
+      <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.firstStop">Start: <strong class="k500">{{vm.firstStop.name}}</strong> <br>Scheduled on <strong class="k500">{{dateToForm(vm.firstStop.startDate)}}</strong></li>
+      <li class="my-1.5 p-3 rounded-xl bg-white border border-neutral-100" *ngIf="vm.lastStop">Destination: <strong class="k500">{{vm.lastStop.name}}</strong> <br>Scheduled on <strong class="k500">{{dateToForm(vm.lastStop.startDate)}}</strong></li>
     </ul>
 
     <div class="w-full sm:w-3/12">
